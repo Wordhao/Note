@@ -1,0 +1,55 @@
+6.3  Spring Boot Properties
+
+
+配置文件格式
+
+application.properties 配置文件的格式也很简单。每一行是一条配置项： 
+                                        配置项名称 = 配置项值
+       logging.level.root=info
+       logging.level.fm.douban.app=info
+注意：等号两边不要加空格，要写紧凑一些
+
+为了方便阅读和维护，书写配置文件时推荐遵守如下约定：
+●配置项名称能准确表达作用、含义，以点 . 分割单词,
+●相同前缀的配置项写在一起,
+●不同前缀的配置项之间空一行 ,
+
+
+配置的意义
+
+配置的主要作用，是把可变的内容从代码中剥离出
+来，做到在不修改代码的情况下，方便的修改这些可
+变的或常变的内容。这个过程称之为避免硬编码、做
+到解耦。
+怎么判断可变呢?通常跟项目运行相关的上下文环
+境，比如端口号、路径等可能变化信息，是可变的或
+常变的内容。但主要还是根据具体的项目经验积累,
+提前判断。
+在经验欠缺的时候，主要是依靠代码重构，当一个值
+变化的时候，要有敏感度思考是否应该采用配置的方
+式。
+
+
+自定义配置项
+
+我们可以在application.properties配置文件中加入自定义的配置项。
+    song.name=God is a girl
+框架会 自动加载 并 自动解析 整个文件。
+那么代码中怎么使用自定义的配置项呢？实际上很简单：
+import org.springframework.beans.factory.annotation.Value;
+public class SongListControl {
+    @Value("${song.name}")
+    private String songName;
+}
+只需要使用@Value注解即可，注意写法，花括号中的配置项名称，
+与配置文件中保持一致即可。
+
+项目启动时，Spring系统会自动把application.properties配置文件中的song.name
+的值，赋值给SongListControl对象实例的songName变量。
+
+代码中使用配置项，application.properties 文件必须
+有配置，缺少了就会报错;但application.properties
+文件中的配置没有被代码使用，则没关系。就是说,
+多了没事，少了就报错
+
+

@@ -1,0 +1,18 @@
+7.2 媒体查询
+
+@media(媒体查询关键词) screen and(逻辑操作符) (max-width: 900px)(媒体查询条件){
+         .side{   （符合条件时应用的样式）
+                   display:none;
+        }
+}
+
+条件：最大宽度(max-width)(<=时符合)
+
+条件：最小宽度(min-width)(>=时符合)
+
+逻辑操作符 and
+宽度大于900px，小于等于1080px，用and将两个条件结合起来：
+@media screen and (min-width: 900px) and (max-width:1080px){
+                       .......
+}
+

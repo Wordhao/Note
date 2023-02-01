@@ -1,0 +1,46 @@
+5.5 组件函数调用
+
+下面利用Vue提供的 ref属性来访问子组件实例，并调用子组件的方法。
+
+改写子组件 Model.vue
+将visible属性改写到子组件中。
+
+调用子组件的方法
+接下来我们使用ref属性来访问子组件实例，并调用子组件中的方法：
+1.给要访问的子组件添加ref属性
+<template>
+  <Modal ref="modal"></Modal>
+</template>
+现在我们可以通过 this.$refs.modal 来访问自定义组件Modal.vue
+2.调用子组件中的方法
+现在我们调用子组件中的 show方法来改变子组件中的 visible 的值，使弹框出现：
+<script>
+export default {
+  methods: {
+    showModal() {
+      // 调用子组件中的 show 方法
+      this.$refs.modal.show();
+    }
+  }
+};
+</script>
+
+ref 访问子元素
+ref 除了可以访问组件实例，还可以访问子元素：
+<template>
+  <div id="app">
+    <input ref="input" type="text" />
+    <button @click="focusInput">点击使输入框获取焦点</button>
+  </div>
+</template>
+<script>
+export default {
+  name: 'app',
+  methods: {
+    focusInput() {
+      // this.$refs.input 访问输入框元素，并调用 focus() 方法使其获取焦点
+      this.$refs.input.focus();
+    }
+  }
+}
+</script>

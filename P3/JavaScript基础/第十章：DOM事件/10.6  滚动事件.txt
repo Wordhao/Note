@@ -1,0 +1,59 @@
+10.6  滚动事件
+
+
+使用场景
+1.无尽滚动
+         我们在很多网站都看到过网页每次滚动到底部,会加载新内容，再次
+滚动到底部，又会加载新内容。
+
+2.动态效果
+          滚动一般用于展示一些动态效果
+
+
+事件描述
+滚动事件，事件名称为 --- scroll
+window.addEventListener(' scroll ',function(){
+         console.log( window.scrollY );//打印Y轴滚动距离 
+})
+
+
+无尽滚动
+    当页面快滚动到底部时，添加新的文章内容到body 中。代码如下：
+window.addEventListener('scroll', function () {
+  // 可以通过clientHeight获取内容高度
+  const height = document.body.clientHeight;
+  // 通过screen.height获取浏览器的高度
+  const screenHeight = window.screen.height;
+  // 当距离底部的距离小于500时，触发页面新增内容
+  if (height - window.scrollY - screenHeight < 500) {
+    console.log('加载新文章内容');
+    // 在底部添加10张图片
+    const div = document.createElement('div');
+    let str = '';
+    for (let i = 0; i < 10; i++) {
+      str += `
+       <img
+        class="first"
+        alt=""
+        src="https://document.youkeda.com/P3-1-HTML-CSS/1.8/1.jpg?x-oss-process=image/resize,h_300"
+      />
+      `;
+    }
+    div.innerHTML = str;
+    document.body.appendChild(div);
+  }
+});
+
+
+
+transform：translateY（）
+
+const core = document.querySelector('.core');
+window.addEventListener('scroll', function() {
+  const scrollY = window.scrollY;
+  if (scrollY < 100) {
+    core.style.transform = 'translateY(0)';
+  } else {
+    core.style.transform = 'translateY(-52px)';
+  }
+});

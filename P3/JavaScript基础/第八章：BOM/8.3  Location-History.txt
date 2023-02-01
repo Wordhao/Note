@@ -1,0 +1,32 @@
+8.3  Location/History
+
+
+Location
+
+href         href是整个网页地址
+hostname       hostname是网页域名
+host            host是网页域名+端口信息，在这里端口默认80省略，所以和hostname一样
+protocol       protocol代表协议信息
+origin          origin页面来源域名的标准形式
+pathname       pathname包含url路径部分
+search          search表示URL的参数
+
+https ://  ham.youkeda.com  /workspaces/5e4167c5ed496ab2c7f942ae/6052a987474a287709b64102/index.html  ?time=1616030094405
+protocol     host/hostname                              pathname                                                                                                             search
+
+Location方法
+reload（）     防止无限快速循环，设置一个定时器延迟调用reload
+setTimeout(function () {
+  window.location.reload();
+}, 3000);
+
+跳转到新的地址
+window.location = 'https://www.youkeda.com';
+
+
+
+History
+History允许操作浏览器的曾经在标签页或者框架里访问的会话历史记录，
+由这个名称我们得知，History会储存该窗口的历史记录。
+history两个方法： back（） 和forward（）
+

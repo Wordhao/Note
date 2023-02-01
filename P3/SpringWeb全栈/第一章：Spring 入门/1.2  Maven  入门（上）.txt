@@ -1,0 +1,23 @@
+1.2  Maven  入门（上）
+
+Maven 命令
+1.mvn clean compile
+    编译命令，Maven会自动扫描src/main/java下的代码并完成编译工作，
+执行完，会在根目录下生成target/classes目录（存放所有的class）
+
+2.mvn clean package
+    编译并打包命令，这个命令是compile和package的集合，也就是说会先执行
+compile命令，然后执行jar打包命令，这个的结果会把所有的java文件和资源
+打包成一个jar，jar是java的一个压缩格式，方便我们灵活的运用多个代码
+
+3.mvn clean install
+    执行安装命令，这个命令是compile和package、install的集合，也就是说
+会先执行compile命令，然后再执行jar打包命令，然后执行install命令安装到
+本地的Maven仓库目录里，这个目录是${user_home}/.m2
+    这个${user_home}指的就是你电脑登录用户名的个人目录
+
+4.mvn compile exec:java -Dexec.mainClass=${main}
+    这个命令的意思是在compile执行完后，执行运行Java的命令，具体执行
+哪个Java类是由  -Dexec . mainClass=${main}  参数指定的，比如我们想执行
+com.youkeda.Test类，那么这个完整的命令就是
+mvn compile exec:java -Dexec. mainClass=com. youkeda.Test 

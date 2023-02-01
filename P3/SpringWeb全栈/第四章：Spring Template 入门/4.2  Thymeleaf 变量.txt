@@ -1,0 +1,53 @@
+4.2  Thymeleaf 变量
+
+
+模板变量
+
+由于Thymeleaf是完全兼容HTML的，所以为了不破坏HTML结
+构，Thymeleaf采用了自定义HTML属性的方式来生成动态内容
+th:text     这个属性就是Thymeleaf自定义的HTML标签属性,
+th是Thymeleaf的缩写，所以你如果看到th: 开头的标签属
+性，那么就代表使用的是是Thymeleaf语法
+th:text语法的作用就是会动态替换掉html标签的内部内容，
+
+<span th:text="${msg}">Hello</span>
+
+这段代码的执行结果就是用msg变量值替换了span标签内的
+Hello字符串，比如说msg变量值是你好，那么代码渲染的结果是
+
+<span>你好</span>
+
+
+
+对象变量
+
+模板语言还可以支持复杂对象的输出，我们完全可以使用 . 把属性调用出来，
+比如我们的歌单对象SongList
+
+import org.springframework.ui.Model;
+@Controller
+public class DemoControl {
+
+  @RequestMapping("/demo")
+  public String index(Model model){
+
+    SongList songList = new SongList();
+    songList.setId("0001");
+    songList.setName("爱你一万年");
+
+    model.addAttribute("sl",songList);
+    return "demo";
+  }
+}
+我们在模板中可以通过 th:text="sl.name" 、th:text="sl.id" 分别得到name、id值
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <span th:text="${sl.id}"></span>
+    <span th:text="${sl.name}"></span>
+  </body>
+</html>
+

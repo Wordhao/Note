@@ -1,0 +1,4 @@
+Mybatis中xm文件里写小于等于时间，不能直接写 《=，要写成
+and reg_time <![CDATA[ <= ]]> #{params.endTime}
+
+gmt_modified <![CDATA[ >= ]]> #{time,jdbcType=TIMESTAMP}

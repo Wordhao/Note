@@ -1,0 +1,60 @@
+3.1  2048对象设计
+
+
+Tile对象（方格对象）
+// tile.js
+function Tile(position, value) {
+  this.row = position.row;
+  this.column = position.column;
+  this.value = value;
+}
+
+
+Grid对象（整个面板管理）
+// grid.js
+function Grid(size = 4) {
+  this.size = size;
+}
+我们用Grid对象来储存Tile内容，在这里我们可以使用二维数组来储存：
+//grid.js
+function Grid(size = 4) {
+  this.size = size;
+  this.cells = [];
+  this.init(size);
+}
+
+// prototype 设置方法（设置类方法的技术）
+Grid.prototype.init = function (size) {
+  for (let row = 0; row < size; row++) {
+    this.cells.push([]);
+    for (let column = 0; column < size; column++) {
+      this.cells[row].push(null);
+    }
+  }
+};
+
+
+
+设置属性 object.setAttribute('class' , ...)  //设置模块类名
+
+
+
+往Grid添加Tile
+首先在Grid加入add方法
+//grid.js
+//...
+Grid.prototype.add = function (tile) {
+  this.cells[tile.row][tile.column] = tile;
+};
+然后修改index.js文件，创建一个Tile，并将其添加到Grid中：
+// index.js
+let grid = new Grid();
+let tile = new Tile(
+  {
+    row: 0,
+    column: 0,
+  },
+  2
+);
+grid.add(tile);
+console.log(grid);

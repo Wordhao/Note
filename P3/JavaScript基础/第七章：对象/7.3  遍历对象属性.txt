@@ -1,0 +1,25 @@
+7.3  遍历对象属性
+
+
+在javaScript 中我们可以通过 for ... in 或借助 Object.keys来实现.
+
+用 for ... in 遍历属性
+let person = {
+  name: 'henry',
+  age: 18,
+}
+
+for (let key in person) {
+  console.log('键名：' + key + '；键值：' + person[key]);
+}
+
+
+借助 Object.keys 遍历属性
+let person = {
+  name: 'henry',
+  age: 18,
+}
+let keys = Object.keys(person);
+for (let i = 0; i < keys.length; i++) {
+  console.log('键名：' + keys[i] + '；键值：' + person[keys[i]]);
+}

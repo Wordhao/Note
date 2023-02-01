@@ -1,0 +1,35 @@
+5.1  自定义组件
+
+组件是可复用你的Vue实例，在开发过程中，我们可以把重复用到的功能封装成自定义
+组件，达到快捷开发的目的。
+
+组件的组织
+为了能在模板<template>中使用，这些组件必须先注册以便Vue能识别。
+
+组件的注册
+全局注册和局部注册：
+1.全局注册：用 Vue.component 来创建组件，注册之后可以在任何新创建的Vue根实例中使用。
+2.局部注册：在单个Vue格式的文件中创建组件，在需要用到的地方进行注册；
+通常采用局部注册
+
+组件的局部注册
+1.首先需要一个Vue格式的文件
+2.将其作为组件，在App.vue中使用，组件可以重复使用：
+第一步：引入组件(script中)
+import HelloWorld from './components/HelloWorld.vue';
+第二步：注册组件(script-export default中)
+components:{
+       HelloWorld
+}
+第三步：使用组件(template中)
+<HelloWorld></HelloWorld>
+<HelloWorld></HelloWorld>
+
+
+组件中的数据
+自定义组件内的数据data必须是一个函数：
+data: function () {       //data(){
+  return {
+    count: 0
+  }
+}

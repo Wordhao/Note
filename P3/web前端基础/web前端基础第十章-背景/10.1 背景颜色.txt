@@ -1,0 +1,17 @@
+10.1  背景颜色
+
+
+之前普通背景颜色的写法：
+background: red;
+background: #ffffff;
+background: rgba(200, 200, 200);
+background: rgba(0, 0, 0, 0.5);
+
+利用background这个属性设置渐变色：
+background：渐变类型（to  渐变方向，开始颜色，结束颜色）
+例： background:linear-gradient(to right,#95ca47,#4dc891)
+
+我们可以在每个色值后面跟一个值 百分比/px，来约定变色起止位置。
+
+字体样式：
+font-family:......

@@ -1,0 +1,112 @@
+2.3 Vuex request
+
+在真实的项目中，数据都是从服务器端获取的，Vuex中同样也支持从远程获取数据，
+Action是接受数据并处理逻辑的地方。
+
+一般情况下，action 会接收外部传入的参数，然后执行网络请求，
+但是需要添加 async 关键字。
+
+接下来我们按照顺序来完成 store 的编写
+
+state
+
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    users: []
+  }
+});
+
+mutation  定一个load mutation函数用于更新 users
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    users: []
+  },
+  mutations: {
+    load(state, payload) {
+      state.users = payload;
+    }
+  }
+});
+
+
+action
+
+由于网络请求是一个异步行为，所以在我们调用的时候，得借助await/async，
+action 的函数声明上就得添加 async 关键字，执行request 语句也需要添加 await 关键字：
+   axios
+   我们这里使用get 请求就可以得到数据啦，注意以下上面api的返回模型
+import axios from "axios";
+const response = await axios.get(
+        "https://www.fastmock.site/mock/a9b15cd4db90d4e03ed76cd3c76d9197/f6/users"
+      );
+console.log(response.data); 
+
+
+action 中运用 axios
+
+import Vue from "vue";
+import Vuex from "vuex";
+import axios from "axios";
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    users: []
+  },
+  actions: {
+    load: async ({ commit }) => {
+      const response = await axios.get(
+        "https://www.fastmock.site/mock/a9b15cd4db90d4e03ed76cd3c76d9197/f6/users"
+      );
+      commit("load", response.data.data.users);
+    }
+  },
+  mutations: {
+    load(state, payload) {
+      state.users = payload;
+    }
+  }
+});
+
+运用
+<template>
+  <div>
+    <ul v-for="user in users" :key="user.name">
+      <li>
+        <p>
+          <label>用户名</label>:
+          <span>{{user.name}}</span>
+        </p>
+        <p>
+          <label>邮箱</label>:
+          <span>{{user.email}}</span>
+        </p>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import { mapState, mapActions } from "vuex";
+
+export default {
+  async mounted() {
+    await this.load();
+  },
+  computed: {
+    ...mapState({
+      users: state => state.users
+    })
+  },
+  methods: { ...mapActions(["load"]) }
+};
+</script>

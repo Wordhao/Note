@@ -1,0 +1,57 @@
+DOM属性
+
+  DOM类别
+  1.元素节点
+  2.特征节点
+  3.文本节点
+  4. ...... 其他类别不重要，忽略
+
+1.整个HTML中，无论是标签,标签属性,还是
+纯文本字符串都是Element ,不同的地方在于
+nodeType分别为1，2，3
+2. HTML标签都是元素节点，可以用nodeName
+获取标签名称
+3.纯文本都是文本节点，可以用nodeValue获
+取文本内容
+4.标签的每个属性都是特性节点，可以用
+nodeName取得属性Key,用nodeValue取
+得属性Value
+5.attributes可以获取元素节点的所有属性,
+得到的结果是一个字典，通过属性Key获取对
+应的特性节点。  let attDom = divDom.attributes.id;
+
+
+DOM内容
+  outerHTML           整个DOM的HTML代码
+  innerHTML            DOM内部HTML代码
+  innerText                DOM内部纯文本内容
+
+
+DOM亲属
+  firstChild                指定节点的第一个子节点
+  lastChild                 指定节点的最后一个子节点        console.log(divDom.firstChild, divDom.lastChild);
+  childNodes             指定节点的子节点的集合             console.log(divDom.childNodes);
+  parentNode             指定节点在DOM树中的父节点   console.log(divDom.parentNode);
+
+
+DOM样式
+const h1Dom = document.querySelector('h1');
+console.log(h1Dom.classList);
+console.log(h1Dom.style);
+console.log(h1Dom.style.color);
+  classList                 classList数组方式储存所有的class名称
+  style                        对象或字典的方法储存CSS Style
+
+
+DOM数据类型
+HTML提供一种数据属性的标准，利用 data-* 允许我们在标准内于HTML元素
+中储存额外的信息。如：
+<article data-parts="3" data-words="1314" data-category="python"></article>
+
+数据获取：
+const article = document.querySelector('article');
+console.log(article.dataset);
+  
+
+
+

@@ -1,0 +1,39 @@
+9.4  DOM操作（一）
+
+1.创建标签节点
+document.creatElement(tagName)
+--此方法用于创建一个标签名称 tagName 指定的HTML元素，也就是上节课
+提到的元素（标签）节点。
+如果想创建一个div标签，我们可以使用：
+const div = document.createElement('div');
+
+document.createTextNode(string)
+如果想继续在这个div标签内部，添加纯文本内容，可以继续用创建文本方法
+代码如下：
+const div = document.createElement('div');
+const txt = document.createTextNode('优课达-学的比别人好一点');
+
+我们继续把txt添加到div中，把div添加到body中，代码如下：
+const div = document.createElement('div');
+const txt = document.createTextNode('优课达-学的比别人好一点');
+div.appendChild(txt);
+document.body.appendChild(div);
+
+
+2.添加新节点
+appendChild（newNode）此方法可以往该节点中插入儿子节点
+例子： div.appendChild(txt)         //如上
+
+inserBefore(newNode,referenceNode)             //（新节点 ，目标节点）
+此方法和appendChild（）刚好相反，appendChild是在所有儿子节点之后添加，
+inserBefore是在某个目标儿子节点之前添加。
+
+
+3.设置样式、属性
+img.setAttribute('style', 'width: 100%; height: 100%;');
+  单独设置：
+dom.style.color = 'xxxx';
+
+
+4.innerHTML
+使用innerHTML=' '清空select节点所有的后代内容。

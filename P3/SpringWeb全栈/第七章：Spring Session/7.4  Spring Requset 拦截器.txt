@@ -1,0 +1,83 @@
+7.4  Spring Requset 拦截器
+
+在上节课的练习中我们模拟了用户登录以及提供了查询登录状态的方法。
+
+在实际的项目中，会有大量的页面功能是需要判断用户是否登录的。例如
+电商的网站，订单、购物车、管理收货地址等等，都需要登录。那么让每
+一个页面都判断是否登录、为登录跳转到登录页，就太繁琐了，也不利于维护。
+
+所有需要一种统一处理相同逻辑的机制，Spring提供了HandlerInterceptor（拦截器）
+满足这种场景的需求。
+
+实现拦截器也不同负责，有三个步骤：
+
+一、创建拦截器
+
+拦截器必须实现HandlerInterceptor接口。可以在三个点进行拦截：
+1.Controller方法执行之前。这是最常用的拦截点。例如是否登录的验证
+就要在 preHandle（）方法中处理。
+2.Controller方法执行之后。例如记录日志、统计方法执行时间等，就要在
+postHandle（）方法中处理。
+3.整个请求完成后。 不常用的拦截点。例如统计整个请求的执行时间的
+时候用，在afterCompletion 方法中处理。
+
+示例代码：
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+public class InterceptorDemo implements HandlerInterceptor {
+  // Controller方法执行之前
+  @Override
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    // 只有返回true才会继续向下执行，返回false取消当前请求
+    return true;
+  }
+  //Controller方法执行之后
+  @Override
+  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+      ModelAndView modelAndView) throws Exception {
+  }
+  // 整个请求完成后（包括Thymeleaf渲染完毕）
+  @Override
+  public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+  }
+}
+preHandle() 方法的参数中有HttpServletRequest 和HttpServletResponse，可以像
+control中一样使用Session。
+
+
+二、实现WebMvcConfigurer
+
+创建一个类实现WebMvnConfigurer，并实现addInterceptors（）方法。这个步骤
+用于管理拦截器。
+     注意：实现类要加上 @Configuration 注解，让框架能自动扫描并处理。
+
+管理拦截器，比较重要的是为拦截器设置 拦截范围。常用addPathPatterns（"/**"）
+表示拦截所有的URL。
+当然也可以调用excludePathPatterns（）方法排除某些URL，例如登录页本身不
+需要登录，需要排除。
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebAppConfigurerDemo implements WebMvcConfigurer {
+
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    // 多个拦截器组成一个拦截器链
+    // 仅演示，设置所有 url 都拦截
+    registry.addInterceptor(new UserInterceptor()).addPathPatterns("/**");
+  }
+}
+
+学习拦截器，要注意理解和体会 拦截器 与 管理拦截器 分开的思想。
+思考一下：如果不分开处理，由拦截器本身决定在什么情况下进行拦截，
+是否更好？
+
+这种按功能划分子包的方式，可以让阅读者比较直观、清晰的分解
+各个类的作用。

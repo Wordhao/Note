@@ -1,0 +1,39 @@
+2.6  Spring Bean 的生命周期（lifecycle）
+
+
+实例化Bean->完成依赖注入 ->afterPropertiesSet ->Bean init ->destory
+
+
+大部分时候，我们只需要掌握init方法即可，注意这个init方法名称可以是
+任意名称的，因为我们是通过注解来声明init的，我们以SubjectServiceImpl为例
+import javax.annotation.PostConstruct;   //PostConstruct的完整包路径
+
+@Service
+public class SubjectServiceImpl implements SubjectService {
+
+  @PostConstruct
+  public void init(){
+      System.out.println("启动啦");
+  }
+
+}  
+
+我们只要在方法上添加 @PostConstruct注解，就代表方法在Spring Bean启动
+后会自动执行。
+
+
+有了init方法之后，我们就可以把之前static代码块的内容移到init里。代码如下
+@Service
+public class SubjectServiceImpl implements SubjectService {
+
+  @PostConstruct
+  public void init(){
+      Subject subject = new Subject();
+      subject.setId("s001");
+      subject.setName("成都");
+      subject.setMusician("赵雷");
+
+      subjectMap.put(subject.getId(), subject);
+  }
+
+}  

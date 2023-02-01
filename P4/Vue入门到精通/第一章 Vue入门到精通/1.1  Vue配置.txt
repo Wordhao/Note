@@ -1,0 +1,36 @@
+1.1  Vue配置
+
+下载安装node.js （去node.js官网下载安装包）
+
+检测node.js是否安装成功
+在CMD窗口输入：node -v;
+
+检测npm：npm --version;
+
+
+安装Vue CLI(脚手架)
+执行下面的命令：
+npm install -g @vue/cli
+// 如果是mac电脑，需要在命令前面加sudo
+sudo npm install -g @vue/cli
+    注意：如果执行上面的代码，很久都安装不好，那就换一种方式，
+先切换一下镜像：npm install -g cnpm --registry=https://registry.npm.taobao.org
+再执行安装命令：
+// 注意这里要用的是cnpm
+cnpm install -g @vue/cli
+安装完成后要验证一下脚手架是否安装成功，执行命令：
+vue --version
+
+创建Vue工程
+执行如下命令创建应该Vue工程：
+// vue 创建 工程名
+vue create   vue_first
+此时会出现几个选项，选择最后一个---自定义配置（键盘上下选择，回车确认）
+选中以后，进入自定义配置选项，勾选 Babel、Router 即可（空格选中/反选，回车确认）
+下一步是询问你是否使用历史模式的路由器，根据自己需要来选择 N 或者 Y
+下一步是询问你要将 Babel 等配置文件放在哪里，我们选择放在 package.json文件里：In package.json
+最后一步是询问你是否要保存这次配置，以后如果遇到相同配置的项目会比较方便。
+
+经过一系列的编译，最后创建成功一个原始的Vue项目，脚手架还给我们附赠了两个命令：
+cd vue_first:进入到工程根目录, 
+npm run serve:启动 vue 工程

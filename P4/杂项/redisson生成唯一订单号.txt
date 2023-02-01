@@ -1,0 +1,10 @@
+private String createOrderNumber() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+        String date = dtf2.format(localDateTime);
+        RAtomicLong aLong = redisson.getAtomicLong("myOrderPartNum" + date);
+        aLong.expire(10, TimeUnit.SECONDS);//设置key的过期时间，key过期后将不再可用
+        long count = aLong.incrementAndGet();//多线程调用该方法，不会造成数据丢失
+        String orderId = date + count;
+        return orderId;
+}

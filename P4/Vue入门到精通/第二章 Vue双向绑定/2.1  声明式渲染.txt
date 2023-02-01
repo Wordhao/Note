@@ -1,0 +1,129 @@
+2.1  声明式渲染
+
+app.vue是工程的根组件，所以我们可以将学习的代码先写在app.vue中
+
+// template即模版的意思，每一个vue文件里必须要有一个，在这里写HTML代码
+<template>
+  <div id="app"></div>
+</template>
+
+// 在这里写js逻辑相关的代码
+<script>
+  export default {
+    name: 'app',
+  };
+</script>
+
+// 这里写样式代码
+<style></style>
+
+
+每一个Vue文件由三部分组成，template、script、style
+，他们分别对应 HTML、JavaScript、CSS。
+
+
+注意：在template里面只允许有一个块状元素，通常在template里面写的都是 div。
+错误示范1：
+<template>
+  <div></div>
+  <div></div>
+</template>
+错误示范2：
+<template>
+  <div></div>
+  <ul>
+    >
+  </ul>
+</template>
+错误示范3：<template>
+  <div></div>
+  <span></span>
+</template>
+总之就是template标签内只能有一个块标签，其他所有的标签都在这个块标签内。
+
+
+
+声明式渲染
+JavaScript中，使用模板字符串来将数据渲染在页面中时：let element = `<div>${data.name}</div>`;
+差值表达式渲染--字符串 ：
+首先在template部分确定差值表达式位置，并填充变量名：
+<template>
+  <h2>{{title}}</h2>
+</template>
+在script部分定义字符串变量：
+<script>
+  // export default是固定格式，不需要纠结
+  export default {
+    // 模块的名字
+    name: 'app',
+    // 页面中数据存放的地方
+    data() {
+      return {
+        title: '优课达--学的比别人好一点',
+      };
+    },
+  };
+</script>
+添加样式：
+<!-- scope的意思表示这段样式只在本xxx.vue文件中生效，其他xxx.vue文件中不会生效，有锁定的意思 -->
+<style scope>
+  h2 {
+    color: deeppink;
+    border: 1px solid #cccccc;
+  }
+</style>
+
+差值表达式渲染--数组
+<h2 class="title">{{title}}</h2>
+<ul class="list">
+  <li>{{todoList[0]}}</li>
+  <li>{{todoList[1]}}</li>
+  <li>{{todoList[2]}}</li>
+  <li>{{todoList[3]}}</li>
+  <li>{{todoList[4]}}</li>
+</ul>
+<script>
+export default {
+  name: "app",
+  data() {
+    return {
+      title: "今日待完成事项",
+      todoList: [
+        "完成HTML标签学习",
+        "完成CSS文字样式学习",
+        "完成CSS盒模型学习",
+        "完成Flex布局学习",
+        "完成JavaScript入门学习"
+      ]
+    };
+  }
+};
+</script>
+
+差值表达式--对象
+<script>
+export default {
+  name: "app",
+  data(){
+      return {
+          list:[
+              {
+                  name:"张三",
+                  grade:"三年级二班",
+                  mark:290
+              },
+              {
+                  name:"李四",
+                  grade:"三年级二班",
+                  mark:270
+              },
+              {
+                  name:"王五",
+                  grade:"三年级二班",
+                  mark:270
+              }
+          ]
+      }
+  }
+};
+</script>

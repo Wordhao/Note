@@ -1,0 +1,83 @@
+3.4  Get Request（二）
+
+
+我们在一开始学习了@RequestMapping 注解用于解析URL请求路径,
+这个注解默认是支持所有的Http Method的。放开所有的Http
+Method这样不是很安全，一般我们还是会明确制定method,比如说
+get请求
+我们可以使用@GetMapping 来替换注解@RequestMapping，他们的包
+路径是一样的，我们之前的代码可以写成
+import org.springframework.web.bind.annotation.*;
+@GetMapping("/songlist")
+public String index(@RequestParam("id") String id,@RequestParam("pageNum") int pageNum){
+  return "html/songList.html";
+}
+我们可以通过如下的URL进行访问：
+http://xxxx/songlist?id=xxx&pageNum=1         //多个参数用 & 分割
+
+
+非必须传递参数
+
+默认情况下，访问的URL中必须包含我们在Request服务里设定的参
+数，上一节我们也提到过
+如果不想某个参数必须传递，那么你可以修改一下参 数的注解
+@GetMapping("/songlist")
+public String index(@RequestParam(name="pageNum",required = false) int pageNum,@RequestParam("id") String id){
+  return "html/songList.html";
+}
+
+@RequestParam(name="pageNum",required = false) int pageNum
+
+required = false 表示为不是必须的，一旦我们这样设置后，下面两个URL请
+求都是可以的
+http://xxxx/songlist?id=xxx&pageNum=1       //参数的顺序是无所谓的
+http://xxxx/songlist?id=xxx           
+
+
+
+输出JSON数据
+
+在Spring当中配置JSON数据非常简单，如下
+@GetMapping("/api/foos")
+@ResponseBody
+public String getFoos(@RequestParam("id") String id) {
+  return "ID: " + id;
+}
+字符串也是JSON数据的一种，大家应该看见了，我们在getFoos方法
+上增加了@ResponseBody注解，这个注解的包和RequestParam包一
+样的，我们可以运行看一看效果
+
+我们调用的url是
+https://xxxx/api/foos?id=100
+
+返回java对象
+
+public class User{
+  private String id;
+  private Stirng name;
+  // 省略了 getter、setter
+}
+
+
+public class UserControl{
+  //缓存 User 数据
+  private static Map<String,User> users = new HashMap();
+
+  /**
+   * 初始化数据 
+   */
+  @PostConstruct
+  public void init(){
+    User user = new User();
+    user.setId("100");
+    user.setName("ykd");
+    users.put(user.getId(),user);
+  }
+
+  @GetMapping("/api/user")
+  @ResponseBody
+  public User getUser(@RequestParam("id") String id) {
+    return users.get(id);
+  }
+}
+

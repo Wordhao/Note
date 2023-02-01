@@ -1,0 +1,23 @@
+5.6 组件slot入门
+
+slot 即插槽，相当于在子组件的DOM中留一个位置，父组件如果有需要，
+就可以在插槽里添加内容。
+
+插槽的基本使用
+
+1.在子组件 Modal.vue 中用slot标签预留一个位置，slot 标签中的内容是后备内容，
+   也可以为空：
+<div class="modal-content">
+  <slot>这是个弹框</slot>
+  <div class="footer">
+    <button @click="close">close</button>
+    <button @click="confirm">confirm</button>
+  </div>
+</div>
+后备内容：当父组件不在插槽里添加内容时，插槽显示的内容。
+
+2.在父组件中使用子组件
+*在父组件中使用子组件，但不向自定义组件的插槽 slot中添加内容：
+<Modal :visible.sync="visible"></Modal>
+*在父组件中使用子组件，并给插槽加入个性化内容：
+<Modal :visible.sync="visible">个性化内容</Modal>

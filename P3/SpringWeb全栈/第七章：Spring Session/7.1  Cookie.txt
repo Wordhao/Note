@@ -1,0 +1,81 @@
+7.1  Cookie
+
+从7.1图中看，服务器既要返回Cookie给客户端，也要读取客户端提交的
+Cookie。所以本节课主要学习服务端Spring工程是如何使用Cookie的，有
+读、写两种操作。
+
+
+读Cookie
+
+为control 类的方法添加一个 HttpServletRequest 参数，通过request.getCookies()
+取得cookie数组。然后再循环遍历数组即可。（系统会自动传入方法参数
+所需要的HttpServletRequest 对象）
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+@RequestMapping("/songlist")
+public Map index(HttpServletRequest request) {
+  Map returnData = new HashMap();
+  returnData.put("result", "this is song list");
+  returnData.put("author", songAuthor);
+
+  Cookie[] cookies = request.getCookies();
+  returnData.put("cookies", cookies);
+
+  return returnData;
+}
+
+**Cookie的重要属性值   https://ham.youkeda.com/articles/detail/5f37597b5e205f30b2c2b32f
+
+
+使用注解读取cookie
+
+如果知道cookie的名字，就可以通过注解的方式读取，不需要再遍历
+cookie数组了，更加方便。
+为control类的方法增加一个 @CookieValue("xxxx") String xxxx 参数即可，注意
+使用时要填入正确的 cookie 名字。（系统会自动解析并传入同名的cookie）
+import org.springframework.web.bind.annotation.CookieValue;
+
+@RequestMapping("/songlist")
+public Map index(@CookieValue("JSESSIONID") String jSessionId) {
+  Map returnData = new HashMap();
+  returnData.put("result", "this is song list");
+  returnData.put("author", songAuthor);
+  returnData.put("JSESSIONID", jSessionId);
+
+  return returnData;
+}
+**注意：如果系统解析不到指定名字的cookie，使用此注解就会报错。必须谨慎使用。
+
+
+
+写Cookie
+
+同样，也很简单。为control类的方法增加一个HttpServletResponse参数，调用
+response.addCookie（）方法添加Cookie实例对象即可。
+（系统会自动传入方法参数所需要的HttpServletResponse对象）
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+@RequestMapping("/songlist")
+public Map index(HttpServletResponse response) {
+  Map returnData = new HashMap();
+  returnData.put("result", "this is song list");
+  returnData.put("name", songName);
+
+  //第一个参数是cookie名称，第二个参数是cookie值。
+  Cookie cookie = new Cookie("sessionId","CookieTestInfo");
+
+  // 设置的是 cookie 的域名，就是会在哪个域名下生成 cookie 值
+  cookie.setDomain("youkeda.com");
+  // 是 cookie 的路径，一般就是写到 / ，不会写其他路径的
+  cookie.setPath("/");
+  // 设置cookie 的最大存活时间，-1 代表随浏览器的有效期，也就是浏览器关闭掉，这个 cookie 就失效了。
+  cookie.setMaxAge(-1);
+  // 设置是否只能服务器修改，浏览器端不能修改，安全有保障
+  cookie.setHttpOnly(false);
+  response.addCookie(cookie);
+
+  returnData.put("message", "add cookie successfule");
+  return returnData;
+}

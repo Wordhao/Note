@@ -1,0 +1,99 @@
+3.1 配置模块
+
+在Vuex 中使用 Module 方案，也就是模块方案来维护 store
+
+
+配置 Vuex 模块
+
+vuex 模块简单来说就是把一个 store 文件分割成多个 js 文件，每个分割的文件就是一个
+模块，每个模块都拥有自己的 state、mutation、action、getter，甚至模块还可以嵌套子模块。
+
+多个模块在一个文件里 组合
+
+const moduleA = {
+  state: { ... },
+  mutations: { ... },
+  actions: { ... },
+  getters: { ... }
+}
+
+const moduleB = {
+  state: { ... },
+  mutations: { ... },
+  actions: { ... }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    a: moduleA,
+    b: moduleB
+  }
+})
+模块获取：
+store.state.a; // -> moduleA 的状态
+store.state.b; // -> moduleB 的状态
+
+
+分拆模块文件
+
+在 src/store 目录下创建 count.js
+export default {
+  namespaced: true,
+  state : {
+      count:0,
+  },
+}
+
+namespaced : true 这个代表的是开启命名空间，这个设置的作用在于这个 module 的state、
+mutation、action、getter 都限定在本 module 里，这样就不会污染别的 module。
+
+集成module
+打开 src/store/index.js 文件，把刚才写的这个 count.js module store 导入进来
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
+
+import count from "./count";
+
+export default new Vuex.Store({
+  modules: {
+    count:count
+  }
+});
+
+在 vue 中使用 module store
+Vuex提供了一个 createNameSpacedHelpers 函数用来创建指定 namespace 的module引用，
+createNamespacedHelpers 接受的参数就是 module 的名称，
+import { createNamespacedHelpers } from "vuex";
+// 创建 count 模块的引用
+const { mapState, mapActions } = createNamespacedHelpers("count");
+
+export default {
+  computed: {
+    ...mapState({
+      count: state => state.count
+    })
+  },
+  methods: { ...mapActions(["increment", "decrement"]) }
+};
+
+
+引用多个module
+const { mapState, mapActions } = createNamespacedHelpers("count");
+
+const { mapState:demoMapState, mapActions:demoMapActions} = createNamespacedHelpers("demo");
+
+
+export default {
+  computed: {
+    ...mapState({
+      count: state => state.count
+    }),
+     ...demoMapState({
+      demoCount: state => state.count
+    })
+  },
+  methods: { ...mapActions(["increment", "decrement"]) }
+};
+
+使用变量别名的方式就可以把两个module区别开了。

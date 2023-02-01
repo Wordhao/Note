@@ -1,0 +1,25 @@
+2.3 CSS伪类--事件伪类
+
+hover--鼠标移动上去
+在鼠标移动上去以后，完成两种状态之间的转换，
+能完成这种转换过程的就是伪类。
+例：
+li:hover{
+    background-color: #47A0FC;
+    color: white;
+}
+
+
+active--鼠标点击时
+ul>li:active{
+    /* 要改变的效果 */
+    color: black;
+}
+
+**注意
+hover一定要在active之前，否则不会生效。
+
+focus--获取焦点后（点击出现：预设display：none，后：focus--  display：block）
+focus：获取焦点的伪类，一般用于具有焦点的元素，比如input，我们
+可以让input获取到焦点以后，改变input的边框颜色。
+

@@ -1,0 +1,56 @@
+杂项——表格 table
+
+<table border="1">（无border属性表格将不显示边框）
+<tr>
+<td>row 1, cell 1</td>
+<td>row 1, cell 2</td>
+</tr>
+<tr>
+<td>row 2, cell 1</td>
+<td>row 2, cell 2</td>
+</tr>
+</table>
+显示如下：
+row 1, cell 1	row 1, cell 2
+row 2, cell 1	row 2, cell 2
+
+表格的表头
+<table border="1">
+<tr>
+<th>Heading</th>
+<th>Another Heading</th>
+</tr>
+<tr>
+<td>row 1, cell 1</td>
+<td>row 1, cell 2</td>
+</tr>
+<tr>
+<td>row 2, cell 1</td>
+<td>row 2, cell 2</td>
+</tr>
+</table>
+在浏览器显示如下：
+Heading	Another Heading
+row 1, cell 1	row 1, cell 2
+row 2, cell 1	row 2, cell 2
+
+
+空单元格用占位符处理
+<table border="1">
+<tr>
+<td>row 1, cell 1</td>
+<td>row 1, cell 2</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>row 2, cell 2</td>
+</tr>
+</table>
+在浏览器中显示如下：
+row 1, cell 1	row 1, cell 2
+ 	                   row 2, cell 2
+
+
+ <td align="left"> 文字居左
+
+

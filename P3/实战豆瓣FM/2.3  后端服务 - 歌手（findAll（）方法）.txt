@@ -1,0 +1,6 @@
+2.3  后端服务 - 歌手（findAll（）方法）
+
+
+当数量级不大（一般在千级）的时候，可以一次把所有的记录查询出来。
+调用findAll（）方法，在参数中指定类，即可查询所有的数据记录。
+List<Singer> singers = mongoTemplate.findAll(Singer.class);

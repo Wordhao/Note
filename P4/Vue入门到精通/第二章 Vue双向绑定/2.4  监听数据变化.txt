@@ -1,0 +1,92 @@
+2.4  监听数据变化
+
+监听数据变化，在Vue中是通过 侦听器 来实现的，你也可以将它理解为监听器，时刻监听某个数据的变化。
+
+watch 的基本用法
+1.侦听器的书写位置
+<script>
+  export default {
+    name: 'app',
+    // 侦听器 key---watch value---{}
+    watch: {},
+  };
+</script>
+
+2.侦听器的侦听对象
+侦听器侦听的是 data里面的变量，当变量发生变化的时候，侦听器开始运行，例如：
+<script>
+  export default {
+    name: 'app',
+    data: function () {
+      return {
+        count: 1,
+      };
+    },
+    watch: {
+      count() {
+        console.log('count发生了变化');
+      },
+    },
+  };
+</script>
+注意：侦听器里面的方法 count 一定要跟被侦听的变量名一致。
+
+3.侦听器的运行时机
+侦听器里面的count要运行的话，count变量的值必须发生变化，所有需要添加一个改变count变量的方法 add：
+<script>
+  export default {
+    name: 'app',
+    data: function () {
+      return {
+        count: 1,
+      };
+    },
+    methods: {
+      add: function () {
+        this.count++;
+      },
+    },
+    watch: {
+      count:functio() {
+        console.log('count发生了变化');
+      },
+    },
+  };
+</script>
+此时当点击按钮，使count变量的值发生变化，控制台就会打印 count发生了变化。
+
+
+侦听器的进阶用法
+
+获取前一次的值
+添加一个参数，即可获取旧值，代码如下：
+watch:{
+    inputValue(value,oldValue) {
+        // 第一个参数为新值，第二个参数为旧值，不能调换顺序
+        console.log(`新值：${value}`);
+        console.log(`旧值：${oldValue}`);
+    }
+}
+
+handler 方法和 immediate 属性
+前面我们已经知道，当我们侦听的值没有发生变化的时候，是不会触发侦听器的，并且，页面第一次渲染的时候也不会触发侦听器。
+但是现在我有一个需求就是要让页面第一次渲染的时候就去触发侦听器呢？此时就要用到侦听器的immediate 属性。
+在之前用的侦听器都是简写模式，实际上侦听器就是一个对象，里面包含一个 handler 方法和其他属性， immediate 属性就在其中：
+<script>
+  export default {
+    name: 'app',
+    watch: {
+      firstName: {
+        handler: function (newName, oldName) {
+          this.fullName = newName + ' ' + this.lastName;
+        },
+        immediate: true,
+      },
+    },
+  };
+</script>
+当immediate 属性的值为 true 时，不论数据是否变化，页面刷新以后，handler 方法就会运行。
+
+
+this.sortData.sort((a, b) => a - b);
+sort方法：返回值>0则交换，<0则不交换，即a-b 为从小到大排，b-a为从大到小排。

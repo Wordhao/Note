@@ -1,0 +1,59 @@
+完整的html文档结构
+
+1. <!DOCTYPE html>
+(1).作用: 告知浏览器该页面文件的文档类型，指示web浏
+览器使用哪个HTML版本编写页面。
+(2).位置: <!DOCTYPE> 声明必须是HTML文档的第一行,
+位于<html> 标签之前。
+(3). < !DOCTYPE>声明对大小写不敏感。
+(4). < !DOCTYPE>声明没有结束标签。
+
+2. <html lang="en">... </html>
+(1).此元素可告知浏览器其自身是一个HTML文档。
+(2). <html> 与</html> 标签限定了文档的开始点和结束
+点，在它们之间是文档的头部和主体。文档的头部由
+<head>标签定义，而主体由<body> 标签定义。
+(3). lang属性(语言属性) :当搜索引擎或者浏览器拿到语
+言属性后，有可能做一些针对指定语言的辅助操作，'en'表示
+英文。
+
+3.标签属性
+(1).标签可以拥有零个或多个标签属性，注意:标签属性与标
+签名称、标签属性与标签属性之间需用一个空格隔开。
+(2).标签属性可以赋予标签更多的信息，标签属性通常是以
+key= "value"即名称="值"的形式出现。
+(3).常见的标签属性有: class、 id、style、 lang、 src等。
+
+4.文档的头部<head>...</head>
+(1). head元素定义文档的头部，我们通常在这里引用样式
+表、提供元信息等。
+(2).文档的头部中的<title>...</tit1e> 定义文档的标题,
+在网页上体现为网页标签的标题。
+(3).一个<head>元素必须包含且只能包含一个<title> 
+元素。
+
+5.文档的主体<body>...</body>
+(1). body元素定义文档的主体，包含文档的所有内容(比如
+文本、超链接、图像、表格和列表等等)
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!--系统内置 start-->
+<script type="text/javascript" src="//qgt-style.oss-cn-hangzhou.aliyuncs.com/commonJSCSS/console.js"></script>
+<!--系统内置 end-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>改错题</title>
+  </head>
+  <body>
+    <div class="subtitle">
+      <h4>DOCTYPE有什么作用？</h4>
+      <p>告诉浏览器使用哪个版本的HTML规范来渲染文档。DOCTYPE不存在或形式不正确会导致HTML文档以混杂模式呈现。</p>
+      </div>
+  </body>
+</html>
+

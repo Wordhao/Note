@@ -1,0 +1,89 @@
+6.7 监听路由  watch  $route
+
+监听路由 $route 的变化
+
+监听路由变化我们需要用到两个知识： vue中的watch 和 $route。
+
+watch 即之前讲过的数据变化监听，$route 即当前路由。
+
+路由监听写法如下：
+watch: {
+  $route(to,from){
+    console.log(to, from);
+  }
+}
+
+// 或者
+watch: {
+  $route: {
+    handler: function(to,from) {
+      console.log(to,from);
+    },
+    // 深度观察监听
+    deep: true
+  }
+},
+
+to是变化后的路由，from是变化前的路由。一般我们用第一种写法就可以了。
+
+
+路由监听的使用
+
+1.基础样式
+tab 的样式分两种，被点击的和未被点击的：
+被点击的 tab 会多个类名 "active"。
+
+2.定义 tab 事件
+<script>
+export default {
+  methods: {
+    // 点击 tab 时会执行 changeTab 方法
+    changeTab(type) {
+      // 使用 Router 实例方法改变路径参数
+      this.$router.push({ query: { type: type } });
+    }
+  }
+};
+</script>
+
+3.监听路由变化，更新 tab 样式
+export default {
+  watch: {
+    $route(to, from) {
+      // 路由变化了就执行更新样式的方法
+      this.updateTab();
+      console.log(to, from);
+    }
+  },
+  methods: {
+    changeTab(type) {
+      this.$router.push({ query: { type: type } });
+    },
+    // 更新样式的方法
+    updateTab() {
+      this.tabList.map(menu => {
+        menu.active = menu.type === this.$route.query.type;
+      });
+    }
+  }
+};
+</script>
+
+4.处理特殊情况
+如果页面路径一开始没有路径参数 type，那我们默认选择第一个 tab，
+如果页面路径一开始就有路径参数，那么需要马上更新 tab 样式：
+<script>
+export default {
+  methods: {
+    // ...
+    updateTab() {
+      if (!this.$route.query.type) {
+        return;
+      }
+      this.tabList.map(tab => {
+        tab.active = tab.type === this.$route.query.type;
+      })
+    }
+  }
+};
+</script>

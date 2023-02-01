@@ -1,0 +1,200 @@
+Web全栈注解小结
+
+
+@PostContrust   初始化
+
+@Controller 控制器
+@RequestMapping   提供MVC路由能力    return "hello.html";    支持所有的Http Method，这样不是很安全。
+
+获取HttpURL参数
+public String index(@RequestParam("id") String id){
+          return " ... ";
+}   @RequestParam()里面的参数必须和 URL的param key一样
+
+
+@GetMapping     等效于@RequestMapping
+          非必须传递参数public String index(@RequestParam(name="pageNum",required = false) int pageNum,@RequestParam("id") String id){   }
+
+@ResponseBody     输出JSON数据  一般我们将输出JSON数据的方法称为 API
+
+
+Thymeleaf     Java对象数据+模板页面
+ model.addAttribute("songList",songList);
+<h1 th:text="${songList.name}">  <h1>
+
+页面跳转 redirect
+return "redirect:/user/list.html";
+
+
+Validation注解       放置在Java类定义中     在需要验证的变量前添加@Valid 后添加BindingResult     public String saveUser(@Valid User user, BindingResult errors) 
+@NotEmpty(message = "名称不能为 null")
+private String name;
+@Min(value = 18, message = "你的年龄必须大于等于18岁")
+@Max(value = 150, message = "你的年龄必须小于等于150岁")
+private int age;
+@NotEmpty(message = "邮箱必须输入")
+@Email(message = "邮箱不正确")
+ private String email;
+
+在返回的html中添加Model
+@GetMapping("/user/add.html")
+    public String addUser(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "user/addUser";
+    }
+
+错误信息显示
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+<form action="/user/save" th:object="${user}" method="POST">
+        <div th:classappend="${#fields.hasErrors('name')} ? 'error' : ''">    如果name错误，class="error"
+        <label>用户名称:</label>
+        <input type="text" th:field="*{name}">
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+</form>                   
+
+
+layout解决模板复用   th:include  + th:replace 
+th:include = "::content" 选择器 <div class="container" th:include="::content">页面正文内容</div>  
+对应：
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout">
+<div th:fragment="content">
+......
+</div>
+</html>
+
+
+启动类的注解，告知系统需要额外扫描的包：@SpringBootApplication(scanBasePackages={"fm.douban.app", "fm.douban.service"})
+
+Logger运用    修改配置文件   logging.level.root=info
+      private static final Logger LOG = LoggerFactory.getLogger(SongListControl.class);
+        LOG.info("SongListControl 启动啦");
+
+Properties配置文件
+自定义配置项   song.name=God is a girl
+使用  @Value("${song.name}")
+           private String songName;
+
+
+读Cookie     （HttpServletRequest  request）
+Cookie[] cookies = request.getCookies();   returnData.put("cookies", cookies);
+只有这一直读Cookie方法，若要找到名为 xxx 的Cookie
+if (cookies != null && cookies.length > 0) {
+          for (Cookie cookie : cookies) {
+              if ("xxx".equals(cookie.getName())) {
+                  break;
+              }
+       }
+  }
+
+使用注解读取cookie  在control类的方法增加一个@CookieValue（"xxxx"） String xxxx参数
+public Map index(@CookieValue("JSESSIONID") String jSessionId){ 系统会自动解析并传入一个同名的cookie
+             returnData.put("JSESSIONID", jSessionId);
+}
+
+写Cookie        （HttpServletResponse reponse）
+ response.addCookie(cookie);
+设置cookie：
+Cookie cookie = new Cookie("sessionId","CookieTestInfo"); //  （"cookie名称"，"cookie值"）
+  // 设置的是 cookie 的域名，就是会在哪个域名下生成 cookie 值
+  cookie.setDomain("youkeda.com");
+  // 是 cookie 的路径，一般就是写到 / ，不会写其他路径的
+  cookie.setPath("/");
+  // 设置cookie 的最大存活时间，-1 代表随浏览器的有效期，也就是浏览器关闭掉，这个 cookie 就失效了。
+  cookie.setMaxAge(-1);
+  // 设置是否只能服务器修改，浏览器端不能修改，安全有保障
+  cookie.setHttpOnly(false);
+
+Spring Session API
+读操作 
+HttpSession session=request.getSession( );
+UserLoginInfo userLoginInfo = (UserLoginInfo)session.getAttribute("userLoginInfo");
+
+登录信息类   实现序列化接口Serializable
+import java.io.Serializable;
+public class UserLoginInfo implements Serializable {
+  private String userId;
+  private String userName;
+}
+
+写操作
+UserLoginInfo userLoginInfo = new UserLoginInfo（）；
+HttpSession session=request.getSession（）；
+session.setAttribute("userLoginInfo",userLoginInfo)；
+
+
+Spring Session 配置
+在类上添加@Configuration 注解，就表示这是一个配置类，系统会自动扫描并处理。
+在方法上添加@Bean 注解，表示把此方法返回的对象实例注册成Bean 
+                                跟@Service等写在类上的注解一样，都表示注册Bean
+配置类   在类上额外添加一个注解：@EnableSpringHttpSession，开启session
+                 然后注册两个bean：
+    *CookieSerializer ：读写Cookies中的SessionId信息
+    *MapSessionRepository ：Session信息在服务器上的储存仓库
+@Configuration
+@EnableSpringHttpSession
+public class SpringHttpSessionConfig {
+  @Bean
+  public CookieSerializer cookieSerializer() {
+    DefaultCookieSerializer serializer = new DefaultCookieSerializer();
+    serializer.setCookieName("JSESSIONID");
+        // 用正则表达式配置匹配的域名，可以兼容 localhost、127.0.0.1 等各种场景
+    serializer.setDomainNamePattern("^.+?\\.(\\w+\\.[a-z]+)$");
+    serializer.setCookiePath("/");
+    serializer.setUseHttpOnlyCookie(false);
+    // 最大生命周期的单位是分钟
+    serializer.setCookieMaxAge(24 * 60 * 60);
+    return serializer;
+  }
+  // 当前存在内存中
+  @Bean
+  public MapSessionRepository sessionRepository() {
+    return new MapSessionRepository(new ConcurrentHashMap<>());
+  }
+}
+
+Spring Request 拦截器  ——HandlerInterceptor（拦截器）
+创建拦截器——实现WebMvcConfigurer
+一、创建拦截器
+实现HandlerInterceptor接口，public class InterceptorDemo implements HandlerInterceptor {}
+在三个点进行拦截
+1.Controller方法执行之前，preHandle（）方法   
+2.Controller方法执行之后，postHandle（）方法
+3.整个请求完成之后，afterCompletion（）方法
+public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{ }
+public void PostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)throws Exception{}
+public void afterCompletion(HttpServletRequest request,HttpServletResponse response,Object handler,Exception ex)throws Exception{}
+二、实现WebMvcConfigurer
+创建一个类实现WebMvcConfigurer(记得加上@Configuration)，并实现addInterceptors()方法。用于管理拦截器。
+管理拦截器，比较重要的是为拦截器设置拦截范围。常用addPathPatterns("/**") 表示拦截所有的URL
+                          也可以调用excludePathPatterns()方法排除某些URL，例如登录页面本身就不需要登录，需要排除。
+@Configuration
+public class WebAppConfigurerDemo implements WebMvcConfigurer {
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    // 多个拦截器组成一个拦截器链
+    // 仅演示，设置所有 url 都拦截
+    registry.addInterceptor(new UserInterceptor()).addPathPatterns("/**");
+  }
+}
+
+POST 请求
+@PostMapping(path = "/authenticate")
+public String loginAction(@RequestParam String name, @RequestParam String password) {
+  return user.toString();
+}
+
+页面跳转
+跳转操作：String loginPageUrl = "/login";
+response.sendRedirect(loginPageUrl);
+                                                  
+
+
+
+

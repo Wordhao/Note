@@ -1,0 +1,60 @@
+6.4  复用：mixin/include
+
+mixin/include 除了可以用来解决代码复用问题，还可以解决无语义的
+类名问题（比如：".float-left"）。
+
+解决复用问题：
+
+@mixin  定义可复用的样式
+@include  应用可复用的样式
+
+@mixin square {
+  width: 100px;
+  height: 100px;
+}
+// 应用：
+.user-avatar {
+  @include square;
+}
+.admin-avatar {
+  @include square;
+}
+
+编译结果：
+.user-avatar {
+  width: 100px;
+  height: 100px;
+}
+
+.admin-avatar {
+  width: 100px;
+  height: 100px;
+}
+
+有参数混合：
+（无默认参数）
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+// 应用
+.avatar {
+  @include square(100px);
+}
+
+（有默认参数）
+@mixin square($size: 100px) {
+  width: $size;
+  height: $size;
+}
+
+// 不传参数就会使用默认的值 100px
+.avatar {
+  @include square;
+}
+
+// 传入参数就会使用传入的值 200px
+.avatar-200 {
+  @include square($size: 200px);
+}

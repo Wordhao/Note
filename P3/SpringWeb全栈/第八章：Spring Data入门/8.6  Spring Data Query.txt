@@ -1,0 +1,36 @@
+8.6  Spring Data Query
+
+上节课学习倒了根据主键id查询数据。但是显然只根据主键查询是不够的，
+通常情况下需要根据多条件查询。
+
+条件查询就相对复杂一些，但功能也更强大。查询操作的核心方法是：
+List<Song> songs = mongoTemplate.find(query, Song.class);
+因为可能查询到多条数据，所以返回结果是对象的集合。第一个参数是查询
+对象Query实例；第二个参数就表示查询什么样的对象，写法是 类名.class
+
+查询方法比较简单，但查询操作的复杂性在于条件，需要用构建好的 Criteria （标准）
+条件对象的实例，来构建 Query 实例：
+Query query = new Query（criteria）；
+而构建 Criteria 条件对象，一般有两种情况：
+*单一条件，用：  Criteria criterial = Criteria.where("条件字段名").is("条件值")
+即可返回一个条件对象的实例。
+*组合条件，根据或（or）、且（and）的关系进行组合，多个子条件对象组合
+成一个总条件对象：
+——或(or)关系:
+Criteria criteria = new Criteria();
+criteria. orOperator(criteria1, criteria2);
+——且(and) 关系:
+Criteria criteria =new Criteria();
+criteria. andOperator(criteria1, criteria2);
+oroperator()和andoperator()的参数，都可以输入多个子条件,也可以输入子条件数组
+
+List<Criteria> subCris = new ArrayList();//用于存放子条件
+ // 三个子条件以 and 关键词连接成总条件对象，相当于 name='' and lyrics='' and subjectId=''
+    criteria.andOperator(subCris.toArray(new Criteria[]{}));
+
+ query.limit(10);//限定返回十条数据
+
+List<Song>  songs = mongoTemplate.find(query, Song.class);
+return songs;
+
+

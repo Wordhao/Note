@@ -1,0 +1,91 @@
+4.1  计算属性
+
+
+大家有没有思考过这样一个问题，下面这段代码，功能上没什么问题，但是读起来很费劲，因为需要思考过后，才能知道这段代码的意思。
+<p>{{ message.split(''). reverse().join('') }}</p>
+这完全不符合面向对象的思想(关注功能，不关注过程)，如果改成下面这种写法，是不是更清晰呢?
+<p>{{ reverseMessage }}</p>
+这就是这一节要学习的计算属性.
+
+
+计算属性-- computed
+
+计算属性是继data、methods、watch之后的又一个新成员
+
+书写位置
+跟其他属性一样，计算属性也是通过键值对的方式添加，并且没有先后顺序：
+<script>
+  export default {
+    name: 'app',
+    // 计算属性
+    computed: {},
+  };
+</script>
+
+计算属性的写法
+计算属性内部是由一系列方法组成的键值对，键是方法名，值是方法体，以文字开头的代码为例，计算属性可以这样写：
+<script>
+  export default {
+      name: "app",
+      data:function(){
+          return {
+              message:"优课达--学的比别人好一点～"
+          }
+      }
+      // 计算属性
+      computed:{
+          reverseMessage:function(){
+              return this.message.split('').reverse().join('')
+          }
+      }
+  };
+</script>
+
+看起来没什么区别，无非是将reverseMessage改成了
+reverseMessage() ,将方法的位置改到了methods 中，但是为什么要去选择计算属性呢?
+这是因为计算属性的两个性质:依赖和缓存。
+依赖:案例中message就是计算属性的依赖
+缓存:上一 次计算得到的值
+
+计算属性:
+●当message发生改变(即依赖变化)，reverseMessage计算属性会重新计算，然后返回计算结果;
+●message不发生改变( 即依赖不变化)，reverseMessage 计算属性会返回缓存的值，而不会重新计算。
+
+方法:
+●每次访问的时候，都会去执行方法体里的逻辑，然后返回结果。
+
+总结:计算属性避免了不必要的代码执行，性能更优
+
+
+
+
+filter（）方法：
+this.bookList.filter((item) => {
+          return item.isRead === true;
+   });
+filter（）方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
+
+var ages = [32, 33, 16, 40];
+function checkAdult(age) {
+    return age >= 18;
+}
+function myFunction() {
+    document.getElementById("demo").innerHTML = ages.filter(checkAdult);
+}
+输出结果为：32，33，40
+
+
+selectList:function(){
+      if(this.flag == 0){
+        this.bookList;
+      }else if(this.flag == 1){
+        return this.bookList.filter(function(item){
+          return item.isRead == true;
+        })
+      }else{
+        return this.bookList.filter(function(item){
+          return item.isRead == false;
+        })
+      }
+    }
+

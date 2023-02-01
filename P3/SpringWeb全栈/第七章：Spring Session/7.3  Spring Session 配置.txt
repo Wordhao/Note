@@ -1,0 +1,69 @@
+7.3  Spring Session 配置
+
+上节课讲解了Session的操作，在操作中，没有涉及到cookie。系统会自动
+把默认的JSESSION放在默认的cookie中。
+但Cookie作为session id的载体，也可以修改属性。
+
+
+前置知识点：配置
+第六章我们讲了 application.properties是SpringBoot的标准配置文件，配置一些
+简单的属性。同时，SpringBoot也提供了编程式的配置方式，主要用于配置Bean。
+基本格式：
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+@Configuration
+public class SpringHttpSessionConfig {
+  @Bean
+  public TestBean testBean() {
+    return new TestBean();
+  }
+}
+在类上添加@Configuration注解，就表示这是一个配置类，系统会自动扫描并处理。
+在方法上添加@Bean注解，表示将此方法返回的对象实例注册成Bean。
+         跟@Service等写在类上的注解一样，都表示注册Bean。
+
+
+Session配置
+
+依赖库
+先在pom.xml文件中添加依赖库：
+<!-- spring session 支持 -->
+<dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-core</artifactId>
+</dependency>
+
+配置类
+在类上额外添加一个注解：@EnableSpringHttpSession，开启session。然后，
+注册两个 Bean：
+*CookieSerializer： 读写Cookies中的SessionId信息
+*MapSessionRepository：Session信息在服务器上的储存仓库
+
+
+import org.springframework.session.MapSessionRepository;
+import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession;
+import org.springframework.session.web.http.CookieSerializer;
+import org.springframework.session.web.http.DefaultCookieSerializer;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Configuration
+@EnableSpringHttpSession
+public class SpringHttpSessionConfig {
+  @Bean
+  public CookieSerializer cookieSerializer() {
+    DefaultCookieSerializer serializer = new DefaultCookieSerializer();
+    serializer.setCookieName("JSESSIONID");
+        // 用正则表达式配置匹配的域名，可以兼容 localhost、127.0.0.1 等各种场景
+    serializer.setDomainNamePattern("^.+?\\.(\\w+\\.[a-z]+)$");
+    serializer.setCookiePath("/");
+    serializer.setUseHttpOnlyCookie(false);
+    // 最大生命周期的单位是分钟
+    serializer.setCookieMaxAge(24 * 60 * 60);
+    return serializer;
+  }
+  // 当前存在内存中
+  @Bean
+  public MapSessionRepository sessionRepository() {
+    return new MapSessionRepository(new ConcurrentHashMap<>());
+  }
+}

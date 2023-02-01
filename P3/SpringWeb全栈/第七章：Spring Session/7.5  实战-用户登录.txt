@@ -1,0 +1,26 @@
+7.5  实战-用户登录
+
+知识点一：POST请求
+
+前面的课程中，都是针对GET请求时的情况。从服务端获取数据，是GET请求。
+向服务端提交或写入数据，是POST请求。
+例如：注册、登录，都是向服务端写入数据（用户名、密码），由服务端完成
+验证、储存数据等操作，所以是POST请求。
+                 POST请求与GET请求的区别在《Java网络编程》课程中讲解
+
+在control中使用@PostMapping 注解把方法定义为POST请求：
+import org.springframework.web.bind.annotation.PostMapping;
+@PostMapping(path = "/authenticate")
+public String loginAction(@RequestParam String name, @RequestParam String password) {
+  return user.toString();
+}
+
+
+知识点二：页面跳转
+
+第四节我们学习了拦截器。使用拦截器判断登录状态时，常常要实现一个逻辑：
+*如果已经登录，则继续执行
+*如果没有登录，需要强制跳转到登录页。
+跳转的操作，调用
+String loginPageUrl = "/login";
+response.sendRedirect(loginPageUrl);

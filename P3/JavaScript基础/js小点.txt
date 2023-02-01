@@ -1,0 +1,57 @@
+箭头函数
+
+箭头函数未被提升，必须在使用前进行定义。
+使用const比var更加安全，因为定义函数始终是常量。
+const x = (x,y) => x*y;
+const x=(x,y)=>{return x*y};
+
+等同于
+var x = function(x,y){
+      return x*y;
+}
+
+
+
+arguments对象
+x = findMax(1, 123, 500, 115, 44, 88);
+
+function findMax() {
+    var i;
+    var max = -Infinity;
+    for (i = 0; i < arguments.length; i++) {
+        if (arguments[i] > max) {
+            max = arguments[i];
+        }
+    }
+    return max;
+}
+
+
+
+element.attribute = new value;改变html元素的属性值
+element.setAttribute(attribute , value);改变html元素的属性值
+element.style.property = new style;改变html元素的样式
+
+
+var x = document.getElementById("main");
+var y = x.getElementsByTagName("p"); 
+
+
+<button onclick="myFunction( )"></button>
+
+
+<br>换行运算符
+
+
+e.stopPropagation();   阻止冒泡
+
+nodeName 属性
+nodeValue
+nodeType
+
+
+createElement("p");
+createTextNode("这是新文本');
+para.appendChild(node);   =   element.insertBefore(para,child);
+parent.removeChild(child);
+child.parentNode.removeChild(child);

@@ -1,0 +1,52 @@
+9.2  访问DOM
+
+
+获取DOCUMENT
+window.document;
+
+Chrome调试工具
+切换到“检查”界面，然后执行下面三个步骤：
+1.开发者窗口里面切换到Console面板
+2.再次点击代码演示
+3.可以看到Console里面出现#document, 这
+个是Chrome单独处理过的，可读性较强(学
+习平台中的JSConsole是最原生的对象类
+型)。
+
+
+选择器查询
+选择器查询方法---querySelector（）
+document.querySelector('main .core .subtitle');
+
+迭代查询
+利用之前查询到的元素，继续筛选内部元素：
+let subtitle = document.querySelector('main .core .subtitle');
+console.log(subtitle.querySelector('a'));
+
+
+选择器全量查询
+查询所有满足条件的节点--改为querySelectorAll（），代码如下：
+document.querySelectorAll('input');
+
+
+其他筛选方法
+getElementById（）：根据id查询某个节点（id为标签唯一属性）
+getElementByClassName（）：根据class查询多个节点
+getElementByTagName（）：根据标签名查询多个节点
+
+
+
+querySelector（All）和getElementXXX的主要区别 -- 动态性
+querySelector查询出来的元素是拷贝的原始
+数据，不会再随着页面DOM节点的改变而
+变化。
+get系列方法查询出来的元素就是原始数
+据，所以会随着页面的DOM节点的改变而
+变化。
+
+
+<option>+86</option>
+<option>+852</option>
+
+console.log(document.querySelector('select option:nth-child(2)'));
+

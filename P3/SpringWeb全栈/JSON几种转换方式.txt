@@ -1,0 +1,29 @@
+JSON几种转换方式
+
+
+JSON.parseArry用于如果是用[]包裹的
+JSON.parseObject用于如果是{}包裹的补充
+
+
+调用 JSON.toJSONString(dog) 方法，
+把 Building 对象转换为 JSON 格式的字符串返回。
+Building b;
+String content = JSON.toJSONString(b);
+
+当 JSON 格式是 {} 时，表示对象，可以反序列化为具体的对象或者 Map
+当 JSON 格式是 [] 表示数组，Java 中一般不直接使用数组，而是更方便的 List
+
+反序列化为一个具体对象
+Building b2 = JSON.parseObject(content, Building.class); 
+
+
+反序列化为Map
+Map bInfo = JSON.parseObject(content, Map.class); 
+
+
+反序列化为List
+List dataList = JSON.parseObject(content, List.class);
+反序列化的结果，取决于原始字符串的格式
+["a1","a2","a3"]     List<String> dataList = JSON.parseObject(content, List.class);
+[{"a1":"1"},{"a2":"2"}]     List<Map<String, String>> dataList = JSON.parseObject(content, List.class);
+[["a1","a2","a3"]]      List<List<String>> dataList = JSON.parseObject(content, List.class);

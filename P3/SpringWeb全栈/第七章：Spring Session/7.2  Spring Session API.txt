@@ -1,0 +1,93 @@
+7.2  Spring Session API
+
+
+上节课我们学习了Cookie放在客户端，可以储存用户地理信息，主要用于
+辨识用户身份。
+
+但如果真的把用户ID、登陆状态等重要信息放入cookie，会带来安全隐患，
+因为网络上很不安全，cookie可能拦截、甚至伪造。
+
+采用 Session 会话机制可以解决这个问题，用户ID、登陆状态等重要信息不
+存放在客户端，而是存放在服务端，从而避免安全隐患。
+通讯过程如7.2图所示。
+
+使用会话机制时，Cookie 作为 session id 的载体与客户端通信。7.1演示代码中，
+Cookie 中的JSESSIONID 就是这个作用。
+（名字为JSESSIONID的cookie，是专门用来记录用户session的。JSESSIONID是
+标准的、通用的名字。）
+
+Session的操作
+
+读操作
+
+与cookie相似，从HttpServletRequest对象中取得 HttpSession对象，使用的语句是
+request.getSession( )。
+但不同的是，返回结果不是数组，是对象。在attribute属性中用key -> value的
+形式储存多个数据。
+假设储存登录信息的数据 key 是 userLoginInfo，那么语句就是
+session.getAttribute("userLoginInfo")。
+
+登录信息类
+
+登录信息实例化对象因为要在网络上传输，就必须实现序列化接口Serializable，
+否则不实现的话会报错。
+登录信息类需要根据具体的需要设计属性字段。下列代码的两个属性仅供演示。
+import java.io.Serializable;
+public class UserLoginInfo implements Serializable {
+  private String userId;
+  private String userName;
+}
+操作代码
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+@RequestMapping("/songlist")
+public Map index(HttpServletRequest request, HttpServletResponse response) {
+  Map returnData = new HashMap();
+  returnData.put("result", "this is song list");
+  // 取得 HttpSession 对象
+  HttpSession session = request.getSession();
+  // 读取登录信息
+  UserLoginInfo userLoginInfo = (UserLoginInfo)session.getAttribute("userLoginInfo");
+  if (userLoginInfo == null) {
+    // 未登录
+    returnData.put("loginInfo", "not login");
+  } else {
+    // 已登录
+    returnData.put("loginInfo", "already login");
+  }
+  return returnData;
+}
+
+写操作
+
+加入登录成功，怎么记录登录信息到Session呢？
+既然从HttpSession对象中读取登录信息用的是getAttribute（）方法，那么
+写入信息就是setAttribute（）方法。
+下列代码演示了使用Session完成登录的过程，略去了校验用户名和密码的
+步骤（实际项目中需要）：
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+@RequestMapping("/loginmock")
+public Map loginMock(HttpServletRequest request, HttpServletResponse response) {
+  Map returnData = new HashMap();
+  // 假设对比用户名和密码成功
+  // 仅演示的登录信息对象
+  UserLoginInfo userLoginInfo = new UserLoginInfo();
+  userLoginInfo.setUserId("12334445576788");
+  userLoginInfo.setUserName("ZhangSan");
+  // 取得 HttpSession 对象
+  HttpSession session = request.getSession();
+  // 写入登录信息
+  session.setAttribute("userLoginInfo", userLoginInfo);
+  returnData.put("message", "login successfule");
+  return returnData;
+}
+
+
+额外知识点
+
+Cookie存放在客户端，一般不能超过 4kb，要特别注意，放太多的内容会导致
+出错；而Session存放在服务端，没有限制，不过基于服务端的性能考虑也
+不能放太多的内容。

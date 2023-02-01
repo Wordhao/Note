@@ -1,0 +1,53 @@
+2.1  设计稿尺寸处理
+
+
+Sass 自定义函数
+
+自定义函数基础语法如下：
+
+自定义函数关键词  自定义函数名  传入的参数
+@function      psd2px    ($px) {
+  @return     #{$px / 2}px;
+返回语句关键词   返回值
+}
+
+.header {
+  // 假设设计稿上高度是100px，那么函数参数就写100，计算后返回的值就是 50px
+  height: psd2px(100);
+}
+
+
+移动端的响应式布局尺寸处理
+
+1.设置根元素的字体大小
+html{
+       font-size： 20px；
+}
+
+2.重写自定义函数
+设计稿宽度为750px，设备像素比为2时：
+html {
+  font-size: 20px;
+}
+@function psd2px($px) {
+  @return #{$px / 40}rem;
+}
+设计稿宽度为375时，@return#{$px/20}rem。
+
+3.用媒体查询写响应式布局
+@function psd2px($px) {
+  @return #{$px / 40}rem;
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+// <= 320px 的情况下，根元素的字体大小等比例缩小
+@media screen and (max-width: 320px) {
+  html {
+    font-size: 20px / 375 * 320;
+  }
+}

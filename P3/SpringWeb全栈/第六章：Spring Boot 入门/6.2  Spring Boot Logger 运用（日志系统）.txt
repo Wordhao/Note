@@ -1,0 +1,101 @@
+6.2  Spring Boot Logger 运用（日志系统）
+
+在Spring 这种比较复杂的系统中,System. out . printIn()]打印的内容会输出到什么地
+方，是不确定的。所以在企业级的项目中，都用日志系统来记录信息。
+日志系统的两大优势:
+
+1.日志系统可以轻松的控制日志是否输出。例如淘宝这
+样超大型的网站，在开发阶段需要打印出调试信息，
+但是发布到正式环境就不能打印了，因为每几十几
+百亿的访问量，大量调试信息到导致磁盘撑爆。这时
+候就需要控制日志的输出，而不是修改所有的代码。
+
+2.日志系统可以灵活的配置日志的细节，例如输出格
+式，通常在日志输出时，需要自动附带输出日志发生
+的时间、打印日志的类名等信息，这样能很方便的观
+察日志分析问题。
+
+
+步骤
+
+使用日志系统，有两大步骤
+
+1.配置
+
+修改 Spring Boot 系统的标准配置文件：
+application.properties（在项目的src/main/resources/ 目录下），增加日志级别配置：
+    logging.level.root = info       表示所有日志（root）都为 info 级别。
+我们也可以为不同的包定义不同的级别，例如：
+    logging.level.fm.douban.app = info   表示fm.douban.app包及其子包中所有的类都
+                                                                  输出info 级别的日志。
+
+常用的日志级别(优先级)，请看下列表格:
+优先级           级别                         含义和作用
+          
+最高                ERROR                  错误信息日志
+
+高                    WARN                     暂时不出错但高风险的警告信息日志
+
+中                     INFO                       一般的提示语、普通数据等不要紧的信息日志
+
+低                    DEBUG                   进开发阶段需要关注的调试信息日志
+
+
+级别的作用
+
+logging.level.root = error 意味着 不输出更低 优先级的 WRAN、INFO、DEBUG日志，
+只输出ERROR 日志。
+
+logging.level.root = warn 意味着 不输出更低 优先级的INFO、DEBUG日志，只输出
+WARN 和更高优先级的ERROR日志。以此类推。
+
+在开发阶段配置为DEBUG，在项目发布时调整为INFO或更高级别，即可做到
+不改代码而控制只输出关心的日志。
+
+
+2.编码
+
+配置完成后，编码很简单，只需要实例化日志对象即可打印日志了。
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.PostConstruct;
+
+@RestController
+public class SongListControl {
+    private static final Logger LOG = LoggerFactory.getLogger(SongListControl.class);
+
+    @PostConstruct
+    public void init(){
+        LOG.info("SongListControl 启动啦");
+    }
+}
+先定义一个类变量LOG，然后在LOG.info( ) 方法的参数中输入日志内容。
+
+注意这里的方法名（info( )）与日志级别一一对应：
+优先级              级别               方法名
+
+最高                  ERROR           error（）
+
+高                      WARN             warn（）
+
+中                       INFO               info（）
+
+低                       DEBUG           debug（）
+
+如果想输出警告信息就调用LOG.warn( ) 方法，以此类推。
+
+
+日志按级别输出
+
+配置为logging. level. root=error时,warn()
+info()、 debug() 三个方法是无效的,都不会
+在Console打印日志内容(不会报错哦)，只有
+error()可以。
+
+当修改配置为logging . level.root=warn后, 
+warn()自动变的有效,也可以打印日志内容了(高
+级别error() 本来就有效)，info() 、 debug()
+仍然不行。
+这样，就可以通过修改-一个配置，并不修改每行日
+志打印代码，即可方便的调节日志输出的内容。

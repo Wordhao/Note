@@ -1,0 +1,30 @@
+1.4  Maven 入门（下）
+
+
+1. 依赖管理dependencies
+<dependencies>
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>1.2.62</version>
+    </dependency>
+    <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>4.2.2</version>
+    </dependency>
+</dependencies>
+1.1 中央仓库
+1.2 间接依赖
+
+
+2. 插件体系 plugins
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+        </plugin>
+    </plugins>
+</build>

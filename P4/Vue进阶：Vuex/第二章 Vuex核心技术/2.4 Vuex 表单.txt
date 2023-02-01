@@ -1,0 +1,141 @@
+2.4 Vuex 表单
+
+
+登录功能
+
+API
+*Api Url
+https://www.fastmock.site/mock/a9b15cd4db90d4e03ed76cd3c76d9197/f6/login
+*Api Method
+post
+*Api 请求参数
+{
+ "username": "string",
+ "password": "string"
+}
+*返回模型
+{
+  "success": boolean,
+  "data": {
+    "username": "string",
+    "email": "string"
+  }
+}
+
+
+Store 定义
+
+state
+根据上面的 api定义，登录成功后会返回 user 对象，那么我们可以把 user 作为 state 属性
+来定义
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    user: {}
+  }
+});
+
+mutation
+定一个setUser mutation 函数用于更新 user
+  mutations: {
+    setUser(state, payload) {
+      state.user = payload;
+    }
+  }
+
+action
+由于这次的 api 是post 参数，所以需要使用 axios.post
+const response = await axios.post('api...', {
+    username: 'admin',
+    password: '123456'
+});
+
+
+完整代码如下：
+import Vue from "vue";
+import Vuex from "vuex";
+import axios from "axios";
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    user: {}
+  },
+  mutations: {
+    setUser(state, payload) {
+      state.user = payload;
+    }
+  },
+  actions: {
+    login: async ({ commit }, param) => {
+      // 执行远程请求
+      const response = await axios.post(
+        "https://www.fastmock.site/mock/a9b15cd4db90d4e03ed76cd3c76d9197/f6/login",
+        {
+          username: param.username,
+          password: param.password
+        }
+      );
+      if (response.data.success) {
+        commit("setUser", response.data.data);
+      }
+    }
+  }
+});
+
+运用：
+<template>
+  <div>
+    <div>
+      <label>用户名</label>
+      <input type="text" v-model="username" />
+    </div>
+    <div>
+      <label>密码</label>
+      <input type="password" v-model="password" />
+    </div>
+    <button @click="onLogin">登录</button>
+    <div v-if="loginError">登录失败</div>
+  </div>
+</template>
+
+<script>
+  import { mapState, mapActions } from "vuex";
+
+  export default {
+    data() {
+      return {
+        username: "",
+        password: "",
+        loginError: false
+      };
+    },
+    computed: {
+      ...mapState({
+        user: state => state.user
+      })
+    },
+    methods: {
+      ...mapActions(["login"]),
+      async onLogin() {
+        // 执行 store 的登录 action
+        await this.login({
+          username: this.username,
+          password: this.password
+        });
+
+        if (this.user && this.user.username) {
+          // 登录成功,随便跳转一下
+          window.location.href = "https://m.baidu.com";
+        } else {
+          // 登录失败
+          this.loginError = true;
+        }
+      }
+    }
+  };
+</script>

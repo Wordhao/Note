@@ -1,0 +1,20 @@
+6.3  嵌套
+
+解决选择器选择路劲过长的问题
+main .double .item .links {
+  text-align: center;
+}
+
+main .double .item .links a {
+  margin-right: 20px;
+}
+
+嵌套后：
+main .double .item .links {
+  text-align: center;
+  a {
+    margin-right: 20px;
+  }
+}
+
+父选择器  &

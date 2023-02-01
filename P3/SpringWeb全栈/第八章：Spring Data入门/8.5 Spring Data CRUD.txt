@@ -1,0 +1,81 @@
+8.5 Spring Data CRUD
+
+对数据库的操作一定要放在@Service类中，而不是放在@Controller类中；且
+@Controller类可以调用@Service类的方法，反之则不行。这是SpringMVC的
+经典设计理念。
+*@Service 类主要用于不易变得核心业务逻辑。
+*@Controller类与前端页面紧密配合，调用@Service服务读写数据，从而响应
+前端请求。
+
+1.新增数据
+新增数据就是向数据库中插入一条数据。在Java世界中万物皆对象，所有，
+所谓数据就是实例对象。
+import org.springframework.data.mongodb.core.MongoTemplate;
+  @Autowired
+  private MongoTemplate mongoTemplate;
+  public void test() {
+    Song song = new Song();
+    song.setSubjectId("s001");
+    song.setLyrics("...");
+    song.setName("成都");
+    mongoTemplate.insert(song);
+  }
+调用mongoTemplate.insert( )方法就能把对象存入数据库。
+
+
+2.查询数据
+一条语句就可以了：
+mongoTemplate.findById(songId, Song.class)
+注意：findById( )方法第1个参数就是主键id，第2个参数是具体的类，
+写法是 类名.class
+
+
+3.修改数据
+修改的操作包括两个部分：
+1.修改哪条数据？
+2.哪个字段修改成什么值？
+所以，修改操作也分部分：修改条件 和 修改的字段。
+// 修改 id=1 的数据
+Query query = new Query(Criteria.where("id").is("1"));
+
+// 把歌名修改为 “new name”
+Update updateData = new Update();
+updateData.set("name", "new name");
+
+// 执行修改，修改返回结果的是一个对象
+UpdateResult result = mongoTemplate.updateFirst(query, updateData, Song.class);
+// 修改的记录数大于 0 ，表示修改成功
+System.out.println("修改的数据记录数量：" + result.getModifiedCount());
+
+先使用条件对象Criteria 构建条件对象 Query 实例，然后再
+调用修改对象Update  的方法.set() 设置需要修改的字段。
+最后调用
+mongoTemplate. updateFirst(query, updateData, Song.class)
+方法完成修改;第3个参数是具体的类。
+
+本修改数据的演示中，使用了约定:主键不能修改;且其它字段
+值为null表示不修改,值为长度为0的字符串""表示清空此字段。
+
+这样，我们就可以使用一一个Song对象区分出”哪些字段需要修
+改”、“哪些字段不需要修改”、“哪些字段需要清除值”等多种情况。
+服务接口只需要Song对象-个参数即可，使用起来也比较简便。
+
+
+4.删除数据
+只需要精确确定需要删除哪什么数据即可。
+调用mongoTemplate.remove( )方法即可删除数据，参数是对象，
+表示需要删除哪些数据。
+示例代码：
+Song song = new Song();
+song.setId(songId);
+// 执行删除
+DeleteResult result = mongoTemplate.remove(song);
+// 删除的记录数大于 0 ，表示删除成功
+System.out.println("删除的数据记录数量：" + result.getDeletedCount());
+
+创建一个对象并设置好属性值,作为删除的条件，符合条件的数据都将被删除。
+可以设置更多的属性值来提高精确性，但通过主键来删除数据，是保证不误
+删的一个比较好的办法。
+
+
+if (!StringUtils.hasText(songId))   表示如果没有文本

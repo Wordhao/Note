@@ -1,0 +1,45 @@
+7.5 盒模型--display:block/none
+
+display:block
+块元素性质一--独占一行
+
+
+块元素性质二--可以设置宽高
+width，height
+
+
+行内元素和块元素之间的转换
+*块元素默认的display属性的值是block
+*行内元素默认的display属性的值是inline
+
+行内元素转块元素
+<span class="demo">    
+    这是一个span标签
+</span>
+.demo{
+    /*将span标签转换成块元素*/
+    display: block;
+    width: 300px;
+    height: 100px;
+    background-color: #FFF2CC
+}
+
+块元素转行内元素
+<div class="demo">    
+    这是一个span标签
+</div>
+.demo{
+    /*将div标签转换成行内元素*/
+    display: inline;
+    /* 转换成行内元素以后，宽、高的设置就会失效，即使我们仍然设置了它们 */
+    width: 300px;
+    height: 100px;
+    /* 背景颜色也不会是300*100范围，而是文字有多少面积，背景颜色就又多少面积 */
+    background-color: #FFF2CC
+}
+
+
+display：none
+给标签设置了这个属性值，标签就会消失
+
+

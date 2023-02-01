@@ -1,0 +1,35 @@
+10.2 背景图片
+
+给元素设置背景图片：
+在需要加背景的标签里添加
+background-image:  url(图片地址);
+
+
+使用background-repeat:no-repeat;  禁止图片的重复
+repeat       默认值。如果背景图片比容器小，将在垂直和水平方向进行重复
+repeat-x     背景图片只在水平方向重复
+repeat-y      背景图片只在垂直方向重复
+no-repeat     背景图片将只显示一次，不重复
+
+
+background-position:center;  解决图片不居中问题
+**具体background-position的值在10.2课件中**
+
+高级特性
+background-size:contain;把图像拓展至最大尺寸，以使其
+宽度和高度完全适应内容区域。
+为了防止容器留白，一般背景图片会使用cover；
+**具体background-size属性在10.2课件**
+
+background-image: url(https://style.youkeda.com/img/ykd-components/logo.png);
+ background-repeat: no-repeat;
+ background-size: contain;
+ background-position: center;
+合并写法：
+background: url(https://style.youkeda.com/img/ykd-components/logo.png)
+    no-repeat center / contain;
+
+
+
+
+

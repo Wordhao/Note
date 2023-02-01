@@ -1,0 +1,22 @@
+选项菜单
+
+
+用到新的标签<select>和<option>，选项菜单
+每个选项用<option>标签表示，一组选项用<select>包裹：
+<select name="career">
+  <option value="default">请选择职业</option>
+  <option value="staff">公司职员</option>
+  <option value="freelancer">自由职业者</option>
+  <option value="student">学生</option>
+  <option value="other">其他</option>
+</select>
+
+
+给<select>标签添加 multiple 属性，就可以通过按住 Ctrl（或 ⌘）并单击选项来选中多个选项啦：
+<select name="career" multiple>
+  <option value="default">请选择职业</option>
+  <option value="staff">公司职员</option>
+  <option value="freelancer">自由职业者</option>
+  <option value="student">学生</option>
+  <option value="other">其他</option>
+</select>

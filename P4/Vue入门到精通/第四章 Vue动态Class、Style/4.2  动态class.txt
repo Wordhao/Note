@@ -1,0 +1,116 @@
+4.2  动态class
+
+
+动态样式绑定就是根据条件去给某个标签添加样式，其实在学习Javascript的时候，就遇到过这种情况
+let currentIndex = 0;
+function clickFn(index) {
+  if (currentIndex === index) {
+    element.style.backgroundColor = 'green';
+  }
+}
+
+
+动态样式绑定
+
+在Vue中提供了更方便的方案，就是动态样式绑定。
+语法如下：
+<div class="base" v-bind:class="{ active: isActive }"></div>
+.active {
+  border: 1px solid green;
+}
+* active是类名，对应CSS样式中的类名；
+* isActive是boolean类型的值，决定是否应用该类名。
+
+1.类名的书写
+如果是单个单词的话，如active，就跟上面的写法一样，如果是带连字符的类名base-active，就需要用引号（单双引号）引起来：
+<div v-bind:class="{ 'base-active': isActive }"></div>
+
+2.引导规则
+如果大括号用双引号引起来那么里面的类名就要用单引号引起来，反之相反：
+<!-- 外双内单 -->
+<div v-bind:class="{ 'base-active': isActive }"></div>
+<!-- 外单内双 -->
+<div v-bind:class='{ "base-active": isActive }'></div>
+
+3.多类名写法
+动态样式绑定还可以绑定多个类，写法很简单，往对象（{}）里面填内容就完事了：
+<div v-bind:class='{ "base-active": isActive,"base":true}'></div>
+
+
+动态样式绑定的条件类型
+现在我们来说一下，动态样式绑定的条件，也就是类名后面的boolean值，如何去获取这个布尔值，是接下来要掌握的内容
+
+1.变量形式
+<div :class="{ hover: isActive }">手机/运营商/数码</div>
+在data中定义布尔类型的变量
+data:function(){
+    return {
+        isActive:false
+    }
+}
+最后通过用户事件来改变布尔值，从而改变动态绑定的样式
+
+2.方法形式
+方法形式在循环渲染中用的比较多，这里可以用一个案例来说明一下：
+“新”字就是用 方法形式来渲染的，来看一下数据：
+data:function(){
+    return {
+        liListData: [
+            {
+            imgUrl:
+                'https://m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png',
+            text: '话费',
+            type: 'NEW',
+            },
+        ]
+    }
+}
+数据中 type字段决定是否显示 “新” 这个字样。但是它并不是布尔值，所以需要用一个方法来转换一下，这时候就用到了方法形式，核心代码如下：
+<span :class="{ 'new-appear': isActive(item.type) }">新</span>
+定义方法：
+isActive: function(type) {
+    if (type === 'NEW') {
+        return true;
+    }
+    return false;
+}
+
+3.表达式形式
+<span :class="{ 'new-appear': item.type === 'NEW' }">新</span>
+
+4.计算属性形式
+computed: {
+  hoverObj: function () {
+    return {
+      hover: this.index === 1,
+    };
+  },
+},
+
+
+动态样式绑定的写法
+
+1.对象写法
+单个属性：
+<div v-bind:class="{ active: isActive }"></div>
+多个属性：
+<div v-bind:class="{ active: isActive ,hover:true,'after-hover':false}"></div>
+
+2.数组写法
+对象的写法遵从键值对的规则，数组的写法当然也要遵从数组的规则，往里面添加类名即可
+
+常规写法（注意这里的类名都要带引号）
+<div v-bind:class="['red-style', 'font-style']"></div>
+
+数组中使用三元表达式
+有时候某个样式类可能会根据条件决定要不要应用，所以需要三元表达式帮助实现：
+<div v-bind:class="['red-style', 'font-style',isChoosed ? 'redbg' : '']"></div>
+也可以使用三元表达式实现两个类名的二选一
+<div
+  v-bind:class="['red-style', 'font-style',isChoosed ? 'redbg' : 'bluebg']"
+></div>
+
+在数组中使用对象
+对上面第一种进行改进：
+<div v-bind:class="['red-style', 'font-style',{'redbg':isChoosed}]"></div>
+上面第二种是不能改成对象的形式的。仅限于第二个结果为 ' ' 的情况。

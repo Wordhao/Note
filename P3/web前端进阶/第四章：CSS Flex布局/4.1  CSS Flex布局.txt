@@ -1,0 +1,9 @@
+4.1  CSS Flex布局
+
+
+
+它最显著的效果就是把原本从上到下排列的块状元素变成水平排列；
+.main{
+     display:flex;
+}
+设为Flex布局以后，子元素的float、clear和vertical-align属性将失效

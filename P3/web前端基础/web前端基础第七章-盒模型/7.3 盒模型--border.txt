@@ -1,0 +1,97 @@
+7.3 盒模型--border
+
+盒模型中的边框--border
+
+.box {
+  /* 设置矩形大小 */
+  width: 200px;
+  height: 30px;
+  /* 设置边框线 */
+  border-width: 2px;//边框的粗细
+  border-color: grey;//边框的颜色
+  border-style: solid;//边框的线形   solid为实线 dashed为虚线
+}
+
+边框的简写
+.box {
+  border: 2px solid blue;
+}
+补充一点: border后面跟的三个值之间要用空格隔
+开，值的顺序是可以忽略的，比如你可以写成
+2px blue solid，效果是一样的。
+
+
+分别设置边框
+.box {
+  /* 添加顶部border */
+  border-top: 1px solid black;
+  /*添加右侧border*/
+  border-right: 3px solid orange;
+  /*添加底部border*/
+  border-bottom: 5px dashed pink;
+  /*添加左侧border*/
+  border-left: 10px dashed purple;
+}
+
+
+利用层叠性设置边框
+
+.box {
+  /*设置矩形的宽*/
+  width: 300px;
+  /*设置矩形的高*/
+  height: 300px;
+  /*设置矩形的背景颜色*/
+  background-color: white;
+  /*设置矩形的边框*/
+  /*统一设置矩形的所有边框样式*/
+  border: 2px solid black;
+  /*重新设置一个下边框的样式来层叠掉统一设置的边框的样式*/
+  border-bottom: 5px solid orange;
+}
+
+
+无边框
+
+.box {
+  border-bottom: none;//none属性值
+}
+
+
+圆角
+
+.box {
+  border-radius: 12px;
+}
+     圆角分开设置
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: violet;
+  border-top-left-radius: 5px;//左上角
+  border-top-right-radius: 10px;//右上角
+  border-bottom-left-radius: 20px;//左下角
+  border-bottom-right-radius: 15px;//右下角
+}
+
+/* 实现圆形图片 */
+  border-radius: 50%;
+
+
+阴影
+<div class="box"></div>
+
+.box {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #c4c4c4;
+  /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+●x偏移量:在x轴上移动，向右为正
+●y偏移量:在y轴上移动，向下为正
+●阴影模糊半径:就是边线的清晰度
+●阴影扩散半径:就是向外伸展
+●阴影颜色:就是矩形下面那个矩形的背景色。

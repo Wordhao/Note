@@ -1,0 +1,44 @@
+9.5  DOM操作（二）
+
+
+监听Input输入事件，处理区域显示隐藏
+  监听Input输入事件，我们暂时内置代码如下：
+const input = document.querySelector('input');
+// 监听键盘事件
+input.addEventListener('keyup', function() {
+  // this 是DOM节点，this.value可以获取input内输入的值
+  console.log(this.value);
+});
+
+
+监听输入肺炎时，显示肺炎查询结果
+显示和隐藏我们知道可以利用CSS知识display：block/none；进行控制。
+因此我们首先将搜索结果设置不可见
+main .search-result{
+     padding:0;
+     display:none;
+}
+接着修改JavaScript代码，动态控制显示和隐藏如下：
+const input = document.querySelector('input');       //找到对应标签
+const login = document.querySelector('.login');
+const searchResult = document.querySelector('.search-result');
+// 监听键盘事件
+input.addEventListener('keyup', function() {
+  // this 是DOM节点，this.value可以获取input内输入的值
+  if (this.value === '肺炎') {
+    login.style.display = 'none';
+    searchResult.style.display = 'block';
+  } else {
+    login.style.display = 'block';
+    searchResult.style.display = 'none';
+  }
+});
+
+
+肺炎搜索结果动态显示
+封装一个函数，用于生成这个li DOM节点，代码如下：
+function createSearchItem(txt) {
+  const item = document.createElement('li');
+  item.innerHTML = `<i class="search"></i><p>${txt}</p><i class="edit"></i>`;
+  return item;
+}

@@ -1,0 +1,9 @@
+1.2  Vue 工程目录介绍
+
+工程src文件夹目录下：
+①: assets:存放项目中需要用到的资源文件,css、js、images等
+②: componets:存放vue开发中ー些公共组件:例如如项目初始的header.vue、 footer.vue就是公共组件。
+③: router:vue路由的配置文件。
+④: Vews:存放页面文件
+⑤:app.vue:根组件
+⑥: main.js:项目的入口文件,定义了vue实例,并引入根组件app.vue,将其挂载到 index.html中id为'app'的节点上

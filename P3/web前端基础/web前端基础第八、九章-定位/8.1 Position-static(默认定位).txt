@@ -1,0 +1,9 @@
+8.1 Position-static(默认定位)
+
+position属性 在CSS用于定位DOM元素，修改DOM元素的布局
+
+position除了static属性值外，还有4个常用值，分别为：
+*relative(相对定位)
+*absolute（绝对定位）
+*fixed（固定定位）
+*sticky（粘性定位）

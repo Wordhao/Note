@@ -1,0 +1,57 @@
+4.3  动态 style
+
+
+:class 外部样式         :style 内部样式
+
+动态style跟动态 :class 的写法一样，分为两种：
+1.对象语法
+2.数组语法
+
+
+对象语法
+对象语法跟 :class 的对象语法不同的是，它的键值对是CSS样式的 属性：值 组成的一对键值。写法如下：
+<div :style="{background:'red','font-weight':700,'font-size':'20px'}"></div>
+
+1.引号的使用
+*属性：属性如果是单个单词，如background，可以不用引号，如果是带连字符的单词，如font-weight，就要用引号；
+*值：除了数字，如'font-weight':700 不用引号，其他的都用引号，特殊情况，如1px solid black 这种值，可以使用模板字符串--(/ /)
+
+2.避免使用引号
+属性其实未必一定要使用引号，比如font-weight如果写成fontWeight就可以不用引号
+<div :style="{background:'red',fontWeight:700,fontSize:'20px'}"></div>
+
+3.改变动态样式的书写位置
+只是简单的几个样式，加在标签上是可以的，但是如果要加的样式很多，HTML看起来就不那么整洁了，那么就需要将动态样式提取出来。
+首先根据动态样式的功能，给它取个名字——flexStyle，然后以flexStyle为属性，样式为值，定义在data中：
+data:function(){
+    return {
+        flexStyle: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'no-wrap',
+        },
+    }
+}
+最后在标签的动态样式中引入变量即可：
+<div :style="flexStyle"></div>
+
+4.位置不可变情况
+参照课程内容
+
+
+数组写法
+1.常规写法
+在data定义一个样式对象：
+data() {
+  return {
+    fontStyle: { color: 'red', fontSize: '33px' },
+    boxStyle:{width: '200px', height: '200px', border: `1px solid black`}
+  };
+},
+在标签的动态样式中引入：
+<div :style="[fontStyle,boxStyle]">这里是文字</div>
+
+2.在数组中使用三元表达式
+<div :style="[fontStyle, isActive ? boxStyle : colorBox]">这里是文字</div>

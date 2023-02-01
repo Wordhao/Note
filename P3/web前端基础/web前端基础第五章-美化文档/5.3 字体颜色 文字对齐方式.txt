@@ -1,0 +1,16 @@
+5.3 字体颜色 文字对齐方式
+
+颜色
+1.英文字母样式    color: black;
+2.十六进制颜色    color: #DAE8FC;
+3.rgb形式   r(red),g(green),b(blue)    color: rgb(253,217,106);
+4.rgba形式  a(Alpha 透明度)     color: rgba(253,217,106,1.0);
+
+
+文字居中/居左/居右
+设置文字对齐的格式如下：
+text-align: center; 文字居中对齐
+text-align: left; 文字左对齐
+text-align: right; 文字右对齐
+
+

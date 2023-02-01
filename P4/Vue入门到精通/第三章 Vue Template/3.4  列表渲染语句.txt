@@ -1,0 +1,108 @@
+3.4  列表渲染语句
+
+
+循环渲染数字
+
+列表渲染的核心就是Vue的循环指令：  v-for
+v-for和js中的for循环的原理相似。下面我们通过最简单的循环渲染数字来初步了解一下v-for。代码如下：
+<div id="app">
+    <ul>
+        <li v-for="item in 5" :key="item">{{ item }}</li>
+    </ul>
+</div>
+
+
+循环渲染数组
+
+与js遍历数组一样，Vue中的v-for指令也可以遍历数组对象。代码如下：
+<ul>
+    <li v-for="(item,index) in nameList" :key="index">{{ item }}</li>
+</ul>
+<script>
+export default {
+    name: "app",
+    // 数据
+    data() {
+        return {
+            nameList:["张淮森","周逸依","梁澄静","宁古薄","丘约靖"]
+        };
+    }
+};
+</script>
+
+
+循环渲染对象
+
+循环渲染对象，会从对象里面循环取出里面的值。
+这里要讲一下v-for循环遍历对象的时候，括号内的三个参数：
+<!-- 
+    value：对象中每一项的值
+    key：对象中每一项的键
+    index：索引
+ -->
+<li v-for="(value,key,index)" :key="index"></li>
+例子：
+<ul>
+    <li v-for="(value,key,index) in book" :key="index">值：{{ value }}--键：{{ key }}--索引：{{ index }}</li>
+</ul>
+<script>
+export default {
+    name: "app",
+    // 数据
+    data() {
+        return {
+            book:{
+                bookName:'指环王',
+                author:'JK 罗琳'
+            }
+        };
+    }
+};
+</script>
+
+值：指环王--键：bookName--索引：0
+值：JK 罗琳--键：author--索引：1
+
+
+遍历数组中的对象
+
+绝大多数情况下，我们遍历的都是数组中的对象。
+<ul>
+    <li v-for="(item,index) in books" :key="index">
+        {{ index+1 }}----{{ item.title }}----{{ item.author }}----{{ item.publishedTime }}
+    </li>
+</ul>
+<script>
+export default {
+    name: "app",
+    // 数据
+    data() {
+        return {
+            books: [
+                {
+                    title: '《魔戒》',
+                    author: '约翰·罗纳德·瑞尔·托尔金',
+                    publishedTime: '1954'
+                },{
+                    title:'《哈利·波特》',
+                    author:'J·K·罗琳',
+                    publishedTime:'1997'
+                },{
+                    title:'《人性的弱点》',
+                    author:'戴尔•卡内基',
+                    publishedTime:'2008'
+                }
+            ]
+        };
+    }
+};
+</script>
+
+
+:key
+
+在Vue CLI工程为了保证每一个item都是唯一的，所以需要一个唯一的key，否则项目会报错。
+key的添加位置：
+<li v-for="(item,index) in books" :key="">
+key的值一般都是从后台取到的数据的id，主要是为了保证每一个节点都有唯一的key值。我们在学习的时候，可以使用索引index。如下：
+<li v-for="(item,index) in books" :key="index">

@@ -1,0 +1,60 @@
+8.7  Spring Data 分页
+
+分页是查询中最常用的功能，同时也为了防止一次查询的数据量太大而影响性能。
+
+查询支持分页也非常简单，只需要调用PageRequest.of( )方法构建一个分页对象，
+然后注入到查询对象即可。
+
+PageRequest.of( )方法第一个参数是页码，注意从0开始计数，第一页的值是0；
+第二个参数是每页的数量。
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+Pageable pageable = PageRequest.of(0 , 20);
+query.with(pageable);
+
+对于分页来说，除了要查询结果以外，还需要查询总数，才能进一步计算出
+总共多少页，实现完整的分页功能。所以，还需要两个步骤：
+*调用count(query,XXX.class)方法查询总数。第一个参数是查询条件，第二个
+参数表示查询什么样的对象；
+*根据结果、分页条件、总数三个数据，构建分页器对象。
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.support.PageableExecutionUtils;
+
+// 总数
+long count = mongoTemplate.count(query, Song.class);
+// 构建分页器
+Page<Song> pageResult = PageableExecutionUtils.getPage(songs, pageable, new LongSupplier() {
+  @Override
+  public long getAsLong() {
+    return count;
+  }
+});
+PageableExecutionUtils.getPage( )方法第一个参数是查询结果；第二个参数是
+分页条件对象；第三个参数稍微复杂一点，实现一个LongSupplier 接口的匿名
+类，在匿名类的 getAsLong( )方法中返回结果总数。方法返回值是一个Page分页
+对象，使用起来非常方便。
+
+
+
+
+    // 条件对象构建查询对象
+    Query query = new Query(criteria);
+  
+    // 必须先查询总数，再分页检索
+    long count = mongoTemplate.count(query, Song.class);
+
+    // 构建分页对象。注意此对象页码号是从 0 开始计数的。
+    Pageable pageable = PageRequest.of(songParam.getPageNum() - 1, songParam.getPageSize());
+    query.with(pageable);
+    // 查询结果
+    List<Song> songs = mongoTemplate.find(query, Song.class);
+    // 构建分页器
+    Page<Song> pageResult = PageableExecutionUtils.getPage(songs, pageable, new LongSupplier() {
+      @Override
+      public long getAsLong() {
+        return count;
+      }
+    });
+
+    return pageResult;

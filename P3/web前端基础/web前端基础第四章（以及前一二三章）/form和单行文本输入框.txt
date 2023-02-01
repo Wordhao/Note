@@ -1,0 +1,25 @@
+form标签
+
+<form>
+action：一个处理此表单信息的程序所在的 URL，
+              所述表格信息将在表单提交时被发送到定义的地址；
+method：它的值可以是 GET 或 POST，用来规定 如何 发送表单信息；
+
+<!-- <form>是块状标签，要注意：<form>标签不能嵌套<form>标签 -->
+<form action="">
+  <!-- 这里会有一些表单控件 -->
+</form>
+
+
+单行输入文本框
+<input type="text" placeholder="昵称" name="nick" value="小明" />
+不可修改的输入框 “readonly”和“disabled”
+
+属性     disabled                       readonly
+对象     所有表单元素          input和textarea
+作用    使文本框不能输入   仅使文本框不能输入
+            ，当表单以POST
+             或GET的方式提交
+             时，使用了disabled
+             的元素的值不会被传递出去                                     
+外观      使文本框变灰          外观没有变化

@@ -1,0 +1,52 @@
+10.2  点击事件
+
+
+UCode 案例
+
+一、静态页面
+
+二、like 按钮点击事件
+1.点击按钮后，添加has-like class，再次点击（取消Like），删除has-like class
+2.点击按钮后，将数字+1，再次点击（取消Like），数字-1
+我们首先给按钮添加点击事件，并且利用hasLike变量标识是否喜欢：
+// 默认是未点击喜欢
+let hasLike = false;
+const likeBtn = document.querySelector('.like-btn');
+likeBtn.addEventListener('click', function() {
+  // 点击事件
+  hasLike = !hasLike;
+  console.log(hasLike);
+});
+
+三、根据hasLike修改页面信息
+完善第二步代码：
+// 默认是未点击喜欢
+let hasLike = false;
+const likeBtn = document.querySelector('.like-btn');
+const likeBtnRight = likeBtn.querySelector('.right');
+likeBtn.addEventListener('click', function() {
+  // 点击事件
+  hasLike = !hasLike;
+  if (hasLike) {
+    likeBtn.classList.add('has-like');
+    likeBtnRight.innerHTML = parseInt(likeBtnRight.innerText.trim()) + 1;
+  } else {
+    likeBtn.classList.remove('has-like');
+    likeBtnRight.innerHTML = parseInt(likeBtnRight.innerText.trim()) - 1;
+  }
+});
+
+四、点击三个点显示操作列表
+监听三个点的按钮，点击控制options区域的显示和隐藏，及display：block/none；
+let showMore = false;
+const moreBtn = document.querySelector('.workspace-item-more .select');
+const morePanel = document.querySelector('.workspace-item-more .options');
+moreBtn.addEventListener('click', function() {
+  showMore = !showMore;
+  // 控制morePanel的显示和隐藏
+  if (showMore) {
+    morePanel.style.display = 'block';
+  } else {
+    morePanel.style.display = 'none';
+  }
+});

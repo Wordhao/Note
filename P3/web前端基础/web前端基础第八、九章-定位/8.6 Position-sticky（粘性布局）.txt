@@ -1,0 +1,10 @@
+8.6 Position-sticky（粘性布局）
+
+
+position: sticky
+
+注意MOUNTAIN的效果，在它滚动到顶部时，黏在了顶
+部。而当页面往下面滚动时，MOUNTAIN 又会恢复其在文档
+中的位置，这种效果就是sticky的效果。
+
+

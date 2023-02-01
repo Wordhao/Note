@@ -1,0 +1,17 @@
+多行文本输入框和密码输入框
+
+多行输入框
+用textarea标签来写多行输入框
+<!-- name属性表示表单元素的名称，placeholder属性表示表单元素的占位文本 -->
+<textarea
+  name="sign"
+  rows="5"            //行数（高度）
+  cols="30"           //文本域的可视宽度
+  placeholder="请输入个性签名"
+></textarea>
+
+密码输入框
+密码输入框和昵称输入框有点区别，用户输入的内容将会以 黑圆点 的形式显示。
+只需要把表单标签<input>中的标签属性type="text"改成type="password"就可以啦：
+<!-- type属性表示表单元素的类型，name属性表示表单元素的名称，placeholder属性表示表单元素的占位文本 -->
+<input type="password" name="password" placeholder="密码" />

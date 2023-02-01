@@ -1,0 +1,101 @@
+4.4  Thymeleaf 表达式
+
+Thymeleaf表达式主要用于两种场景
+*字符串处理
+*数据转化
+
+
+字符串处理
+
+我们在很多网站上都会看到视频时间的显示效果是这样的
+00:00/45:00 ,大家应该很容易明白这个代表的就是这个视频从0
+分0秒开始，总共45分钟。在Thymeleaf中这种显示就需要借
+助+就可以完成字符串拼接了，
+
+<span th:text=" '00:00/' +${totalTime}"></span>
+
+这里需要注意的是 '00:00/'  ，我们使用’包围住00:00/这个文本
+的作用在于把这个文本变成Java字符串，两个字符串就可以使用
++拼接成新的字符串了，这和Java的字符串拼接是一样的。
+
+
+字符串拼接优化
+
+Thymeleaf做字符串拼接还做了优化工作，我们可以使用，上面的
+代码你还可以这样 | 包围住字符串， 这样就不需要在文字后面附
+加 '...' + '...'
+
+<span th:text="|00:00/${totalTime}|"></span>
+
+
+
+数据转化
+
+Thymeleaf 默认集成了大量的工具类可以方便的进行数据转化，一
+般我们使用最多的是  dates
+如果你想处理LocalDate和LocalDateTime类，你可以在
+pom.xml添加如下依赖
+<dependency>
+  <groupId>org.thymeleaf.extras</groupId>
+  <artifactId>thymeleaf-extras-java8time</artifactId>
+  <version>3.0.4.RELEASE</version>
+</dependency>
+
+这个库会自动添加一个新的工具类temporals
+工具类的运用和变量不同，变量使用的是${变量名} ,工具类使用
+的是#{工具类}。我们依次看看具体如何运用
+
+dates/temporals
+
+dates和temporals支持的方法是一样的，只是支持的类型不同,
+dates支持的是Date类，temporals 支持的是LocalDate和LocalDateTime 
+
+我们一般使用dates/temporals用于处理日期类型到字符串的转
+化，比如显示年月日
+<p th:text="${#dates.format(dateVar, 'yyyy-MM-dd')}"></p>
+<p th:text="${#dates.format(dateVar, 'yyyy年MM月dd日')}"></p>
+如果显示年月日时分秒
+<p th:text="${#dates.format(dateVar, 'yyyy-MM-dd HH:mm:ss')}"></p>
+<p th:text="${#dates.format(dateVar, 'yyyy年MM月dd日 HH时mm分ss秒')}"></p>
+
+如果日期类型是LocalDate/LocalDateTime那么就把#dates换成#temporals
+
+
+strings
+
+除了日期方法，#strings 也是我们使用比较多的，支持字符串的
+数据处理，比如
+●${#strings. toUpperCase(name)}
+把字符串改成全大写
+●${#strings. toLowerCase(name)}
+把字符串改成全小写
+●${#strings. arrayJoin(array,',')}
+把字符串数组合并成一个字符串, 并以，连接,比如
+["a","b"]执行后会变成a,b
+●${#strings .arraySplit(str,',')}
+把字符串分隔成一个数组， 并以，作为分隔符,比如 a,b
+执行后会变成["a”,"b"] ;如果abc没有匹配到，执行后会变成["abc"]
+●${#strings.trim(str)}
+把字符串去空格, 左右空格都会去掉
+●${#strings.1ength(str)}
+得到字符串的长度，也支持获取集合类的长度
+●${#strings.equals(str1,str2)}
+比较两个字符串是否相等
+●${#strings. equalsIgnoreCase(str1,str2)}
+忽略大小写后比较两个字符串是否相等
+
+
+内联表达式
+
+尽管我们使用 th：text 也比较方便，但是有些时候可能我们还是更喜欢把
+变量写在HTML中，比如这种写法
+<span>Hello [[${msg}]]</span>
+上面的[[变量]] 这种格式就是内联表达式，支持我们直接在HTML中调用变量
+
+
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+6.5  内置函数——计时器
+
+
+延时执行 setTimeout( )          ————Timeclearout( )
+setTimeout 函数用来指定某个函数或某段代码，在多少毫秒之后执行。
+它返回一个整数，表示定位器的编号，以后可以用来取消这个定时器。
+基础语法如下：
+
+let     timerId = setTimeout( func | code , delay);
+        定位器编号               函数名/代码   推迟时间/ms
+以下是setTimeout的三种写法：
+
+console.log(1);
+
+/**
+ * 第一个参数是代码，注意代码需用引号包裹，否则会立即执行代码
+ * 第二个参数是 1000，即 1000ms 后执行 console.log(2)
+ */
+setTimeout('console.log(2)', 1000);
+
+/**
+ * 第一个参数是匿名函数
+ * 第二个参数是 2000，即 2s 后执行 console.log(3)
+ */
+setTimeout(function () {
+  console.log(3);
+}, 2000);
+
+// 第一个参数是函数名，注意函数名后不要加小括号“()”，否则会立即执行 print4
+setTimeout(print4, 3000);
+
+console.log(5);
+
+function print4() {（上提）
+  console.log(4);
+}
+
+
+
+
+无限调用  setInterval               ————clearInterval( )
+
+基础语法与setTimeout一致，
+let timer = setInterval(print, 1000);
+function print() {
+  console.log(1);
+}
+
+let timerId;
+      timerId = setInterval(() => {
+        if(this.seconds>0){
+          this.seconds--;
+        }else{
+          clearInterval(timerId);
+          this.seconds = 60;
+        }
+      }, 1000);

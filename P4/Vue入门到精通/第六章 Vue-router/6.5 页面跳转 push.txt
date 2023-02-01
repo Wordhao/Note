@@ -1,0 +1,42 @@
+6.5 页面跳转 push
+
+编程式导航
+
+除了使用<router-link>创建a标签来定义导航链接，我们还可以借助Router的实例方法，
+通过编写代码来首先：
+          声明式                              编程式
+<router-link :to="...">              router.push(...)
+注意，因为在Vue实例内部，我们可以通过$router 访问 Router的实例。所以Router的实例
+方法push可以用this.$router.push(...)调用。
+
+用router.push进行页面跳转及参数传递
+一、router.push 的参数为字符串路径
+router.push 方法的参数可以是一个字符串路径：
+router.push('user') 表示从当前路径/user
+router.push('/user') 表示从根路径/user
+
+二、router.push 的参数为描述地址的对象
+router.push 方法的参数可以是一个描述地址的对象：
+// 对象
+// 这种写法和字符串类型的参数一样
+router.push({ path: 'home' })
+
+// 命名的路由
+router.push({ name: 'user', params: { userId: '123' }})
+
+// 带查询参数，变成 /register?plan=private
+router.push({ path: 'register', query: { plan: 'private' }})
+
+1. { name: 'user', params: { userId:' 123’ } }
+对应的命名路由为:{ path: 'user/ :userId'，name: 'user' } ;
+跳转后url:  localhost:8080/user/123 ;
+取参数: $route .params.userId ;
+2. { path: 'register', query: { plan: 'private' }} 
+对应的路由为: { path:'register' } ;
+跳转后url: localhost:8080/register?plan=private ;
+取参数: $route. query.plan ;
+
+name对应 params，路径形式：user/123；
+name对应 query， 路径形式：user?id=123;
+
+this.$router.push(`/layout/coursedetail/${this.course.id}`);

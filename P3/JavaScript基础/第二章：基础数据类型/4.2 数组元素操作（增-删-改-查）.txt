@@ -1,0 +1,43 @@
+
+
+push 方法（从尾加）
+变量名.push('要添加的值');
+
+unshift 方法（从头加）
+
+
+pop 方法（从后往前删）
+
+
+shift 方法（从前往后删除）
+
+
+splice 方法（删除指定位置的值）
+一个参数：
+let schools = ['清华大学', '北京大学', '浙江大学', '同济大学'];
+// 删除从下标为1的位置到结束位置的值
+let deleteSchools = schools.splice(1);
+// 删除之后，原数组中的剩余内容
+console.log(schools); // ["清华大学"]
+// 删除的内容
+console.log(deleteSchools); // ["北京大学", "浙江大学", "同济大学"]
+
+两个参数：
+let schools = ['清华大学', '北京大学', '浙江大学', '同济大学'];
+// 从下标为0开始,往后数两个元素,删除
+let deleteSchools = schools.splice(0, 2);
+console.log(schools); // ['浙江大学', '同济大学']
+console.log(deleteSchools); // ['清华大学', '北京大学']
+
+
+splice 方法（需改指定位置的元素）
+let schools = ['清华大学', '北京大学', '浙江大学', '同济大学'];
+
+schools.splice(2, 0, '江西理工大学');//（起始位置，往后移动位数，替换的值）
+console.log(schools); //  ["清华大学", "北京大学", "江西理工大学", "浙江大学", "同济大学"]
+
+
+indexof( ) (查)
+let schools = ['清华大学', '北京大学', '浙江大学', '同济大学'];
+let result = schools.indexOf('浙江大学', 3);//（需要找的值，开始查找位置）
+console.log(result); // -1

@@ -1,0 +1,10 @@
+3.2 CSS装饰--box-shadow/text-shadow
+
+
+div{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.11);
+}
+
+span{
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.11);
+}

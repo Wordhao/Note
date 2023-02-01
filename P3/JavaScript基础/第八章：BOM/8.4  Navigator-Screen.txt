@@ -1,0 +1,12 @@
+8.4  Navigator/Screen
+
+
+Navigator
+Navigator表示用户代理的状态和标识，也就是浏览器基本信息，在这里面
+我们需要了解一个属性--userAgent，代表当前浏览器的用户代理。
+
+
+Screen
+
+screen.width;
+screen.height;

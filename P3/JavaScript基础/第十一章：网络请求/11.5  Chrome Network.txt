@@ -1,0 +1,13 @@
+11.5  Chrome Network
+
+
+
+检查-network-Headers
+Request URL          请求地址
+Request Method     请求类型
+Status Code             请求状态码
+
+-preview  可以看到返回值的情况
+
+
+查看POST请求

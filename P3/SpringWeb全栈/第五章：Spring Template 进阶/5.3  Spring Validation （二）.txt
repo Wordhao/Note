@@ -1,0 +1,59 @@
+5.3  Spring Validation （二）
+
+
+Control 改造
+
+把数据传递到页面，这个我们在上一章节已经学过了，如果想显示具体字段
+的信息，就需要结合模型来传输，比如 上一课的 User，改造一下 UserContorl.addUser方法：
+@GetMapping("/user/add.html")
+public String addUser(Model model) {
+    User user = new User();
+    model.addAttribute("user",user);
+    return "user/addUser";
+}
+如上面的代码，我们需要先创建一个 User 实例并传递到模板中去。
+
+
+user/add.html 改造
+
+在 user/add.html 模板中，我们得去处理错误的状态，增加错误的样式和文案
+th：object
+为了让表单验证状态生效，需要在 from标签里增加一个 th：object = "${user}"  属性
+     th:object 用于替换对象，适用了这个就不需要没错都编写 user.xxxx，可以直接
+     操作 xxxx 了。
+完整的如下
+<form action="/user/save" th:object="${user}" method="POST">
+  ...
+</form>
+
+th：classappend
+关于错误提示这个信息，我们还需再分解一下。如果想显示错误的状态，我们就
+得定义一个错误的 css class，比如
+.error {
+  color: red;
+}
+现在我们就需要动态的管理表单的样式，如果有错误就在该标签上增加这个
+class，否则不处理
+使用th：classappend 这个语法，支持我们动态的管理样式
+<div th:classappend="${#fields.hasErrors('name')} ? 'error' : ''">
+</div>      ——如果错误信息里有 name 字段，上面的代码生成：
+                                             <div class="error">
+                                             </div>
+注意${#fields.hasErors('key')}  这个语法是专门为验证场景提供的，这里的 key
+ 就是对象的属性名称，比如User对象的 name、age、email 等
+
+th：errors
+如果还想要显示出错误信息，可以使用 th：errors = "*{age}" 属性，这个会自动
+提取出错误信息来，完整的代码如下
+<p th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
+注意这里的* 由于我们在form中使用了 th：object="${user}" ，所以我们可以通过
+ *{age} 来获取具体的属性值。
+
+th：field
+一般错误的时候，我们还希望显示上一次输入的内容，可以使用th：field 语法
+<div th:classappend="${#fields.hasErrors('age')} ? 'error' : ''">
+  <label>年龄:</label>
+  <input type="text" th:field="*{age}" />
+  <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
+</div>
+

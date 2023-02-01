@@ -1,0 +1,37 @@
+2.2 CSS伪类--清除浮动
+
+
+如下CSS代码即是清除浮动的css代码：
+.clearfix::after{
+  content: '';
+  display: block;
+  clear: both;
+}
+
+要解决浮动问题，只需要在父盒上添加clearfix类名即可，具体
+参见下方代码：
+<!-- 添加清除浮动类名 -->
+<div class="father-one clearfix">
+    <div class="son-one">son-one</div>
+    <div class="son-two">son-two</div>
+    <div class="son-three">son-three</div>
+</div>
+
+
+
+**最后请记住一句话，哪个盒子的子元素有浮动，
+就在哪个盒子上添加清除浮动
+
+
+在我们做作业的时候，可能会遇到下面这种情况，
+第一行的最后一块有位置，但是最后一个元素却跑到了第二行，
+这是因为，最后一个盒子的右边距是多余的，加上以后，
+总宽度超出父盒子的宽度，所以需要清除掉。
+解决方法：
+将右边距置为零。
+
+
+转义符号：
+作业中小米<小爱老师>中的尖括号在html代码中会
+出现报错现象，所以我们要用转义符号去写，即:
+小米&lt;小爱老师&gt;

@@ -1,0 +1,39 @@
+6.1  Spring Boot ComponentScan
+
+
+解决方法
+
+为启动类的注解 @SpringBootApplication 加一个参数，告知系统需要额外扫描的包
+@SpringBootApplication(scanBasePackages={"fm.douban.app", "fm.douban.service"})
+public class AppApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(AppApplication.class, args);
+  }
+}
+*参数名是：scanBasePackages 
+*参数值是一个字符串数组，用于指定多个需要额外自动扫描的包。需要把所有
+  的待扫描的包的前缀都写上。（Spring Boot框架默认扫描fm.douban.app包）
+
+
+另一种写法
+
+如果不是Spring Boot启动类，可以使用独立的注解 @ComponentScan，作用也是
+一样的，用于指定多个需要额外自动扫描的包。这个知识点不太常用，但是也
+需要记住，未来有可能会用到的。
+@ComponentScan({"fm.service", "fm.app"})
+public class SpringConfiguration {
+  ... ...
+}
+
+
+额外知识点
+
+演示过程中，为了简单起见，本节课的control类
+用的不是@Controller 而是@RestController。
+使用@RestController的类，所有方法都不会渲染
+Thymeleaf页面，而是都返回数据。等同于使用
+@Controller的类的方法.上添加@ResponseBody 注
+解，效果是一样的。但要注意:两个注解的包是不一
+样的哦:
+org.springframework.stereotype.Controller
+org.springframework.web.bind.annotation.RestControlle

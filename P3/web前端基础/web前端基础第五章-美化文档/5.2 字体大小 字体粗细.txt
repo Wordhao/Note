@@ -1,0 +1,13 @@
+5.2 字体大小/字体粗细
+
+字体大小： style="font-size:12px;"
+字体粗细： style="font-weight:100;"
+
+你可能会在以后的代码中看到这样的现象，
+style = "font-size: 12px; font-weight:bold"。//字体加粗
+可以看到，bold 后面没有分号';',
+这是因为这一组属性后面再没有其他的属性了，
+所以可以把结尾的分号;省略，但是这样的写法
+允许，但不规范。
+
+<p style="font-size:12px;">......</p>

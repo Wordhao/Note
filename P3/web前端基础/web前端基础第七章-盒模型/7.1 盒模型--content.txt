@@ -1,0 +1,35 @@
+7.1 盒模型--content
+
+div就是一个干净透彻的矩形，没有默认没有margin、padding、border、content
+
+content
+
+<div></div>（宽度是1661px，高是0px）
+
+width/height
+要画一个矩形，首先要设置矩形的高度，矩形的宽度对应的两个css属性width、height，
+他们的值是数字，单位是px。
+下面我们来画一个宽200px，高100px的矩形
+<div class="box"></div>
+.box {
+  width: 200px;
+  height: 100px;
+  background-color: purple;//默认无色，不添加背景颜色则看不到矩形存在
+}
+
+
+百分百尺寸
+设置块元素的宽高，除了px形式，还有%形式：
+<div class="father">
+  <div class="son"></div>
+</div>
+.father {
+  width: 200px;
+  height: 80px;
+  background-color: #5b6dcd;
+}
+.son {
+  width: 60%;
+  height: 20%;
+  background-color: #fec03e;
+}

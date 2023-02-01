@@ -1,0 +1,115 @@
+2.5  Spring Resource （下）
+
+
+Spring擅长的就是封装各种服务
+
+在Spring当中定义了一个org. springframework. core. io. Resource 
+类来封装文件，这个类的优势在于可以支持普通的File 也可以支持
+classpath文件。
+并且在Spring中通过
+org. springframework. core . io. ResourceLoader服务来提供任意文件
+的读写,你可以在任意的Spring Bean中引入ResourceLoader
+@Autowired
+private ResourceLoader loader;
+
+如何在Spring当中读取文件，我们创建一个自己的FileService
+public interface FileService {
+
+    String getContent(String name);
+
+}
+再看一下实现类
+import fm.douban.service.FileService;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+@Service
+public class FileServiceImpl implements FileService {
+
+    @Autowired
+    private ResourceLoader loader;
+
+    @Override
+    public String getContent(String name) {
+        try {
+            InputStream in = loader.getResource(name).getInputStream();
+            return IOUtils.toString(in,"utf-8");
+        } catch (IOException e) {
+           return null;
+        }
+    }
+}
+再看一下这个服务的调用
+FileService fileService = context.getBean(FileService.class);
+String content = fileService.getContent("classpath:data/urls.txt");
+System.out.println(content);
+
+
+
+
+Resource加载文件（classpath文件、File文件、远程文件）
+
+FileServiceImpl：
+
+package fm.douban.service.impl;
+
+import fm.douban.service.FileService;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+@Service
+public class FileServiceImpl implements FileService {
+
+    @Autowired
+    private ResourceLoader loader;
+
+    @Override
+    public String getContent(String name) {
+        try {
+            InputStream in = loader.getResource(name).getInputStream();
+            return IOUtils.toString(in,"utf-8");
+        } catch (IOException e) {
+           return null;
+        }
+    }
+}
+
+Application：
+
+package fm.douban;
+
+import fm.douban.service.FileService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class Application {
+
+    public static void main(String[] args) {
+
+        ApplicationContext context = new AnnotationConfigApplicationContext("fm.douban");
+
+       (classpath文件)
+        FileService fileService = context.getBean(FileService.class);
+        String content = fileService.getContent("classpath:data/urls.txt");
+        System.out.println(content);
+       
+       （远程文件）
+     //String content2 = fileService.getContent("https://www.zhihu.com/question/34786516/answer/822686390");
+        （File文件）
+        String content2 = fileService.getContent("file:mywork/readme.md");
+        System.out.println(content2);
+
+    }
+}

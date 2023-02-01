@@ -1,0 +1,59 @@
+4.3  Thymeleaf 循环语句
+
+
+在模板当中，for循环和变量的组合是最常见的，比如说歌单的歌曲列表，
+如果我们想显示出来，那就需要借助循环
+
+Thymeleaf 的 for 循环也就是使用标签属性来完成的， th：each代表的就是
+循环语句
+<ul th:each="song : ${songs}">
+  <li th:text="${song.name}">歌曲名称</li>
+</ul>
+
+这段代码应该不难理解，基本上遵循的就是这样的语法
+●${songs}是从模板.上下文中获取songs这个变量
+●song 是${songs} 变量遍历后的每一个对象
+●${song. name}就可以读取遍历中歌曲名称了
+
+完善的Java代码
+  @RequestMapping("/demo")
+  public String index(Model model){
+    List<Song> songs = new ArrayList<>();   
+
+    Song song = new Song();
+    song.setId("0001");
+    song.setName("朋友");
+    songs.add(song);
+
+    song = new Song();
+    song.setId("0002");
+    song.setName("夜空中最亮的星");
+    songs.add(song);
+
+    model.addAttribute("songs",songs);      //返回的List<Song> songs
+    return "demo";
+  }
+
+
+打印列表的索引值
+
+我们经常看到有些列表需要显示当前行数，这个时候，就需要借助 
+th：each  语句的另外一种写法
+<ul th:each="song,it: ${songs}">
+  <li>
+    <span th:text="${it.count}"></span>
+    <span th:text="${song.name}"></span>
+  </li>
+</ul>
+
+th:each="song,it: ${songs}"， 你会发现多了一个,it这个it
+是作为可选参数出行，如果定义了就可以通过这个it对象来获取
+更多关于统计的需求，具体参数如下
+
+it.index  当前迭代对象的index（从0开始计算），如果想从0开始显示用这个就可以了
+it.count  当前迭代对象的index（从1开始计算），如果显示行数就用这个
+it.size     被迭代对象的大小，如果想获取列表长度，用这个就可以了
+it.current 当前迭代变量，等同于上面的song
+it.even/odd  布尔值，当前循环是否是 偶数/奇数（从0开始计算）
+it.first     布尔值，当前循环是否是第一个
+it.last      布尔值，当前循环是否是最后一个

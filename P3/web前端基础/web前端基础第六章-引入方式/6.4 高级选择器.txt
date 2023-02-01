@@ -1,0 +1,67 @@
+6.4 高级选择器
+
+1.后代选择器（空格）
+p a ----选择所有p标签内的所有a标签
+后代选择器的书写规则：用空格隔开，例如：
+
+/* 选择id名为password的标签内部所有类名为box的元素内部的所有p标签 */
+#password .box p{}
+/* 选择所有p标签内部的所有span标签 */
+p span{}
+/* 选择所有p标签内部的所有类名为spanItem的标签 */
+p .spanItem{}
+
+2.交集选择器
+交集选择器的书写规则是：
+a .special{}
+<a href="#" class="special">超链接</a>
+<a href="#">超链接</a>
+<a href="#">超链接</a>
+<a href="#">超链接</a>
+它的意思是，在所有a标签内，类名为special的标签。
+
+3.子代选择器
+p>span {
+    color: orangered;
+}
+
+子选择器与后代选择器类似，不同的是后代选择器突出的是“后代”，
+子选择器突出的是“子”。 比如同样的HTML代码，但是用不同的选择器
+得到的结果就就不同，HTML代码如下：
+<p>
+    <span>Span 1. 在p标签内
+        <span>Span 2. 在p标签的span标签内</span>
+    </span>
+</p>
+<span>Span 3. 与p标签相邻</span>
+
+使用后代选择器：
+span {
+    color: black;
+}
+
+p span {
+    color: orangered;
+}
+
+使用子代选择器；
+span {
+    color: black;
+}
+
+p>span {
+    color: orangered;
+}
+
+
+4.并集选择器
+
+如果要给不同的标签，或者不同类名的标签添加相同的样式，
+此时就要用到并集选择器，并集选择器的规则是在标签名或
+者类名后面用逗号（,）隔开，例如：
+
+.box,p,h3,.phone{}
+
+并集选择器的作用是--“和”，上面这段代码的意思就是给类名
+为box、phone标签名为p、h3的标签添加相同的属性
+

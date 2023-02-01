@@ -1,0 +1,74 @@
+3.3  条件渲染语句
+
+
+v-if
+
+当条件满足的时候，会显示标签内的内容。案例：
+<p v-if="isShow">{{ message }}</p>
+<script>
+export default {
+    name: "app",
+    // 数据
+    data() {
+        return {
+            message:"当条件满足的时候，显示这里的内容"
+        };
+    },
+    methods:{
+        isShow(){
+            if(!this.message) 
+                return false;
+            return true;
+        }
+    }
+};
+</script>
+
+
+v-else
+
+与js的条件判断语句相应的，学了if，接下来就是else，其意义和js中的else一样，即不符合if的时候，就显示else中的内容。
+代码如下：
+<p v-if="isShow">{{ message }}</p>
+<p v-else>{{ defaultMessage }}</p>
+<script>
+export default {
+    name: "app",
+    // 数据
+    data() {
+        return {
+            message:"当条件满足的时候，显示这里的内容",
+            defaultMessage:"优课达"
+        };
+    },
+    methods:{
+        isShow(){
+            if(!this.message) 
+                return false;
+            return true;
+        }
+    }
+};
+</script>
+
+
+v-else-if
+
+v-else-if是v-if的一个补充，当条件不止一个的时候，就可以用到v-else-if。
+<template>
+  <div id="app">
+    <p v-if="questions[0].type==='PICK'">{{ questions[0].content }}</p>
+    <p v-else-if="questions[1].type==='MULT'">{{ questions[1].content }}</p>
+    <p v-else>题目还没有加载进来...</p>
+  </div>
+</template>
+
+
+v-show
+
+v-show的用法和v-if是一样的，即当条件满足，就会显示标签中的内容，区别就是：
+1.v-show指令只是将标签的display属性设置为none
+2.v-if指令，如果不满足指令，则此标签在dom中根本不存在
+
+那么如何选择呢？
+当标签出现以后就不会再次消失，或者消失/出现的频率不高，就用v-if。当标签会被频繁的切换，从消失到显示，那么就用v-show。

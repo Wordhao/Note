@@ -1,0 +1,35 @@
+1.2 在HTML中使用JavaScript
+
+
+JavaScript写在HTML内部
+
+1.使用script标签嵌入Javascript
+// script标签嵌入JavaScript代码
+<script>
+    // JavaScript代码
+    let name = "Bob";
+    function(){
+        console.log("我的名字叫："+name);
+    }
+</script>
+
+2.注意script标签在HTML文件中的位置
+保证script标签在body标签的末尾，如下面代码所示：
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 正常的html标签一定要写在script标签的前面 -->
+    <div></div>
+    <!-- 在body标签的内部并在末尾 -->
+    <script></script>
+  </body>
+</html>
+
+
+Javascript写在HTML外部
+引入方式：
+<script src='index.js'></script>

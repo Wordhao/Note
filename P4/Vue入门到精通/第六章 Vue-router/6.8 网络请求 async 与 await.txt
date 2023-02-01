@@ -1,0 +1,139 @@
+6.8 网络请求 async(异步) 与 await(同步) 
+
+本章我们会学习如何在 vue 中请求远程数据。
+
+在JavaScript 中我们曾学过用 fetch 请求数据，比如一个显示优课达公司信息的API：
+https://www.fastmock.site/mock/b73a1b9229212a9a3749e046b1e70285/f4/f4-11-1-1
+
+用fetch 请求数据的代码如下：
+fetch(
+  'https://www.fastmock.site/mock/b73a1b9229212a9a3749e046b1e70285/f4/f4-11-1-1'
+)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+  });
+由于fetch 返回的是一个Promise对象，所以我们在请求数据
+的时候用了then 采用平铺式回调的方式，允许我们在数据返回
+之后再对数据进行 response.json() 处理。
+这里就有一个问题，因为Promise 对象的一个特点是无等待，所
+以想对返回的数据进行操作，就必须在 then里处理。假设一个
+业务，分多个步骤完成,每个步骤都是异步的，而且依赖于上一个
+步骤的结果。那么 then 链就会很长
+
+
+现在我们来学习异步编程终级解决方案——async 和 await。
+
+“异步” async
+
+async 是“异步”的简写，用于声明一个异步 function，而这个async 函数返回的是一个
+ Promise对象。
+async function asyncFn() {
+  return {
+    "company": "优课达",
+    "slogan": "学的比别人好一点"
+  };
+}
+const result = asyncFn();
+console.log(result);
+
+既然async返回的是一个Promise对象，那和普通的fetch 
+方法有什么区别?着关键点就在于await 关键字。
+
+
+'等待异步”await
+
+await  用于等待一个异步方法执行的完成，它会阻塞后面的代
+码，等着Promise对象resolve* ， 然后得到resolve的值，作为
+await表达式的运算结果:
+async function getAsyncFn() {
+  const result = await asyncFn();
+  console.log(result);
+}
+getAsyncFn();
+
+要注意，await 只能出现在 async 函数中，如果用在普通函数里，就会报错，
+所以上面我们又定义了一个 async 函数 getAsyncFn 。
+
+
+多个请求并发执行 Promise.all
+
+如果要完成多个请求并发执行，可以使用 Promise.all:
+async function asyncFn1() {
+  return "优课达";
+}
+async function asyncFn2() {
+  return "学的比别人好一点";
+}
+async function getAsyncFn() {
+  const result = await Promise.all([asyncFn1(), asyncFn2()]);
+  console.log(result);
+}
+getAsyncFn();
+
+
+在 vue 中运用 async 和 await 请求数据
+
+之前我们在开发“全部课程页“和"课程详情页”时，课程数据是直接
+写在data里的，现在我们将运用async和await请求数据，完
+成后页面中的课程信息均为动态获取的:
+
+已知我们mock的数据返回格式如下，其中的data是我们实际需
+要的数据:
+{
+  data: {...},
+  isSuccess: true
+}
+在全部课程页CourseAll.vue组件里获取所有课程:
+<script>
+export default {
+  data: function() {
+    return {
+      courseList: []
+    };
+  },
+  async mounted() {
+    // 在生命周期 mounted 中调用获取课程信息的方法
+    await this.queryAllCourse();
+  },
+  methods: {
+    // 在 methods 对象中定义一个 async 异步函数
+    async queryAllCourse() {
+      // 在 fetch 中传入接口地址
+      const res = await fetch('https://www.fastmock.site/mock/2c5613db3f13a5c02f552c9bb7e6620b/f5/api/queryallcourse');
+      // 将文本体解析为 JSON 格式的promise对象
+      const myJson = await res.json();
+      // 获取返回数据中的 data 赋值给 courseList
+      this.courseList = myJson.data;
+    }
+  }
+}
+</script>
+
+给 api 传参数
+根据课程 id获取课程信息，这时需要给获取课程信息的 api 传课程id：
+<script>
+export default {
+  data: function() {
+    return {
+      course: []
+    };
+  },
+  async mounted() {
+    await this.getCourse();
+  },
+  methods: {
+    async getCourse() {
+      // 从路径中获取课程 id
+      const courseId = this.$route.params.courseId
+      // 在接口地址后传入参数 id
+      const res = await fetch('https://www.fastmock.site/mock/2c5613db3f13a5c02f552c9bb7e6620b/f5/api/getcourse?id=${' + courseId + '}');
+      const myJson = await res.json();
+      this.course = myJson.data;
+    }
+  }
+}
+</script>
+

@@ -1,0 +1,59 @@
+1.3 Java入门
+
+Javascript注释
+
+单行注释：
+// 单行注释
+
+块级注释：
+/*
+ * 注释
+ * 注释
+ */
+
+
+字符串
+
+// 双引号 因为格式化的问题，必须加\，大家忽略\，就当"字符串"看待即可
+\"字符串\";
+
+// 单引号
+'字符串';
+
+console 访问控制台
+
+console表示访问控制台，log（）表示在控制台输出信息
+console.log('要输出的内容');
+将输出语句写在script标签内，完整的写法如下：
+<script>console.log("Hello World");</script>
+
+
+模板字符串
+let firstName = '胡';
+let lastName = '雪岩';
+let say = `大家好，我姓${firstName}，名${lastName}`;
+console.log(say);
+
+
+转义符（\）
+在双引号里面写双引号：
+let str = '华为正式发布操作系统---\"鸿蒙OS\" ';
+console.log(str);
+
+
+多行字符串拼接
+let str = '春眠不觉晓\n' + '处处闻啼鸟\n' + '夜来风雨声\n' + '花落知多少\n';
+console.log(str);
+
+
+在字符串中使用表达式
+let number1 = 20;
+let number2 = 10;
+console.log(`两个数的和是：${number1 + number2} 
+两个数的差是：${number1 - number2} 。`);
+
+
+模板字符串中使用三元表达式
+let str = `这里是${false ? '浙江' : '江苏'}`;
+console.log(str); // 江苏
+

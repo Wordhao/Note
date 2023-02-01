@@ -1,0 +1,24 @@
+11.3  API + GET请求
+
+
+用fetch获取API返回得数据
+fetch(
+  'https://www.fastmock.site/mock/b73a1b9229212a9a3749e046b1e70285/f4/f4-11-1-1'
+)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (myJson) {
+    console.log(myJson);
+  });
+
+
+fetch(
+    'https://www.youkeda.com/api/getip'
+)
+.then(function(response) {
+  return response.text();
+})
+.then(function(myText) {
+  console.log(myText);
+})

@@ -1,0 +1,69 @@
+4.1  Thymeleaf  入门
+
+
+如何初始化 Thymeleaf
+
+添加 Maven 依赖
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+
+数据传递
+Spring MVC把页面数据层封装的非常完善，只需要我们在方法参数里
+引入一个Model对象，就可以通过这个Model对象传递数据到页面中了。
+我们首先正确的导入这个Model类
+
+import org. springframework . ui.Model; 
+
+为了更好的演示数据，我们把之前的歌单服务也集成了过来
+@Controller
+public class SongListControl {
+
+  @Autowired
+  private SongListService songListService;
+
+  @RequestMapping("/songlist")
+  public String index(@RequestParam("id")String id,Model model){
+
+    SongList songList = songListService.get(id);
+    //传递歌单对象到模板当中
+    //第一个 songList 是模板中使用的变量名
+    // 第二个 songList 是当前的对象实例
+    model.addAttribute("songList",songList);
+
+    return "songList";   //songList.html
+  }
+}
+
+
+
+模板文件
+
+Spring MVC中对于模板文件是有固定的存放位置，放置在工程的
+src/main/resources/templates
+所以上面的return "songList"; 其实会去查找
+src/main/ resources/templates/songList.html文件,系统会自动去
+匹配后缀的，所以你不需要写成
+return  "songList. html"
+Thymeleaf模板文件也是以html作为文件格式的，所以它也是最容易.
+学习的模板
+最后我们的文件内容如下
+
+
+特别提醒
+
+只要在工程的  src/main/resources/templates  下面放置 了文件，就表
+示需要使用Thymeleaf，这些文件就是模板，无论在模板中是否写了
+变量(${songList.name})。这大家要注意理解规范。
+
+放在  src/main/ resources/static目录下的就不是模板，是静态文件。
+
+只要用到了Thymeleaf就必须在工程的 pom. xm1文件中增上述依
+赖。忘记加了就会出错，而且可能不知道为什么出错，所以大家务必做
+到遵守规范，有问题先检查是否缺少依赖。
+
+
+
+
+

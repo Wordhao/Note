@@ -1,0 +1,69 @@
+1.1 Vuex介绍
+
+Vuex 走的是单向数据绑定模式，我们知道Vue是双向绑定的，这两者还是有点区别的，
+因为在很多时候单向数据流会更安全、可靠一些。
+
+Vuex的数据流和核心概念：
+*Action
+*State
+*Mutation
+
+安装
+
+NPM  npm install vuex --save
+
+Yarn  yarn add vuex
+
+cnpm  cnpm install -save vuex
+在国内，默认情况下推荐使用 cnpm来管理Node工程，因为访问国外的npm仓库网络太差了
+
+配置
+安装完vuex依赖后，我们开始进行vuex的入门配置，基本上后续的vuex工作都
+和这个配置有关系。
+1.创建一个 store
+一般store文件存放在 src/store 目录，现在我们创建src/store/index.js 文件，内容如下：
+import Vue from 'vue'
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+    state:{}
+})
+
+2.找到vue工程的 src/mian.js
+我们把刚才创建的 store文件导入进去
+import store from './store';
+
+// Vue实例化这里把 store 加入进去
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app');
+
+
+如果是创建全新工程
+
+如果你现在是创建一个新工程，那么就更简单啦，使用官方推荐的 vue cli 这个工具：
+首先安装好 vue cli：
+      npm install -g @vue/cli-service-global
+创建包含vuex 的新工程
+*打开终端软件（git bash）
+*进入编程目录
+*执行命令vue create hello-world，创建一个hello-world 工程
+*按回车键后，进入选择页面（空格键选中）
+*选择 Manually select features，回车
+*选择：Babel、Router、Vuex、Linter/Formatter，回车
+*继续回车
+
+
+vue.config.js 配置
+在工程目录下创建 vue.config.js 文件，填入如下内容：
+module.exports = {
+  devServer: {
+    disableHostCheck: true,
+    host: "0.0.0.0"
+  }
+};
+

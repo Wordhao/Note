@@ -1,0 +1,30 @@
+单选框和复选框
+
+单选框
+<!-- type属性表示表单元素的类型，name属性表示表单元素的名称，value属性表示表单元素的值 -->
+<input type="radio" name="gender" value="male" />
+<input type="radio" name="gender" value="female" />
+所谓单选框，其实只是把控件类型type="text"改成了type="radio"。 
+大部分 表单元素都是通过改变标签属性type的值来实现的。
+***属于同一道“单选题”的每个单选按钮，应该拥有相同的name 属性值
+
+<input type="radio" name="gender" value="male" />男
+<input type="radio" name="gender" value="female" />女
+
+配合标签<label>使用，点击文字也能选中对应的选项
+<label> <input type="radio" name="gender" value="male" />男 </label>
+<label> <input type="radio" name="gender" value="female" />女 </label>
+
+另一种写法（增加了“id”）
+<input id="male" type="radio" name="gender" value="male" />
+<label for="male">男</label>
+<input id="female" type="radio" name="gender" value="female" />
+<label for="female">女</label>
+
+
+复选框
+type="checkbox"
+
+<label> <input type="checkbox" name="interest" value="coding" />编程 </label>
+<label> <input type="checkbox" name="interest" value="other" />其他 </label>
+***选项拥有相同的name属性值

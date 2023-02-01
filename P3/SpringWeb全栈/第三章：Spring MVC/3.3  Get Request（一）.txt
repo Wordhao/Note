@@ -1,0 +1,87 @@
+3.3  Get Request（一）
+
+在Http网络中，最常用的两个协议是
+* get
+* post
+
+
+获取 Http URL 参数
+
+需求
+
+    现在我们自定义一下歌单的参数，我们希望可以根据歌单参数访问到不同
+的歌单页面
+    我们歌单URL应该是这样的：
+https://域名/songlist?id=xxxx
+    如果在本地电脑开发，那可能是这样的：
+http://localhost:8080/songlist?id=xxxx
+
+定义参数
+
+    在Spring MVN中，定义一个URL参数也非常重要，只需要我们在方法上面
+添加对应的参数和参数注解就可以：
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class SongListControl {
+
+    @RequestMapping("/songlist")
+    public String index( @RequestParam("id") String id){
+        return "html/songList.html";
+    }
+
+}
+请注意RequestParam注解的参数"id"这个值必须要和URL的
+param key一样哦，因为我们在url中定义的是id,所以这里写id。
+
+如果我们的访问URL是
+https://域名/songlist?listId=xxxx
+
+那么代码应该是
+@RequestMapping("/songlist")
+public String index( @RequestParam("listId") String id){
+    return "html/songList.html";
+}
+大家注意这个要求哦，很多新手经常在这里放错误
+RequestParam注解的包路径是
+org. springframework . web. bind. annotation. RequestParam
+由于Spring MVC的注解都是在
+org. springframework . web. bind. annotation包内，所以我们import
+的时候，直接用
+
+import org . springframework . web . bind . annotation.*;   了，这样省却
+了很多导入的工作。
+
+
+操作参数
+
+根据 id 选择界面
+@RequestMapping("/songlist")
+    public String index( @RequestParam("id") String id){
+        if("38672180".equals(id)){
+            return "html/songList.html";
+        }else{
+            return "html/404.html";
+        }
+    }
+
+
+
+获取多个参数
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class SongListControl {
+
+  @RequestMapping("/songlist")
+  public String index(@RequestParam("id") String id,  @RequestParam("pageNum") int pageNum){
+     return "html/songList.html";
+  }
+}
+基础的boolean、int、 String 数据类型是可以直接自动转化的，所以上
+面的页数参数使用了int 
+如果我们在Request方法声明了多个参数,那么URL访问的时候就必
+须要传递该参数哦，要不然会访问不到的

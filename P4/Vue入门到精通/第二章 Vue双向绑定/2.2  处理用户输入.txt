@@ -1,0 +1,46 @@
+2.2  处理用户输入
+
+v-model（双向绑定）-- input
+
+定义一个基础的HTML代码结构：
+<template>
+  <p class="page">{{message}}</p>
+  <input type="text" v-model="message" placeholder="请输入你想输入的内容" />
+</template>
+定义要用到的变量的变量：
+script>
+export default {
+    name: "app",
+    data() {
+        return {
+            message: ""
+        };
+    }
+};
+</script>
+
+什么是双向绑定呢？简单来说就是改变message变量的值，input标签内的值会变化，
+改变input标签内的值，message变量的值也会改变。
+
+多行文本输入text-area跟input是一样的，只需要在text-area标签内添加v-model即可：
+<textarea v-model="message" placeholder="请在输入框内输入...">
+
+
+v-model（双向绑定）-- checkbox（复选框）
+<div class="food">
+  <div class="check-box">
+    <input type="checkbox" value="新奥尔良鸡腿堡" v-model="checkedGoods" />
+  </div>
+  <div class="food-name">新奥尔良鸡腿堡</div>
+  <div class="food-price">￥24</div>
+</div>
+<script>
+export default {
+    name: "app",
+    data() {
+        return {
+            checkedGoods: []
+        };
+    }
+};
+</script>

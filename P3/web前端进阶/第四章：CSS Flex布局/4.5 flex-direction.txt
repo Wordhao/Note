@@ -1,0 +1,15 @@
+4.5 flex-direction
+
+可以改变项目的排列方向（水平方向）
+当我们设置flex-direction：column时，
+横向三栏自适应布局会变成纵向的
+
+flex-direction有四个有效值：
+row | row-reverse | column | column-reverse;
+1.row:即默认值，主轴为水平方向,起点在左端。
+2.row-reverse:主轴为水平方向，起点在右端。
+3.column:主轴为垂直方向,起点在上沿。
+4.column-reverse:主轴为垂直方向,起点在下沿。
+
+用flex-direction改变主轴方向后，justify-content和align-itmes控制的方向
+也会发生对应变化

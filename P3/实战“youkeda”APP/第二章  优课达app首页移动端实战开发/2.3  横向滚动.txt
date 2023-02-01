@@ -1,0 +1,8 @@
+2.3  横向滚动
+
+
+副导航横向滚动的实现
+横向滚动我们可以使用overflow：scroll属性
+但是在ios移动端滚动不够顺滑，还要加一个属性
+-webkit-overflow-scrolling：touch 
+

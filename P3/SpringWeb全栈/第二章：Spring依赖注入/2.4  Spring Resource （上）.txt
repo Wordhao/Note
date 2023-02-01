@@ -1,0 +1,64 @@
+2.4  Spring Resource （上）
+
+
+java工程中文件的几种情况：
+1.文件在电脑某个位置,比如说d:/ mywork/a.doc
+2.文件在工程目录下，比如说mywork/toutiao . png
+3.文件在工程的src/main/resources目录下，我们在Maven的知识里
+   介绍过这是Maven工程存放文件的地方
+
+第一种和第二种情况都是使用File对象就可以读写，第三种情况比较特殊，
+因为Maven执行package的时候，会把resources目录下的文件一起打包进jar包
+里（之前提到过jar的压缩文件）
+
+显然在第三种情况，用File对象是读取不到的，因为文件已经在jar里了。
+
+
+读取jar内部的文件
+
+classpath
+
+在Java内部当中，我们一般把文件路径称为classpath,所以读取内部
+的文件就是从classpath内读取，classpath 指定的文件不能解析成
+File对象，但是可以解析成InputStream,我们借助Java IO就可以读
+取出来了。
+classpath类似虚拟目录，它的根目录是从/开始代表的是src/main/java
+或者src/main/resources目录
+
+***读取文件我们可以使用commons-io这个库来，需要在pom.xml下添加依赖
+<dependency>
+  <groupId>commons-io</groupId>
+  <artifactId>commons-io</artifactId>
+  <version>2.6</version>
+</dependency>
+
+在resources目录下读取一个 data.json 文件，测试代码如下：
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.commons.io.IOUtils;
+
+public class Test {
+
+  public static void main(String[] args) {
+    // 读取 classpath 的内容
+    InputStream in = Test.class.getClassLoader().getResourceAsStream("data.json");
+    // 使用 commons-io 库读取文本
+    try {
+      String content = IOUtils.toString(in, "utf-8");
+      System.out.println(content);
+    } catch (IOException e) {
+      // IOUtils.toString 有可能会抛出异常，需要我们捕获一下
+      e.printStackTrace();
+    }
+  }
+
+
+InputStream in = Test.class.getClassLoader().getResourceAsStream("data.json");
+这段代码的含义就是从Java运行的类加载器(ClassLoader) 实例中查
+找文件，Test.class 指的当前的Test.java编译后的Java class文件。
+记住这个代码格式就好，以后可能会经常用到，如果你记不住，那就记
+住在这节课程里有这个语法，copy 也可以。
+
+
+}
+

@@ -1,0 +1,61 @@
+6.2 变量
+
+SassScript定义变量
+$width: 10px;
+
+使用变量：
+#main{
+      width: $width;
+}
+
+编译成css：
+#main{
+      width:10px;
+}
+
+如果变量类型为字符串，一般不需要加引号，但
+是有些特殊情况，比如字符串中有双斜杠"//"等特殊符号
+就需要用英文输入法状态下的单引号或者双引号
+包裹字符串，用引号的写法：
+// 变量需要定义在使用之前
+$position: "absolute";
+$mainTxtColor: '#333';
+// 应用
+#main {
+  position: $position;
+  color: $mainTxtColor;
+}
+
+
+简单计算：
+（支持简单的加减乘除）
+$width: 10px;
+#main {
+  width: $width / 2;
+}
+编译成：
+#main {
+  width: 5px;
+}
+
+
+插值法：（可以插入任何类型的变量）
+#{}插值几乎可以在Sass样式表的任何地方使用：
+$name: "mail";
+$top-or-bottom: "top";
+$left-or-right: "left";
+
+.icon-#{$name} {
+  background-image: url("/icons/#{$name}.svg");
+  position: absolute;
+  #{$top-or-bottom}: 0;
+  #{$left-or-right}: 0;
+}
+
+编译为：
+.icon-mail {
+  background-image: url("/icons/mail.svg");
+  position: absolute;
+  top: 0;
+  left: 0;
+}

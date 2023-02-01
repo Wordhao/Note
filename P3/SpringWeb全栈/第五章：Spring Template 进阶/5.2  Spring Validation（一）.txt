@@ -1,0 +1,96 @@
+5.2  Spring Validation（一）
+       Spring 验证
+
+JSR 380
+
+JSR是Java Specification Requests的缩写，意思是Java规范提案。
+JSR380提案的规范可以通过下面的依赖添加到你的工程里
+<dependency>
+  <groupId>jakarta.validation</groupId>
+  <artifactId>jakarta.validation-api</artifactId>
+  <version>2.0.1</version>
+</dependency>
+
+
+Validation 注解
+
+●@NotNull  不允许为null对象
+●@AssertTrue   是否为true .
+●@Size    约定字符串的长度
+●@Min    字符串的最小长度
+●@Max      字符串的最大长度
+●@Email      是否是邮箱格式
+●@NotEmpty   不允许为null或者为空，可以用于判断字符串、集合，比如
+                                         Map、数组、List
+●@NotBlank     不允许为null 和空格
+
+
+用个例子来举例用法
+package com.bookstore.model;
+import javax.validation.constraints.*;
+
+public class User {
+
+    @NotEmpty(message = "名称不能为 null")
+    private String name;
+
+    @Min(value = 18, message = "你的年龄必须大于等于18岁")
+    @Max(value = 150, message = "你的年龄必须小于等于150岁")
+    private int age;
+
+    @NotEmpty(message = "邮箱必须输入")
+    @Email(message = "邮箱不正确")
+    private String email;
+
+    // standard setters and getters 
+}
+大多数情况下，我们建议适用NotEmpty 代替 NotNull、NotBlank
+
+
+
+当数据储存成功后，返回 user/list.html 页面，这个逻辑，我们一般借助页面
+跳转 ：redirect 来完成，如下面的代码
+@PostMapping("/user/save")
+public String saveUser(@Valid User user, BindingResult errors) {
+    if (errors.hasErrors()) {
+        // 如果校验不通过，返回用户编辑页面
+        return "user/addUser";
+    }
+    userService.saveUser(user);
+    // 校验通过，返回成功页面
+    return "redirect:/user/list.html";
+}
+你也可以跳转到某个网站，比如
+return "redirect:https://www.baidu.com";
+
+执行校验
+package com.bookstore.control;
+
+import com.bookstore.model.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;      //@Valid 完整的包路径
+import org.springframework.validation.BindingResult;  //BindingResult 类的路径
+
+@Controller
+public class UserControl {
+
+    @GetMapping("/user/add.html")
+    public String addUser() {
+        return "user/addUser";
+    }
+
+    @PostMapping("/user/save")
+    public String saveUser(@Valid User user, BindingResult errors) {
+        if (errors.hasErrors()) {
+            // 如果校验不通过，返回用户编辑页面
+            return "user/addUser";
+        }
+        // 校验通过，返回成功页面
+        return "user/addUserSuccess";
+    }
+}
+
+

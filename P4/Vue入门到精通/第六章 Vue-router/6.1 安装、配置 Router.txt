@@ -1,0 +1,92 @@
+6.1 安装、配置 Router
+
+Vue Router 是Vue.js 官方的路由管理器。它和Vue.js 的核心深度集成，让构建单页面应用
+易如反掌。
+
+了解路由之前，我们需要先理解一个概念：单页应用。
+
+单页应用
+SPA(single page application):单一页面应用程序，只有一个完整的页面；它在加载页面时，
+不会加载整个页面，而是只更新某个指定的容器中内容。单页面应用（SPA）的核心
+技术之一是：更新视图而不重新请求页面。
+
+路由
+这里的路由指的是SPA的路径管理器。
+vue的单页面应用将路径和组件映射起来，路由用于设定访问路径，由路径之间的切换，
+实现组件的切换。
+路由模板的本质就是建立起 url 和页面之间的映射关系。
+
+
+安装、配置 vue-router
+
+安装路由
+对于vue工程，我们通常用命令行的方式进行安装：
+npm install vue-router
+//或者
+yarn add vue-router
+在我们的学习平台上，我们会把需要的依赖在package.json 文件中预先写好，点击工程
+运行会自动安装这些依赖：
+"vue-router":
+"@vue/cli-plugin-router":
+
+配置路由
+在main.js中进行如下路由配置：
+// 0. 导入 Vue 和 VueRouter，要调用 Vue.use(VueRouter)
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+// 1. 定义 (路由) 组件。
+// 可以从其他文件 import 进来
+import Foo from "./views/Foo.vue";
+import Bar from "./views/Bar.vue";
+
+// 2. 定义路由
+// 每个路由应该映射一个组件。 其中"component" 可以是
+// 通过 Vue.extend() 创建的组件构造器，
+// 或者，只是一个组件配置对象。
+// 我们晚点再讨论嵌套路由。
+const routes = [
+  { path: '/foo', component: Foo },
+  { path: '/bar', component: Bar }
+]
+
+// 3. 创建 router 实例，然后传 `routes` 配置
+// 你还可以传别的配置参数, 不过先这么简单着吧。
+const router = new VueRouter({
+  routes // (缩写) 相当于 routes: routes
+})
+
+export default new VueRouter({
+  mode: 'history',
+  routes // (缩写) 相当于 routes: routes
+});
+
+// 4. 创建和挂载根实例。
+// 记得要通过 router 配置参数注入路由，
+// 从而让整个应用都有路由功能
+const app = new Vue({
+  router
+}).$mount('#app')
+
+路由的使用
+配置好路由之后，我们来看一下如何在vue文件中使用路由实现路径切换引起组件切换。
+首先，在App.vue中我们使用<router-link>组件来导航：
+<template>
+  <div id="app">
+    <h1>Hello App!</h1>
+    <p>
+      <!-- 使用 router-link 组件来导航. -->
+      <!-- 通过传入 `to` 属性指定链接. -->
+      <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+      <router-link to="/foo">Go to Foo</router-link>
+      <router-link to="/bar">Go to Bar</router-link>
+    </p>
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <!-- App.vue 中的 <router-view></router-view> 是路由的最高级出口 -->
+    <router-view></router-view>
+  </div>
+</template>
+

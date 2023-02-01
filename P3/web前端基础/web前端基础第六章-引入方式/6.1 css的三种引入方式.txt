@@ -1,0 +1,21 @@
+6.1 css的三种引入方式
+
+1.行内样式
+<p style="......">......</p> 
+
+2.内部样式（在head中）
+<style>
+     p{font-size:24px;
+         clolr:#ffffff;
+        }
+     h3{color:red;}
+</style>
+<p>......</p>
+<h3>......</h3>
+
+3.外部样式
+*新建一个index.css文件
+*将html代码文部中的style标签的样式全部拷贝过来
+*将复制的css样式粘贴进index.css文件中
+*建立html和css文件的联系，即用link标签引入css文件（link标签放入head中）
+<link rel="stylesheet" type="text/css" href="index.css" />

@@ -1,0 +1,23 @@
+5.4 文字行高 字间距 字体
+
+当height与line-height相等时，文字居中
+行高
+
+line-height:20px
+我们可以使用做一个文字居中的按钮：
+<button
+  style="width: 120px;height:50px;text-align: center;line-height:50px;color:white;font-size: 18px;"
+>
+  提交
+</button>
+
+
+字间距
+字间距就是文字之间的间距，但是中文和英文的字间距是不一样的
+*英文的字间距是每个字母之间的距离，单词和单词之间的距离不属于字间距
+*中文是每个汉字之间的距离
+设置字间距的格式为： letter-spacing:30px;
+
+
+字体
+font-family: sans-serif;

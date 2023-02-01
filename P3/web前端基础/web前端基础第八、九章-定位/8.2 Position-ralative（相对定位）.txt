@@ -1,0 +1,13 @@
+8.2 Position-ralative（相对定位）
+
+.first {
+  position: relative;
+  left: 50px;
+  top: 50px;
+}
+
+left: 50px, 表示距离自己原来位置左侧50px
+top: 50px,表示距离自己原来位置顶部50px
+
+relative是在不改变页面布局的前提下，相对于当前
+元素的static布局位置进行的调整

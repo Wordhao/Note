@@ -1,0 +1,35 @@
+6.4 动态路由
+
+多个路径都映射到一个组件这种情况就属于动态路由。
+
+动态路由
+动态路由即符合某种模式的多个路径映射到同一个组件，请看动态路由的写法：
+import User from "./views/User.vue";
+const routes = [
+  // id 就是路径参数
+  { path: '/user/:id', component: User }
+]
+id为路径参数，一个“路径参数”前需要使用 ： 标记。当url匹配到路由中的一个路径时，
+参数值会被设置到this.$route.params里，可以在组件内读取到。
+比如/user/456 匹配的就是 /user/:id ，那么这个用户的id就是456，this.$route.params.id的值
+就是456.
+
+捕获 404 页面
+当用户输入的url不属于我们注册的任何一个路由时，我们常需要将页面用 404NotFound
+渲染，这里我们可以用通配符(*)来匹配任意路径：
+import NotFound from "./views/NotFound.vue";
+
+const routes = [
+  {
+    // 会匹配所有路径
+    path: '*',
+    component: NotFound
+  }
+]（放在最后面）
+
+
+如何读取匹配到的路径值
+当使用一个通配符时，$route.params 内会自动添加一个名为pathMatch的参数。它包含了
+URL通过通配符被匹配的部分，比如用上面的路由{ path: '*'} 匹配URL
+http://localhost:8081/non-existing/file:
+this.$route.params.pathMatch // '/non-existing/file'

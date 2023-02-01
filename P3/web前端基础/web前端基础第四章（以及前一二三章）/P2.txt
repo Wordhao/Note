@@ -1,0 +1,13 @@
+常量 static
+final 表示这个变量不可以再次修改
+继承 extends
+实例化dog对象并赋值给Animal对象 Animal d=new Dog();//父类对象可以是子类的实例
+super关键字 -- this关键字
+转化数组为 list       List<Integer> lists = Arrays.asList(intArr)
+转化list为数组        Integer[] arr = al.toArray(new Integer[]{})
+List转字符串           String.join("split",list)
+数组转字符串         Arrays.toString(intArr)
+排序sort                    Arrays.sort(intArr)
+集合操作       删除remove    List.remove(int index)
+                         合并addAll     list1.addAll(list2)//合并list2到list1集合中
+                         截取subList    list.subList(2,4)   list(2)<=     <list(4)

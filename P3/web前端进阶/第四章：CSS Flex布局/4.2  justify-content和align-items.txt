@@ -1,0 +1,14 @@
+4.2  justify-content和align-items
+
+
+1.调整水平方向的分布justify-content
+justify-content属性定义了项目在水平方向上的对齐方式
+||特别注意，justity-content是容器的属性，设置在容器上
+justify-content有六个有效值：
+justify-content: flex-start（默认值） | flex-end | center | space-between | space-around | space-evenly;
+ 具体效果在文本4.2中
+
+2.调整垂直方向上的分布align-items
+align-items属性定义项目在垂直方向上如何对齐
+align-items有五个有效值：
+align-items: flex-start | flex-end | center | baseline | stretch（默认值）;

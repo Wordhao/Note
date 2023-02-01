@@ -1,0 +1,72 @@
+7.8  内置对象——Date
+
+
+获取当前时间：new Date（）
+let now = new Date();
+console.log(now);
+
+// 传入表示“年月日时分秒”的数字（如果只传入一个数字，会被认为传入的是毫秒数）
+let dt1 = new Date(2020, 0, 6, 0, 0, 0);
+console.log(dt1);
+
+// 传入日期字符串（月份的范围是0-11，而不是1-12）
+let dt2 = new Date("2020-1-6");
+console.log(dt2);
+
+// 传入距离国际标准时间的毫秒数
+let dt3 = new Date(1578240000000);
+console.log(dt3);
+
+
+时间差：毫秒数
+let dt1 = new Date(2020, 2, 1);
+let dt2 = new Date(2020, 3, 1);
+
+// 求差值
+let diff = dt2 - dt1;
+
+// 一天的毫秒数
+let ms = 24 * 60 * 60 * 1000;
+
+console.log(diff / ms); // 31
+
+早晚比较：大小于符号
+let dt1 = new Date(2020, 2, 1);
+let dt2 = new Date(2020, 3, 1);
+
+console.log(dt1 > dt2); // false
+console.log(dt1 < dt2); // true
+
+解析日期字符串：Date.parse()
+返回该时间距离时间零点（1970-1-1-0：0：0）的毫秒数：
+let dt = Date.parse("2020-1-6");
+console.log(dt); // 1578240000000
+
+时间对象转时间字符串：to方法
+let dt = new Date();
+let dtStr = dt.toJSON();
+console.log(dtStr); // 2020-01-03T09:44:18.220Z
+
+获取时间对象的年/月/日：get方法
+let dt = new Date();
+dt.getTime(); // 返回实例距离1970年1月1日00:00:00的毫秒数。
+dt.getDate(); // 返回实例对象对应每个月的几号（从1开始）。
+dt.getDay(); // 返回星期几，星期日为0，星期一为1，以此类推。
+dt.getFullYear(); // 返回四位的年份。
+dt.getMonth(); // 返回月份（0表示1月，11表示12月）。
+dt.getHours(); // 返回小时（0-23）。
+dt.getMilliseconds(); // 返回毫秒（0-999）。
+dt.getMinutes(); // 返回分钟（0-59）。
+dt.getSeconds(); // 返回秒（0-59）。
+
+设置时间对象的年/月/日：set方法
+let dt = new Date();
+dt.setTime(ms); // 设置实例距离1970年1月1日00:00:00的毫秒数。
+dt.setDate(date); // 设置实例对象对应每个月的几号（从1开始）。
+dt.setFullYear(year); // 设置四位的年份。
+dt.setMonth(month); // 设置月份（0表示1月，11表示12月）。
+dt.setHours(hour); // 设置小时（0-23）。
+dt.setMilliseconds(ms); // 设置毫秒（0-999）。
+dt.setMinutes(min); // 设置分钟（0-59）。
+dt.setSeconds(sec); // 设置秒（0-59）。
+

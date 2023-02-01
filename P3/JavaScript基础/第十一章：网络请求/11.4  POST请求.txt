@@ -1,0 +1,25 @@
+11.4  POST请求
+
+相比GET只要加一个参数method就行了
+
+const data = JSON.stringify({
+  username: 'admin',
+  password: '123456'
+});
+
+fetch(
+  'https://www.fastmock.site/mock/b73a1b9229212a9a3749e046b1e70285/f4/f4-11-4-1',
+  {
+    method: 'POST',
+    body: data,
+    headers: {
+      'content-type': 'application/json'
+    }
+  }
+)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+  });

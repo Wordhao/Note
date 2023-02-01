@@ -1,0 +1,52 @@
+4.5  Thymeleaf  条件语句
+
+动态页面必然会遇到if/else的情况，比如说网页中显示用户性别
+●user.sex    值是male则显示:男
+●user.sex    值是female则显示:女
+Thymeleaf也支持if/else 能力，同样也是以th:开头的属性，这
+次我们使用的是th:if，if表达式的值是ture的情况下就会执行
+渲染
+<span th:if="${user.sex == 'male'}">男</span>
+
+我们还可以使用th:unless代表的是否定条件，这个语句和if是
+相反的，代表的是sex不是male情况才会执行渲染
+<span th:unless="${user.sex == 'male'}">女</span>
+
+th:if条件判断除了判断boolean值外，Thymeleaf 还认为如下表
+达式为true:
+●值非空
+●值是非0数字
+●值是字符串，但是不是false，off  或  no
+●值不是boolean值，数字，character或字符串
+
+
+strings 逻辑判断
+
+    在很多时候，我们还会借助 #strings 这个内置对象来做逻辑判断和数据处理，
+比如
+isEmpty 
+检查字符串变量是否为空（或者为 null），在检查之前会先执行trim（）操作，
+去掉空格
+${#strings.isEmpty(name)}
+数组也适用 isEmpty
+${#strings.listIsEmpty(name)}
+
+contains
+检查字符串变量是否包含片段
+${#strings.contains(name,'abc')}
+
+#strings判断语法还有几个常用的方法：
+●${#strings. containsIgnoreCase(name, 'abc')}
+先忽略大小写字母，然后去判断是否包含指定的字符串
+●${#strings. startsWith(name,'abc')}
+判断字符串是不是以abc开头的
+●${#strings. endsWith(name,'abc')}
+判断字符串是不是以abc结束的
+
+
+#strings 的字符串操作函数   见4.4
+
+
+
+
+

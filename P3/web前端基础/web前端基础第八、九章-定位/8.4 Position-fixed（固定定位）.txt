@@ -1,0 +1,30 @@
+8.4 Position-fixed（固定定位）
+
+
+fixed为固定定位
+固定定位和绝对定位类似，但元素的包含块为屏幕视口
+(viewport)
+固定定位不为元素预留空间，而是通过指定元素相对于屏
+幕视口(viewport) 的位置来指定元素位置。元素的位置
+在屏幕滚动时不会改变。
+
+h1 {
+  position: fixed;
+
+  /*去掉H1默认的样式*/
+  padding: 0;
+  margin: 0;
+
+  left: 30px;
+  top: 50px;
+  color: yellowgreen; /*为了方便观看，我们修改MOUNTAIN的颜色*/
+}
+
+
+z-index
+1.默认非static元素的z-index都为0
+2. z-index越大，则越在最上面，离观察者越近
+3.同样的z-index，在HTML中的元素越靠后，则越在最上
+面，离观察者越近.
+
+

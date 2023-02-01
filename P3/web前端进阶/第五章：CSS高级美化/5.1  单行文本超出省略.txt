@@ -1,0 +1,22 @@
+5.1  单行文本超出省略
+
+
+文本内容溢出，用省略号代替剩余内容
+
+正常情况下，文本内容超出了所给的宽度范围，文字会自动换行，
+但我们并不希望它换行，这时候就需要就行单行文本溢出省略的操作
+
+三个知识点：强制不换行、元素内容溢出处理和文本溢出省略
+
+1.强制不换行
+white-space：nowrap；
+
+2.元素内容溢出 overflow
+overflow： visible（默认值） | hidden | inferit | scroll | auto；
+ 超出部分不显示 overflow：hidden；
+
+3.文本溢出省略 text-overflow
+text-overflow： clip（默认值）| ellipsis；
+clip：一刀切掉
+ellipsis：用一个省略号来表示被截断的文本
+

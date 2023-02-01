@@ -1,0 +1,23 @@
+4.1  键盘监听
+
+键盘监听方法：
+window.addEventListener('keyup', function(e){
+      console.log(e.keyCode);
+})
+e.keyCode结果：
+37=>左
+38=>上
+39=>右
+40=>下
+
+
+方向向量化
+左 => row: 1, column: 0  // 列数索引 -1, 也就是column -1
+右 => row: 1, column: 2  // 列数索引 +1, 也就是column +1
+上 => row: 0, column: 1  // 行数索引 -1, 也就是row -1
+下 => row: 2, column: 1  // 行数索引 +1, 也就是row +1
+
+左 => {row: 0, column: -1}
+右 => {row: 0, column: 1}
+上 => {row: -1, column: 0}
+下 => {row: 1, column: 0}

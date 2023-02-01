@@ -1,0 +1,14 @@
+3.1 CSS装饰--cursor（光标）
+
+
+p{
+    cursor:  .......;
+}
+
+cursor: pointer
+cursor: default
+cursor: text
+cursor: move
+cursor: grab
+cursor: zoom-in
+cursor: zoom-out

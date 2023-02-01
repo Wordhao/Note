@@ -1,0 +1,14 @@
+2.3  Spring Bean （下）
+
+
+@Service
+import org.springframework.stereotype.Service;
+
+@Autowired(自动连线)
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+@Autowired
+ private SongService songService;
+等同于
+private SongService songService = new SongServiceImpl();

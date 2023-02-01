@@ -1,0 +1,16 @@
+10.4  移动事件
+
+
+1.mousemove
+  这个是鼠标移动事件，比较简单
+
+2.mouseenter/mouseleave
+  这个是鼠标进入和离开事件，但是仅仅只作用于当前DOM节点，不会作用
+  于其后代节点
+
+3.mouseover/mouseout
+  这个也是鼠标进入和离开事件，但和enter/leave不同的是：此事件除了作用
+  于当前DOM节点，也会同时作用于其后代节点
+
+在平时使用中，90%我们都只会使用mouseover/mouseout，这个事件。
+

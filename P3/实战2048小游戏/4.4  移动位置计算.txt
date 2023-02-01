@@ -1,0 +1,12 @@
+4.4  移动位置计算
+
+
+在书写Map的时候，如果key和value 变量名称 相同，则可以省略冒号
+{
+  rowPath, columnPath;
+}
+// 等同于
+{
+  rowPath: rowPath,
+  columnPath: columnPath
+}

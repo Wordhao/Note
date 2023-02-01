@@ -1,0 +1,15 @@
+7.4 盒模型--margin
+
+margin---边外距
+所谓外边距就是矩形与矩形之间的距离
+margin-top
+--bottom
+--left
+--right
+
+
+盒子左右居中
+margin: 0 auto;（father和son的width都必须存在的前提下）
+
+超出部分隐藏：
+给父元素添加 overflow:hidden;

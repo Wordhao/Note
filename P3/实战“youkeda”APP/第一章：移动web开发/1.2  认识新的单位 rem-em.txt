@@ -1,0 +1,51 @@
+1.2  认识新的单位 rem/em
+
+
+单位：rem
+rem是一个相对长度单位，我们熟悉的px是一个绝对单位。
+在不同环境中，1rem可以转化成不同的px值。
+
+单位rem与px之间的转换
+1rem = 根元素的字体大小（font-size  一般浏览器中默认为16px）
+
+单位rem的使用：（根据font-size的不同可得到不同的rem）
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+.title {
+  font-size: 2.5rem;
+}
+.logo {
+  width: 10rem;
+  height: 10rem;
+}
+
+
+单位：em
+rem是相对于根元素的字体大小转换的。em则是根据**父元素**的字体大小转换的。
+<div class="parent">                                              （多层嵌套时，取上一级父元素即可）
+  父元素中的文字
+  <div class="child">
+    子元素中的文字
+  </div>
+</div>
+
+.parent {
+  // 父元素的字体大小为 20px
+  font-size: 20px;
+
+  > .child {
+    // 子元素的字体大小为 0.7 * 20px = 14px
+    font-size: 0.7em; 
+    // 特别注意：子元素的宽度为 10 * 14px = 140px
+    width: 10em;
+  }
+}

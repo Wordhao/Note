@@ -1,0 +1,15 @@
+2.2  后端模型 - 歌手（指定时间格式）
+
+对象在序列化时，给时间字段加一个注解，就能够自动转换为指定格式
+的易懂的字符串。
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
+
+public class Singer {
+    /**
+     * 创建时间
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime gmtCreated;
+}

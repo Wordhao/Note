@@ -1,0 +1,23 @@
+8.1  BOM
+
+浏览器对象模型(Browser Object Model) --- BOM。
+BOM是由一系列相关对象构成，每个对象都提供了很多方法和属性。
+
+
+BOM对象
+在BOM里最重要的对象有4个，分别如下：
+1.window（窗口）：window是整个网页的框架，每个网页的内容都是转载
+                                      在window里面
+2.navigator（浏览器）：navigator里面储存浏览器相关信息
+3.history（历史）：我们知道每个网页可以前进后端，history便是拿来储存
+                                     整个网页栈的
+4.screen（显示屏幕）：screen包含我们显示屏幕的信息，这是个硬件信息
+5.Location（地址）：location包含当前访问的地址（网址）信息
+
+
+特别强调几点
+1. screen是整个电脑唯一 的
+2. navigator是整个浏览器唯一的， 如果有多个浏览器就会有多个
+navigator
+3. window每个网页唯一的，每个网页都有一个独立的window
+4. history, location是每个网页的信息，当然也是网页唯一的

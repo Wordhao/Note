@@ -1,0 +1,13 @@
+2.2  固定头部
+
+头部分主导航和副导航：
+主导航
+副导航
+<header class="header">
+  <!-- 主导航 -->
+  <nav class="nav"></nav>
+
+  <!-- 副导航 -->
+  <div class="subnav"></div>
+</header>
+

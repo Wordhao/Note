@@ -1,0 +1,18 @@
+1.5  Hello Spring
+
+
+Spring5的Maven坐标如下：
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-context</artifactId>
+  <version>5.2.1.RELEASE</version>
+</dependency>
+
+Spring方法：
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+
+ApplicationContext context= new AnnotationConfigApplicationContext(Application.class);
+MessageService msgService = context.getBean(MessageService.class);
+System.out.println(msgService.getMessage());

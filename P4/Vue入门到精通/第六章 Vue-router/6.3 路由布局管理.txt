@@ -1,0 +1,74 @@
+6.3 路由布局管理
+
+在实际开发中，工程比较复杂，应用界面通常由多层嵌套的组件组合而成，相应的，
+路由也会按某种结构对应嵌套的各层组件。
+
+1.在组件中配合路由使用<router-view>
+App.vue组件：
+<template>
+  <div id="app">
+    <h1>Hello App!</h1>
+    <p>
+      <router-link to="/album/list">Go to Album List</router-link>
+      |
+      <router-link to="/album/add">Go to Album Add</router-link>
+    </p>
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <!-- 在本例中为 Album.vue 组件 -->
+    <router-view></router-view>
+  </div>
+</template>
+Album.vue组件：
+<template>
+  <div id="album">
+    <div class="banner">banner</div>
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <!-- 在本例中为 List.vue 组件或 Add.vue 组件 -->
+    <router-view></router-view>
+  </div>
+</template>
+
+2.定义嵌套路由
+路由的嵌套关系和组件嵌套关系一致：
+// 0. 导入 Album、List、Add 三个组件
+const routes = [
+  {
+    path: '/album',
+    component: Album,
+    // children 属性可以用来配置下一级路由（子路由）
+    children: [
+      { path: 'list', component: List },
+      { path: 'add', component: Add }
+    ]
+  }
+];
+App.vue中的<router-view>对应routes里的第一层路由，即：
+{ path: '/album', component: Album }
+Album.vue组件中的<router-view>对应routes里的第二层路由，即：
+{ path: 'list', component: List },
+{ path: 'add', component: Add }
+根路径/
+特别注意，在上例中如果希望用路径"/album/list"对应在Album.vue中渲染出相册列表，
+那么子路由中path的写法有两种：
+path: 'list'
+path: '/album/list'
+但是path:'/list' 这样的写法是不对的！因为以 / 开头的嵌套路径会被当作根路径，那么
+List.vue这个组件会直接渲染到App.vue的<router-view>处。
+
+空的子路由
+基于上面的路由配置，如果在路径为"/album"时仍想在功能区渲染些什么，那么可以给
+"/album"添加一个空路由：
+// 0. 导入 Album、List、Add、Empty 三个组件
+const routes = [
+  {
+    path: '/album',
+    component: Album,
+    // children 属性可以用来配置下一级路由（子路由）
+    children: [
+      // 空的子路由
+      { path: '', component: Empty },
+      { path: 'list', component: List },
+      { path: 'add', component: Add }
+    ]
+  }
+];

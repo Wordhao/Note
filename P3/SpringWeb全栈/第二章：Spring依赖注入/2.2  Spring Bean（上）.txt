@@ -1,0 +1,37 @@
+2.2  Spring Bean（上）
+
+//import
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+Annotation类型的IoC容器对应的类是：
+org.springframework.context.annotation.AnnotationConfigApplicationContext
+我们如果要启动IoC容器，可以运行下面的代码：
+ApplicationContext context = 
+    new AnnotationConfigApplicationContext("fm.douban");
+这段代码的含义就是启动ioC容器，并且会自动加载包fm.douban下的Bean，
+哪些Bean会被加载呢？只要引用了Spring注解的类都可以被加载（前提是
+在这个包下哦）
+AnnotationConfigApplicationContext这个类的构造函数有两种
+
+●AnnotationConfigApplicationContext(String ... basePackages)根
+据包名实例化
+
+●AnnotationConfigApplicationContext(Class clazz)根据自定义包
+扫描行为实例化
+我们的例子就是第一种，两者根据情况做选择，开始的时候一般用第一
+种方案
+
+Spring官方声明为Spring Bean的注解有如下几种:
+●org. springfr amework. stereotype.Service
+●org. springframework. stereotype . Component
+●org. springframework. stereotype . Controller
+●org. springframework. stereotype . Repository
+只要我们在类上引用这类注解，那么都可以被loC容器加载
+●@Component注解是通用的Bean注解，其余三个注解都是扩展自Component
+●@Service正如这个名称一样，代表的是Service Bean
+●@Controller作用于Web Bean
+●@Repository作用于持久化相关Bean 
+
+实际上这四个注解都可以被loC容器加载，一般情况下，我们使用
+@Service;如果是Web服务就使用@Controller 

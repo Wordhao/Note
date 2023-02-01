@@ -1,0 +1,96 @@
+3.2  模板中使用表达式
+
+
+Vue的差值表达式：
+<template>
+    <div id="app">
+        <p>{{ text }}</p>
+    </div>
+</template>
+
+
+模板中进行计算
+
+例子：
+<template>
+    <div id="app">
+        <ul>
+            <li>{{ goods[0].index + 1 }}---{{ goods[0].name }}</li>
+            <li>{{ goods[1].index + 1 }}---{{ goods[1].name }}</li>
+            <li>{{ goods[2].index + 1 }}---{{ goods[2].name }}</li>
+        </ul>
+    </div>
+</template>
+<script>
+export default {
+    name: "app",
+    // 数据
+    data() {
+        return {
+            goods:[
+                {
+                    index:0,
+                    name:"扫地机器人"
+                },
+                {
+                    index:1,
+                    name:"华为手机"
+                },
+                {
+                    index:2,
+                    name:"戴尔笔记本"
+                }
+            ]
+        };
+    }
+};
+</script>
+
+
+模板中使用三元表达式
+例子：
+<template>
+    <div id="app">
+        <p>{{ flag?'你已经通过了考试:'你还没有通过考试' }}</p>
+        <button @click="exchange">转换</button>
+    </div>
+</template>
+<script>
+export default {
+    name: "app",
+    // 数据
+    data() {
+        return {
+            flag:true
+        };
+    },
+    methods:{
+        exchange(){
+            this.flag = !this.flag;
+        }
+    }
+};
+</script>
+
+
+在模板中写方法
+
+我们在模板中还可以使用js内置方法，比如下面这个案例中，就可以在模板中写方法，这样就可以少写一个方法。
+<template>
+    <div id="app">
+        <p>{{ message.split('').reverse().join('') }}</p>
+    </div>
+</template>
+<script>
+export default {
+    name: "app",
+    // 数据
+    data() {
+        return {
+            message:"优课达--学的比别人好一点～"
+        };
+    }
+};
+</script>
+
+注意：不要在模板中滥用表达式，尤其是js的内置方法。否则会使html代码变得臃肿。

@@ -1,0 +1,48 @@
+2.2 Getter
+
+在一个Vue文件中提供 computed 函数的缺点就是不能复用，但是放置在 store 中
+就可以被多个组件复用。
+
+Vuex Getter
+Vuex 的 Getter 函数就是类似于Vue computed 函数的作用，Getter的返回值会根据
+它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
+
+定义 Getter
+Getter 接受 state 作为其第一个参数
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
+export default new Vuex.Store({
+  state: {
+    count: 0
+  },
+  actions: {
+    increment: ({ commit }) => commit("increment"),
+    decrement: ({ commit }) => commit("decrement")
+  },
+  mutations: {
+    increment(state) {
+      state.count++;
+    },
+    decrement(state) {
+      state.count--;
+    }
+  },
+  getters: {
+    evenOrOdd: state => (state.count % 2 === 0 ? "偶数" : "奇数")
+  }
+});
+
+使用 Getter
+类似 state 的使用方式一样，你也可以使用 mapGetters 函数来完成映射
+import { mapGetters } from 'vuex'
+
+export default {
+  // ...
+  computed: {
+  // 使用对象展开运算符将 getter 混入 computed 对象中
+    ...mapGetters([
+      'evenOrOdd'
+    ])
+  }
+}

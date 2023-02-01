@@ -1,0 +1,53 @@
+5.4  Thymeleaf 布局（Layout）
+
+
+大多数的网站都有导航、底部等公共的东西，在一一个网站里访问页
+面总是会显示相同的导航、底部之类的内容
+
+这个时候，就需要借助布局(layout) 知识了，注意我们这里说的
+布局并不是指的css布局哦，而是说网站的页面架构
+
+layout解决的是模板复用的问题，比如常见的网站是下面这样的
+                  导航
+                  ——
+                页面内容
+                   ——
+                   底部
+按照这个布局，我们可以把导航和底部做成布局组件，每个页面套用就可以了。
+
+推荐使用 th: include + th: replace 方案来完成布局的开发
+
+
+layout.html
+
+      th:include="::content"
+::content 指的是选择器，这个选择器指的就是加载当前页面的 th:fragment 的值。
+当页面渲染的时候，布局会合并content 这个 fragment 内容一起渲染，下面我们会配置fragment。
+
+
+user/list.html
+
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout">
+<div th:fragment="content">  ...</div>
+     ...
+</html>
+           
+       th:replace="layout"
+       这里指定了布局的名称，这个一旦声明后，页面会被替换成 layout 的内容，
+记住不要指定布局名称错误哦，这个“layout” 指的是 templates/layout.html 。
+
+       th:fragment="content"
+       fragement是片段的意思，当页面渲染的时候，可以通过选择器指定使用
+这个片段。在上面 layout.html 文件的 th:include="::content" 指定的就是这个值。
+
+
+
+ <a href="javascript:;" th:onclick="delBook([[${book.id}]])">删除</a>
+  注意这里的事件用法，实际上Thymeleaf 中对HTML属性的动态赋值都可以这样
+来操作         th:onclick="delBook([[${book.id}]])"
+  这里还有一个技巧，由于超链接有默认的打开链接行为，所以对于想要执行
+onclick 的时候，我们一般设置 href="javascript:;"
+
+
+window.location.href = "/book/list.html";     //刷新页面

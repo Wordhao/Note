@@ -1,0 +1,39 @@
+7.6  内置对象——String
+
+字符串长度： length
+str.length;
+
+查找字符：indexOf（）
+let str = 'here is an apple';
+const index = str.indexOf('an');
+console.log(index);
+
+去掉两端空格：trim（）         //不改变原字符串，只是复制修改到另一个地方
+// 'here' 之前有一个空格，'apple' 之后有三个空格
+let str = ' here is an apple   ';
+const trimedStr = str.trim();
+console.log(str.length);
+console.log(trimedStr.length);
+
+截取字符串：substring/substr             //不改变原字符串，类似trim（）
+let url = 'https://www.youkeda.com/userhome#collect';
+// 首先找到 # 后第一个字母的下标
+const index = url.indexOf('#') + 1;
+// 有 hash 才能进行截取，没有就直接提示不存在
+if (index) {
+  // 用 substring 截取字符串
+  const hash1 = url.substring(index, url.length);     //（开始位置，结束位置）
+  // 计算 hash 的长度
+  const lenHash = url.length - index;
+  // 用 substr 截取字符串
+  const hash2 = url.substr(index, lenHash);     //（开始位置，截取长度）
+  console.log(hash1);
+  console.log(hash2);
+} else {
+  console.log('不存在 hash');
+}
+
+分割字符串：split
+const splitedStr = 'a|b|c'.split('|');
+console.log(splitedStr);
+split也不会改变原字符串，而是返回一个由分割出来的子字符串组成的数组

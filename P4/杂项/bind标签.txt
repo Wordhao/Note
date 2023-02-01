@@ -1,0 +1,8 @@
+<select id="pageQuery" resultMap="BaseResultMap">
+        select * from product
+        <bind name="currentIndex" value="pagination * pageSize"/>
+        limit #{currentIndex},#{pageSize}   从currentIndex行开始，共查询pageSize行
+</select>
+绑定、替换
+将标签内value的值赋值给name的值
+在value中对数据进行处理

@@ -1,0 +1,30 @@
+2.1 变量
+
+在Javascript中定义变量的关键词有两个，即 let、const。
+
+let  name ="Will Smith"；
+关键字 | 变量名 | 赋值符号 | 值 | 结束符号
+
+1.定义变量
+定义一个变量名为 name 的变量： let name；
+**注意： let 声明变量的时候，不能重复声明同名变量，例如：
+   let number = 20;
+   let number = 30;       运行时会报错
+
+
+使用 const 定义变量
+const name = "Will Smith";
+
+let 和 const 异同点一：
+*let 定义的变量可以被多次重新赋值
+let name = 'Bob';
+console.log(name); // Bob
+name = 'Tom';
+console.log(name); // Tom
+*const定义的变量只能赋值一次
+
+let 和 const 异同点二：
+*let定义变量的时候，可以不赋初始值
+let age;
+console.log(age); // undefined
+*const 定义变量的时候，要赋初始值，否则会报错

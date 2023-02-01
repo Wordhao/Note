@@ -1,0 +1,19 @@
+5.3  自定义组件绑定原生事件
+
+事件修饰符
+
+要让父组件里的print也能被执行，添加 .native 修饰符：
+<Article
+  v-for="article in articleList"
+  :key="article.title"
+  :article="article"
+  @click.native="print(article)"
+></Article>
+
+
+按键修饰符
+
+例如：回车键监听
+<button @keyup.enter="print(article)">按回车键执行 print</button>
+回车键（enter键）的ASCLL码是 13，也可以这样写：
+<button @keyup.13="print(article)">按回车键执行 print</button>

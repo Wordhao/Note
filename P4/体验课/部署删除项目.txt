@@ -1,0 +1,19 @@
+部署删除项目
+
+部署
+1.从GitLab上 fork项目到 自己仓库 并负责该仓库的地址
+2.在本地文件夹中 git clone 仓库地址
+3.获取仓库信息 仓库——CI/CD——Pipelines——#***——Deploy——“请复制下列命令”
+4.在课程终端直接运行3中的命令
+5.预览 端口：4000   路径：/index.html
+
+删除
+1.先停止
+课程终端输入
+sudo docker stop tank(文件名)
+2.再删除
+sudo docker rm tank    (rm——remove)
+
+
+cd   进入
+cd ..\   返回上一级

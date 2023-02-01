@@ -1,0 +1,48 @@
+10.1  DOM事件
+
+DOM绑定事件
+在上章节，我们已经开始接触事件了，比如下面代码：
+// 监听Input输入事件
+dom.addEventListener('input', function () {});
+// 监听鼠标放置，移动事件
+dom.addEventListener('mouseover', function () {});
+// etc...
+DOM可以通过 addEventListener( eventName, callBack) 绑定eventName事件
+
+
+DOM事件
+我们打印一下DOM事件对象，这个事件对象会通过
+回调函数参数传递给我们，如下：
+const h1 = document.querySelector('h1');
+h1.addEventListener('click', function (e) {
+  console.log(e);
+});
+
+其他常用事件：https://developer.mozilla.org/zh-CN/docs/Web/Events
+焦点事件
+  focus：表单组件（Input , Textarea , etc...）获取焦点事件
+  blur：表单组件（Input , Textarea ,etc...）失去焦点事件
+
+鼠标事件
+  click：点击事件
+  dblclick：双击事件
+  mousedown：在元素上按下任意鼠标按钮
+  mouseenter：指针移到有事件监听的元素内
+  mouseleave:指针移出元素范围外(不冒泡)
+  mousemove:指针在元素内移动时持续触发。
+  mouseover:指针移到有事件监听的元素或者它的子元素内。
+  mouseout:指针移出元素，或者移到它的子元素上。
+  mouseup:在元素上释放任意鼠标按键。
+
+键盘事件
+  keydown:键盘按下事件
+  keyup:键盘释放事件
+
+视图事件
+  scroll:文档滚动事件
+  resize：窗口放缩事件
+
+资源
+  load：资源加载成功的事件
+
+

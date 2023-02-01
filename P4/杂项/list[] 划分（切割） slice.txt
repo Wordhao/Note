@@ -1,0 +1,3 @@
+list[] 划分（切割） slice
+
+ (state.users && state.users.slice(0, 3)) || [];    //选中 0，1，2

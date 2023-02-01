@@ -1,0 +1,43 @@
+7.2  自定义对象的属性操作
+
+let person = {
+  name: 'henry',
+  age: 18,
+  run: function() {
+    console.log('running');
+  }
+}
+
+person.run();
+
+
+属性的读取
+let person = {
+  name: 'henry',
+  age: 18
+}
+
+console.log(person.name);        //点运算符
+console.log(person['name']);      //方括号运算符（方括号中可以是一个变量）
+
+
+属性的查看
+let person = {
+  name: 'henry',
+  age: 18
+}
+console.log(Object.keys(person));       //Object.keys（） 方法
+
+
+属性的删除和增加
+如果要删除对象中的某个属性，可以使用 delete 命令：
+let person = {
+  name: 'henry',
+  age: 18
+}
+delete person.name;  //delete删除命令
+console.log(person);
+ 增加：
+person.gender = "male";    //直接添加
+
+

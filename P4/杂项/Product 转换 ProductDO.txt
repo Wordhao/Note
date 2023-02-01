@@ -1,0 +1,21 @@
+import org.springframework.beans.BeanUtils; 
+
+
+public ProductDO() {
+
+    }
+
+    public ProductDO(Product product) {
+
+        BeanUtils.copyProperties(product, this);//类型转换
+
+    }
+
+    public Product convertToModel() {
+        Product product = new Product();
+        BeanUtils.copyProperties(this, product);
+        return product;
+    }
+
+
+ProductDO p = new ProductDO(product)

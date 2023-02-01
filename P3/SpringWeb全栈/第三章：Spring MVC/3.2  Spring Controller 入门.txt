@@ -1,0 +1,79 @@
+3.2  Spring Controller 入门
+
+
+1.Controller注解
+Controller注解本身也是一个Spring Bean，只是它多提供了Web能力。
+我们只需要在类上提供一个@Controller注解就可以
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class HelloControl {
+
+}
+
+（我们前面说过的Spring大多数是基于接口开发的，但是没有接口也是可以
+工作的。Spring Controller一般情况下不需要特意实现接口）
+
+
+2.加载网页
+在Spring Boot应用中，一般把网页存放在 src/main/resources/static 目录下
+在controller中，会自动加载static下的html内容，所以通过Spring Boot建设网站
+也非常简单
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class HelloControl {
+
+    public String say(){
+        return "hello.html";
+    }
+
+}
+注意看上面的代码的say方法,
+
+i.定义返回类型为String
+ii.| return "hello. html"返回的是html文件路径
+
+当执行这段代码的时候，Spring Boot实际加载的是
+src/main/resources/static/hello. html文件
+
+我们前面学习过，resouces 属于classpath类型的文件，Spring Boot
+很强大，自动帮我们做了加载，所以我们只需要写hello.html即可
+注意，文件路径不需要额外添加static 哦
+
+    2.1 static子目录
+        如果说我们的html文件存放在 src/main/resources/static/html/hello.html
+        那么我们的代码应该是：
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class HelloControl {
+
+    public String say(){
+        return "html/hello.html";
+    }
+
+}
+
+
+
+3. RequsestMapping 注解
+Spring MVC完美的支持了路由能力，并且简化了路由配置，只需要在
+需要提供Web访问的方法.上添加一个@RequestMapping 注解就可以
+完成配置啦，比如
+**import org.springframework.stereotype.Controller;
+**import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HelloControl {
+
+    @RequestMapping("/hello")
+    public String say(){
+        return "html/hello.html";
+    }
+
+}
+
+最后还有一个规范需要大家知道，一般情况下， 我们会把controller 类
+存放在  control子包里，比如我们这里的fm. douban. app. control
+

@@ -1,0 +1,27 @@
+xml查询
+
+<update id="updateByPrimaryKey" parameterType="com.youkeda.dewu.dataobject.ProductDO">
+        update product
+        set 
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(name)">
+            name = #{name},
+        </if>
+
+        <if test="price != null">
+            price = #{price},
+        </if>
+
+        <if test="purchaseNum != null">
+            purchase_num = #{purchaseNum},
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(productIntro)">
+            product_intro = #{productIntro},
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(productImgs)">
+            product_imgs = #{productImgs},
+        </if>
+        gmt_modified = now()
+        where id = #{id,jdbcType=VARCHAR}
+    </update>

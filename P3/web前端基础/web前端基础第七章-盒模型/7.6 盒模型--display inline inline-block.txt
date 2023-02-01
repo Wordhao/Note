@@ -1,0 +1,30 @@
+7.6 盒模型--display:inline/inline-block
+
+
+1.行内不能设置宽、高；
+
+2.行内元素可以设置padding；
+
+3.行内元素可以设置左右margin，但是不能设置上下margin
+
+inline-block
+一个可以在同一行显示的块元素
+
+
+解决  空白折叠现象  方法：
+1.去除回车
+<!-- 将div标签写在一行 -->
+<div class="box1"></div>
+<div class="box2"></div>
+
+
+2.给父元素添加word-spacing属性
+.father{
+     word-spacing: -50px;
+}
+
+
+****（常用）3.给父元素设置font-size：0px；
+
+text-decoration: none;
+去除链接的下划线

@@ -1,0 +1,37 @@
+5.7 组件 slot进阶
+
+上节课中的插槽<slot>我们没有写name属性，但其实它会自动带隐含的名字"default"，
+也就是我们所说的"匿名插槽".
+
+而带有 name 属性的插槽，我们称为"具名插槽"。
+
+在向具名插槽提供内容的时候，我们可以在一个<tmeplate>元素上使用v-slot指令，并以
+v-slot的参数的形式提供其名称：
+<Modal :visible.sync="visible">
+  <template v-slot:header>
+    <h1>Modal title</h1>
+  </template>
+
+  <div>main content</div>
+  <div>main content</div>
+
+  <template v-slot:footer>
+    <p>Modal footer</p>
+  </template>
+</Modal>
+
+
+未做标记 无name属性的 slot标签之中
+<div class="modal" v-if="visible">
+  <div class="modal-content">
+    <header>
+      <slot name="header"></slot>
+    </header>
+    <main>
+      <slot></slot>
+    </main>
+    <footer>
+      <slot name="footer"></slot>
+    </footer>
+  </div>
+</div>

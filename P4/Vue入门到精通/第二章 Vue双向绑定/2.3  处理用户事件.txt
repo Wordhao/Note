@@ -1,0 +1,71 @@
+2.3  处理用户事件
+
+v-on：（事件绑定）
+首先在Vue中做 第一步 ：给元素添加点击事件
+在Vue中不叫添加点击事件，叫事件绑定，事件绑定的语法如下：
+<button v-on:click="add">按钮</button>
+这样就给按钮注册了一个点击事件，当点击该按钮的时候，就会驱动add方法。
+
+v-on：事件绑定指令的简写模式就是（@）符号，上面的代码可以改为：
+<button @click="add">按钮</button>
+
+
+methods（方法）
+第二步：给点击事件添加方法
+1.抽离方法
+需要将js代码中的匿名方法写在Vue规定的位置，在Vue中，存放方法的地方就是：
+<script>
+export default{
+    name:"app",
+    methods:{
+        // 在这里存放方法
+         alertFn:function(){//key（方法名）：value（方法体）
+            alert("Hello World");
+        }
+    }
+}
+</script>
+
+
+案例：
+<template>
+  <p>{{ counter }}</p>
+  <button @click="add">点击</button>
+</template>
+
+<script>
+export default {
+    name: "app",
+    data() {
+        return {
+            // 初始次数
+            counter:0
+        };
+    },
+    methods:{
+        add:function(){
+            // 这里的this指向当前的vue实例
+            this.counter++
+        }
+    }
+};
+</script>
+
+
+注意：
+@click="add"的完整写法是@click="add()"在括号里可以传递参数
+<button @click="add">点击</button>
+<!-- 等同于 -->
+<button @click="add()">点击</button>
+
+<!-- 当你的方法需要接收参数的时候，你可以将参数写在这个括号内 -->
+<button @click="add(number)">点击</button>
+
+
+事件修饰符:
+1.阻止冒泡事件
+<div @click.stop="fn2"></div>
+2.捕获事件
+<div class="div2" @click.capture="fn2"></div>
+3.阻止默认事件
+<div class="div2" @click.prevent="fn2"></div>

@@ -1,0 +1,51 @@
+6.2 添加路由
+
+我们知道路由是路径和组件间的映射，而路径所对应的组件将在<router-view>标签
+处渲染。
+
+现在我们给工程添加一些路由，即在routes中添加一些路径和组件的映射：
+// 1. 将要用到的组件从其他文件 import 进来
+import Foo from './views/Foo.vue';
+import Bar from './views/Bar.vue';
+import User from './views/User.vue';
+
+// 2. 定义路由，每个路由应该映射一个组件
+// 添加路径即在 routes 数组中增加新的成员
+const routes = [
+  { path: '/foo', component: Foo },
+  { path: '/bar', component: Bar },
+  // 新增一项
+  { path: '/user', component: User }
+];
+
+// 3. 创建 Router 实例，然后传 `routes` 配置
+const router = new VueRouter({
+  routes
+});
+
+
+导入组件的写法
+导入组件不但可以像上面那样用import的方法导入，还可以像下面这样直接在routes中写：
+const routes = [
+  { path: '/foo', component: () => import('./views/Foo.vue') },
+  { path: '/bar', component: () => import('./views/Bar.vue') },
+  { path: '/user', component: () => import('./views/User.vue') }
+];
+
+
+命名路由
+有时候，通过一个名称来标识一个路由显得更方便一些，特别是在链接一个路由，
+或者是执行一些跳转的时候。我们可以在创建Router实例的时候，在routes配置中
+给某个路由设置名称：
+// 0. 导入 Album、List、Add、Empty 三个组件
+
+// 1. 定义路由
+const routes = [
+  { path: '/foo',
+    name: 'fooName',
+    component: () => import('./views/Foo.vue')
+  }
+];
+通过命名跳转：
+<!-- to 的值是一个对象而不是字符串，所以要在 to 前加 : -->
+<router-link :to="{name: 'fooName'}">Go to Foo</router-link>

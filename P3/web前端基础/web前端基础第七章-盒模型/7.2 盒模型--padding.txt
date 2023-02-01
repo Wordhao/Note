@@ -1,0 +1,76 @@
+7.2 盒模型--padding
+
+盒模型中的内边距--padding
+
+
+.box {
+    padding: 20px;
+}
+上面的代码等价于：
+.box {
+    padding-top: 20px; /*上内边距*/
+    padding-right: 20px; /*右内边距*/
+    padding-bottom: 20px; /*下内边距*/
+    padding-left: 20px; /*左内边距*/
+}
+简写：
+div{
+    padding:20px 20px 20px 20px;(上、右、下、左  边距)
+}
+
+
+
+1.上下一样，左右一样
+div{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+简写：
+div{
+    padding: 20px 30px;（上下 左右）
+}
+
+         永远记住，第一个值是上，第二个值是右，第三个值如果没有，
+就和第一个值保持一致，第四个值如果没有就和第二个值保持
+一致
+
+2.上下一样，左右不一样
+div{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 30px;
+}
+简写：
+div{
+    padding: 20px 30px 20px 10px;
+}
+
+3.上下不一样，左右一样
+div{
+    padding-top: 30px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+简写：
+div{
+    padding: 30px 10px 20px;
+}
+
+
+box-sizing
+
+box-sizing规定了如何计算一个元素的总宽度和高
+度，它有两个值content-box，border-box，默认是content-box。
+
+content- box尺寸计算公式:
+width =内容的宽度
+height =内容的高度
+
+border-box尺寸计算公式:
+width = border + padding +内容的宽度
+height = border + padding +内容的高度
+
