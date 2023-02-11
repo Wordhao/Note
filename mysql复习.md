@@ -141,11 +141,66 @@ WHERE
 
 ***关联查询***
 
+* 左连接 **LEFT JOIN**
+
+```mysql
+SELECT
+  *
+FROM
+  TableA LEFT  JOIN
+  TableB
+  ON condition;
+```
+
+```mysql
+SELECT
+  *
+FROM
+  ykd_teacher
+  LEFT JOIN ykd_course ON ykd_teacher.id = ykd_course.teacher_id;
+```
 
 
 
+* 右连接 **RIGHT JOIN**
+
+(左连接返回左表内数据，右连接返回右表内数据)
 
 
+
+* 内连接**INNER JOIN**
+
+ ![img](https://style.youkeda.com/newcoursep4/d1/d1-5/A%26B.jpg?x-oss-process=image/resize,w_800/watermark,image_d2F0ZXJtYXNrLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzEwMA==,t_60,g_se,x_10,y_10) 
+
+```mysql
+SELECT
+  *
+FROM
+  Table_A
+  INNER JOIN Table_B
+ON
+  Table_A.id = Table_B.student_id;
+```
+
+
+
+* **UNION**查询所有内容
+
+```mysql
+SELECT
+  *
+FROM
+  Table_A
+  LEFT JOIN Table_B
+ON
+  Table_A.id = Table_B.student_id
+UNION DISTINCT
+SELECT
+  *
+FROM
+  Table_A
+  RIGHT JOIN Table_B ON Table_A.id=Table_B.student_id;
+```
 
 
 
