@@ -83,6 +83,33 @@
 
 ##### ***属性***
 
+###### 自定义属性
+
+```xml
+<!-- 定义自定义属性 -->
+    <properties>
+        <spring.version>5.1.9.RELEASE</spring.version>
+        <junit.version>4.12</junit.version>
+    </properties>
+```
+
+
+
+```xml
+<!-- 调用格式-->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+```
+
+
+
+###### 内置属性
+
+###### java系统属性
+
 
 
 ##### 版本管理
