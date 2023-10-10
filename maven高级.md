@@ -118,6 +118,45 @@
 
 ##### 多环境开发配置
 
+###### 定义多环境
+
+```xml
+<!-- 创建多环境 -->
+    <profiles>
+        <!-- 定义具体的环境：生产环境 -->
+        <profile>
+            <!--定义环境对应的唯一名称-->
+            <id>produce_env</id>
+            <!--定义环境中专用的属性值-->
+            <properties>
+                <jdbc.url>jdbc:mysql://127.1.1.1:3306/ssm_db</jdbc.url>
+            </properties>
+        </profile>
+
+        <!-- 定义具体的环境：开发环境 -->
+        <profile>
+            <id>dep_env</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://127.2.2.2:3306/ssm_db</jdbc.url>
+            </properties>
+        </profile>
+    </profiles>
+```
+
+
+
+###### 使用多环境
+
+执行命令
+
+```java
+install -P dep_env(多环境id)
+```
+
+
+
+
+
 ##### 跳过测试
 
 ##### *私服*
