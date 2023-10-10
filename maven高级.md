@@ -131,6 +131,10 @@
             <properties>
                 <jdbc.url>jdbc:mysql://127.1.1.1:3306/ssm_db</jdbc.url>
             </properties>
+            <!--设置默认启动-->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
 
         <!-- 定义具体的环境：开发环境 -->
@@ -153,7 +157,9 @@
 install -P dep_env(多环境id)
 ```
 
+调用格式
 
+mvn 指令 -P 环境定义id
 
 
 
